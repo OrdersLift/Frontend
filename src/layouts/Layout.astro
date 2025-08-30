@@ -1,0 +1,83 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const { 
+  title, 
+  description = "OrdersLift - Your premier digital agency partner. We specialize in creating stunning websites, powerful applications, and digital solutions that drive results.",
+  image = "/og-image.jpg",
+  canonical = Astro.url.href
+} = Astro.props;
+
+const siteName = "OrdersLift";
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:site_name" content={siteName} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    
+    <!-- Additional SEO -->
+    <meta name="keywords" content="digital agency, web development, app development, UI/UX design, digital marketing, SEO, branding" />
+    <meta name="author" content="OrdersLift" />
+    <meta name="theme-color" content="#3b82f6" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "OrdersLift",
+      "url": "https://orderslift.com",
+      "logo": "https://orderslift.com/logo.png",
+      "description": description,
+      "sameAs": [
+        "https://twitter.com/orderslift",
+        "https://linkedin.com/company/orderslift"
+      ]
+    })} />
+  </head>
+  <body class="font-sans antialiased bg-white text-gray-900">
+    <slot />
+  </body>
+  
+  <!-- Global Styles -->
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+</html> 

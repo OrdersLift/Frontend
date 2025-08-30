@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Banner from '../components/Banner';
+import Services from '../components/Services';
+import Portfolio from '../components/Portfolio';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+---
+
+<Layout title="OrdersLift - Digital Agency">
+  <Header client:load />
+  <Banner client:load />
+  <Services client:load />
+  <Portfolio client:load />
+  <Contact client:load />
+  <Footer client:load />
+</Layout>
