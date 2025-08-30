@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import AboutBanner from '../components/about/AboutBanner';
+import AboutAgency from '../components/about/AboutAgency';
+import ServicesOverview from '../components/about/ServicesOverview';
+import TeamSection from '../components/about/TeamSection';
+import ContactCTA from '../components/about/ContactCTA';
+import Footer from '../components/Footer';
+---
+
+<Layout 
+  title="About OrdersLift - Global AI Restaurant Website Agency | Our Story & Team"
+  description="Learn about OrdersLift, the leading global AI-powered restaurant website agency. Meet our expert team of international restaurant industry professionals and technology innovators. Discover our mission to transform restaurants worldwide."
+  keywords="about OrdersLift global, international restaurant website agency, global AI restaurant technology, restaurant website developers worldwide, international restaurant industry experts, global restaurant technology team, international restaurant website company, restaurant digital transformation worldwide, global restaurant technology company"
+  canonical="https://orderslift.com/about"
+  type="article"
+  section="About Us"
+>
+  <Header client:load />
+  <AboutBanner client:load />
+  <AboutAgency client:load />
+  <ServicesOverview client:load />
+  <TeamSection client:load />
+  <ContactCTA client:load />
+  <Footer client:load />
+</Layout> 

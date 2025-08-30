@@ -3,7 +3,7 @@ import { ArrowRight, Play, Star, TrendingUp, Users, Award } from 'lucide-react';
 
 const Banner = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50" role="banner" aria-label="OrdersLift Hero Section">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -140,23 +140,6 @@ const Banner = () => {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-
-          {/* Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="mt-16 md:mt-20 pt-8 md:pt-12 border-t border-gray-200"
-          >
-            <p className="text-sm text-gray-500 mb-4">Trusted by restaurants across the globe</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              {/* Placeholder for restaurant logos */}
-              <div className="h-8 w-24 bg-gray-300 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-gray-300 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-gray-300 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-gray-300 rounded animate-pulse"></div>
-            </div>
           </motion.div>
         </div>
       </div>
