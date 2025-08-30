@@ -4,13 +4,25 @@ export interface Props {
   description?: string;
   image?: string;
   canonical?: string;
+  keywords?: string;
+  author?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
+  type?: string;
 }
 
 const { 
   title, 
-  description = "OrdersLift - Your premier digital agency partner. We specialize in creating stunning websites, powerful applications, and digital solutions that drive results.",
-  image = "/og-image.jpg",
-  canonical = Astro.url.href
+  description = "OrdersLift - Global AI-Powered Restaurant Website Agency. Transform restaurants worldwide with cutting-edge AI technology. Boost direct sales, reduce delivery app dependency, and create exceptional customer experiences globally. Get your AI-powered restaurant website today.",
+  image = "https://orderslift.com/og-image.jpg",
+  canonical = Astro.url.href,
+  keywords = "global restaurant website agency, international restaurant technology, AI restaurant website worldwide, restaurant website development global, AI chatbot for restaurants international, restaurant delivery integration worldwide, restaurant analytics global, restaurant marketing international, restaurant technology worldwide, AI-powered ordering system global, restaurant website design international, restaurant SEO worldwide, restaurant online ordering global, restaurant management system international, restaurant website agency worldwide, restaurant digital transformation global",
+  author = "OrdersLift",
+  publishedTime,
+  modifiedTime,
+  section = "Global Restaurant Technology",
+  type = "website"
 } = Astro.props;
 
 const siteName = "OrdersLift";
@@ -28,16 +40,44 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <!-- SEO Meta Tags -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href={canonical} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
+    <meta name="theme-color" content="#B5432F" />
+    
+    <!-- Language and Region -->
+    <meta name="language" content="English" />
+    <meta name="geo.region" content="Worldwide" />
+    <meta name="geo.placename" content="Global" />
+    <meta name="geo.position" content="Global" />
+    <meta name="ICBM" content="Global" />
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
     <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="en_CA" />
+    <meta property="og:locale:alternate" content="en_AU" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    <meta property="article:section" content={section} />
+    
+    <!-- Hreflang for International SEO -->
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="en-us" href={canonical} />
+    <link rel="alternate" hreflang="en-gb" href={canonical} />
+    <link rel="alternate" hreflang="en-ca" href={canonical} />
+    <link rel="alternate" hreflang="en-au" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -45,11 +85,9 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
-    
-    <!-- Additional SEO -->
-    <meta name="keywords" content="digital agency, web development, app development, UI/UX design, digital marketing, SEO, branding" />
-    <meta name="author" content="OrdersLift" />
-    <meta name="theme-color" content="#3b82f6" />
+    <meta property="twitter:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
+    <meta property="twitter:creator" content="@orderslift" />
+    <meta property="twitter:site" content="@orderslift" />
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,10 +104,70 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
       "url": "https://orderslift.com",
       "logo": "https://orderslift.com/logo.png",
       "description": description,
+      "foundingDate": "2023",
+      "industry": "Global Restaurant Technology",
+      "numberOfEmployees": "10-50",
+      "globalServiceArea": true,
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Global"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-123-4567",
+        "contactType": "customer service",
+        "email": "hello@orderslift.com",
+        "availableLanguage": "English, Spanish, French, German, Hindi, Chinese"
+      },
       "sameAs": [
         "https://twitter.com/orderslift",
-        "https://linkedin.com/company/orderslift"
-      ]
+        "https://linkedin.com/company/orderslift",
+        "https://facebook.com/orderslift"
+      ],
+      "serviceArea": {
+        "@type": "Place",
+        "name": "Worldwide",
+        "description": "Global restaurant technology services"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Restaurant Website Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI-Powered Restaurant Website",
+              "description": "Complete AI-powered website solution for restaurants"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Restaurant Analytics Dashboard",
+              "description": "Comprehensive analytics and insights for restaurant owners"
+            }
+          }
+        ]
+      }
+    })} />
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "OrdersLift",
+      "description": "AI-Powered Restaurant Website Agency",
+      "url": "https://orderslift.com",
+      "telephone": "+1-555-123-4567",
+      "email": "hello@orderslift.com",
+      "priceRange": "$$",
+      "currenciesAccepted": "USD, EUR, GBP, CAD, AUD, INR",
+      "paymentAccepted": "Credit Card, PayPal, Bank Transfer, Stripe, Apple Pay, Google Pay",
+      "areaServed": "Worldwide",
+      "serviceType": "Restaurant Website Development",
+      "openingHours": "Mo-Su 00:00-23:59"
     })} />
   </head>
   <body class="font-sans antialiased bg-white text-gray-900">

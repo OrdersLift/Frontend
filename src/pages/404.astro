@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+---
+
+<Layout title="404 - Page Not Found | OrdersLift">
+  <Header client:load />
+  
+  <main class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center px-4 pt-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Animated 404 Number -->
+      <div class="relative mb-8">
+        <div class="text-9xl md:text-[12rem] font-display font-bold text-primary-600 opacity-20 select-none">
+          404
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-6xl md:text-8xl font-display font-bold text-primary-700 animate-bounce">
+            404
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="relative z-10">
+        <!-- Animated Icon -->
+        <div class="mb-8">
+          <div class="inline-flex items-center justify-center w-24 h-24 bg-primary-100 rounded-full mb-6 animate-pulse">
+            <svg class="w-12 h-12 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <h1 class="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-6 animate-fade-in">
+          Oops! Page Not Found
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-delay">
+          Looks like this page got lost in the kitchen! 🍽️<br>
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+
+        <!-- Restaurant-themed illustration -->
+        <div class="mb-12 flex justify-center">
+          <div class="relative">
+            <!-- Plate -->
+            <div class="w-32 h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full border-4 border-gray-400 animate-spin-slow"></div>
+            <!-- Fork and Knife -->
+            <div class="absolute -top-4 -left-4 w-8 h-16 bg-gray-600 rounded-full transform rotate-45 animate-bounce-delay"></div>
+            <div class="absolute -top-4 -right-4 w-8 h-16 bg-gray-600 rounded-full transform -rotate-45 animate-bounce-delay-2"></div>
+            <!-- Question mark -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-4xl font-bold text-primary-600 animate-pulse">?</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in-delay-2">
+          <a 
+            href="/" 
+            class="group inline-flex items-center px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-primary-600/25"
+          >
+            <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            Back to Home
+          </a>
+          
+          <a 
+            href="/#contact" 
+            class="group inline-flex items-center px-8 py-4 border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
+            <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            Contact Support
+          </a>
+        </div>
+
+        <!-- Helpful Links -->
+        <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 animate-fade-in-delay-3">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Looking for something specific?</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/#features" class="group p-4 bg-primary-50 hover:bg-primary-100 rounded-lg transition-all duration-300 transform hover:scale-105">
+              <div class="text-primary-600 font-semibold group-hover:animate-pulse">AI Features</div>
+              <div class="text-sm text-gray-600">Explore our AI-powered tools</div>
+            </a>
+            <a href="/#faq" class="group p-4 bg-secondary-50 hover:bg-secondary-100 rounded-lg transition-all duration-300 transform hover:scale-105">
+              <div class="text-secondary-600 font-semibold group-hover:animate-pulse">FAQ</div>
+              <div class="text-sm text-gray-600">Find answers to common questions</div>
+            </a>
+            <a href="/#about" class="group p-4 bg-accent-50 hover:bg-accent-100 rounded-lg transition-all duration-300 transform hover:scale-105">
+              <div class="text-accent-600 font-semibold group-hover:animate-pulse">About Us</div>
+              <div class="text-sm text-gray-600">Learn more about OrdersLift</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Fun Restaurant Quote -->
+        <div class="mt-12 p-6 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl border-l-4 border-primary-600 animate-fade-in-delay-4">
+          <blockquote class="text-lg text-gray-700 italic">
+            "The best websites, like the best restaurants, are built with passion, 
+            attention to detail, and a commitment to serving customers perfectly."
+          </blockquote>
+          <div class="text-sm text-gray-600 mt-2">— OrdersLift Team</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer client:load />
+
+  <style>
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bounce-delay {
+      0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0) rotate(45deg); }
+      40%, 43% { transform: translate3d(0,-30px,0) rotate(45deg); }
+      70% { transform: translate3d(0,-15px,0) rotate(45deg); }
+      90% { transform: translate3d(0,-4px,0) rotate(45deg); }
+    }
+    
+    @keyframes bounce-delay-2 {
+      0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0) rotate(-45deg); }
+      40%, 43% { transform: translate3d(0,-30px,0) rotate(-45deg); }
+      70% { transform: translate3d(0,-15px,0) rotate(-45deg); }
+      90% { transform: translate3d(0,-4px,0) rotate(-45deg); }
+    }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fade-in-delay {
+      0% { opacity: 0; transform: translateY(20px); }
+      50% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fade-in-delay-2 {
+      0% { opacity: 0; transform: translateY(20px); }
+      70% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fade-in-delay-3 {
+      0% { opacity: 0; transform: translateY(20px); }
+      85% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fade-in-delay-4 {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-spin-slow {
+      animation: spin-slow 3s linear infinite;
+    }
+    
+    .animate-bounce-delay {
+      animation: bounce-delay 2s infinite;
+      animation-delay: 0.5s;
+    }
+    
+    .animate-bounce-delay-2 {
+      animation: bounce-delay-2 2s infinite;
+      animation-delay: 1s;
+    }
+    
+    .animate-fade-in {
+      animation: fade-in 1s ease-out;
+    }
+    
+    .animate-fade-in-delay {
+      animation: fade-in-delay 1.5s ease-out;
+    }
+    
+    .animate-fade-in-delay-2 {
+      animation: fade-in-delay-2 2s ease-out;
+    }
+    
+    .animate-fade-in-delay-3 {
+      animation: fade-in-delay-3 2.5s ease-out;
+    }
+    
+    .animate-fade-in-delay-4 {
+      animation: fade-in-delay-4 3s ease-out;
+    }
+  </style>
+</main> 

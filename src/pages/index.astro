@@ -2,17 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
-import Services from '../components/Services';
-import Portfolio from '../components/Portfolio';
+import Features from '../components/Features';
+import FAQ from '../components/FAQ';
+import Reviews from '../components/Reviews';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 ---
 
-<Layout title="OrdersLift - Digital Agency">
+<Layout 
+  title="OrdersLift - Global AI Restaurant Website Agency | Transform Restaurants Worldwide"
+  description="Transform restaurants worldwide with AI-powered websites. Boost direct sales, reduce delivery app dependency, and create exceptional customer experiences globally. Get your AI restaurant website today."
+  keywords="global restaurant website agency, international restaurant technology, AI restaurant website worldwide, restaurant website development global, AI chatbot for restaurants international, restaurant delivery integration worldwide, restaurant analytics global, restaurant marketing international, restaurant technology worldwide, AI-powered ordering system global, restaurant website design international, restaurant SEO worldwide, restaurant online ordering global, restaurant management system international, restaurant website agency worldwide, restaurant digital transformation global"
+  canonical="https://orderslift.com/"
+>
   <Header client:load />
   <Banner client:load />
-  <Services client:load />
-  <Portfolio client:load />
+  <Features client:load />
+  <FAQ client:load />
+  <Reviews client:load />
   <Contact client:load />
   <Footer client:load />
 </Layout>

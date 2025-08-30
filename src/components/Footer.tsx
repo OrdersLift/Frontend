@@ -7,23 +7,21 @@ const Footer = () => {
   };
 
   const footerLinks = {
-    services: [
-      { name: 'AI Menu Chatbot', href: '#services' },
-      { name: 'Sales Dashboard', href: '#services' },
-      { name: 'Direct Delivery', href: '#services' },
-      { name: 'Customer Engagement', href: '#services' },
-      { name: 'Restaurant Analytics', href: '#services' }
+    features: [
+      { name: 'AI Menu Chatbot', href: '/#features' },
+      { name: 'Sales Dashboard', href: '/#features' },
+      { name: 'Direct Delivery', href: '/#features' },
+      { name: 'Customer Engagement', href: '/#features' },
+      { name: 'Restaurant Analytics', href: '/#features' }
     ],
     company: [
-      { name: 'About OrdersLift', href: '#about' },
-      { name: 'How It Works', href: '#how-it-works' },
-      { name: 'Success Stories', href: '#portfolio' },
-      { name: 'Restaurant Partners', href: '#partners' },
-      { name: 'Contact Us', href: '#contact' }
+      { name: 'About OrdersLift', href: '/#about' },
+      { name: 'How It Works', href: '/#features' },
+      { name: 'Success Stories', href: '/#about' },
+      { name: 'Restaurant Partners', href: '/#about' },
+      { name: 'Contact Us', href: '/#contact' }
     ],
     support: [
-      { name: 'Help Center', href: '/help' },
-      { name: 'Setup Guide', href: '/setup' },
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
       { name: 'Cookie Policy', href: '/cookies' }
@@ -52,7 +50,7 @@ const Footer = () => {
                 viewport={{ once: true }}
               >
                 <div className="mb-6">
-                  <a href="#home" className="flex items-center">
+                  <a href="/" className="flex items-center">
                     <img 
                       src="/logo.png" 
                       alt="OrdersLift Logo" 
@@ -87,16 +85,16 @@ const Footer = () => {
               </motion.div>
             </div>
 
-            {/* Services Links */}
+            {/* Features Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-lg font-semibold mb-6">Our Services</h3>
+              <h3 className="text-lg font-semibold mb-6">AI Features</h3>
               <ul className="space-y-3">
-                {footerLinks.services.map((link, index) => (
+                {footerLinks.features.map((link, index) => (
                   <motion.li
                     key={link.name}
                     initial={{ opacity: 0, x: -20 }}
