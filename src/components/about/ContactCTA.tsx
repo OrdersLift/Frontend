@@ -35,19 +35,19 @@ const ContactCTA = () => {
             </p>
 
             {/* Contact Methods */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-12">
               <div className="flex items-center justify-center space-x-3 text-primary-100">
                 <Phone className="w-5 h-5" />
-                <span className="font-medium">+1 (555) 123-4567</span>
+                <span className="font-medium">(+91) 63939 74340</span>
               </div>
-              <div className="flex items-center justify-center space-x-3 text-primary-100">
+              <div className="flex items-center justify-center space-x-2 text-primary-100">
                 <Mail className="w-5 h-5" />
-                <span className="font-medium">hello@orderslift.com</span>
+                <span className="font-medium">restaurantorderlift@gmail.com</span>
               </div>
-              <div className="flex items-center justify-center space-x-3 text-primary-100">
+              {/* <div className="flex items-center justify-center space-x-3 text-primary-100">
                 <MessageSquare className="w-5 h-5" />
                 <span className="font-medium">Live Chat Available</span>
-              </div>
+              </div> */}
             </div>
           </motion.div>
 

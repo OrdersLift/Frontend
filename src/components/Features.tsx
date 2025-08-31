@@ -58,14 +58,14 @@ const Features = () => {
       id: 3,
       title: "Direct Delivery Integration",
       subtitle: "Seamless Order Fulfillment",
-      description: "Connect directly with delivery partners like Dunzo, Swiggy Genie, and UberDirect. When customers place orders on your website, they're automatically dispatched to your preferred delivery service. No more juggling multiple apps - everything flows seamlessly from your website.",
+      description: "Connect directly with delivery partners like DoorDash Drive, UberDirect, GrubHub etc. When customers place orders on your website, they're automatically dispatched to your preferred delivery service. No more juggling multiple apps - everything flows seamlessly from your website.",
       benefits: [
         "Multi-platform integration",
         "Automatic order routing",
         "Real-time tracking",
         "Reduced commission fees"
       ],
-      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=600&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1695654390723-479197a8c4a3?q=80&w=1434&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       icon: Truck,
       color: "from-orange-500 to-orange-600",
       modalKey: "delivery-integration"

@@ -66,7 +66,7 @@ const Footer = () => {
                 </p>
                 
                 {/* Social Links */}
-                <div className="flex space-x-4">
+                {/* <div className="flex space-x-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={social.name}
@@ -81,7 +81,7 @@ const Footer = () => {
                       <span className="text-sm font-semibold">{social.icon}</span>
                     </motion.a>
                   ))}
-                </div>
+                </div> */}
               </motion.div>
             </div>
 
@@ -181,9 +181,7 @@ const Footer = () => {
               viewport={{ once: true }}
               className="text-gray-400 text-sm flex items-center"
             >
-              © 2024 OrdersLift. All rights reserved. Made with{' '}
-              <Heart className="w-4 h-4 mx-1 text-red-500 fill-current" />
-              {' '}for restaurants.
+              © 2022-2025 OrdersLift. All rights reserved. 
             </motion.p>
             
             <motion.button

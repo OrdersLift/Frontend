@@ -78,15 +78,15 @@ const AboutBanner = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-3xl mx-auto mb-12"
           >
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">500+</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">100+</div>
               <div className="text-gray-600 text-sm md:text-base">Restaurants Served</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">98%</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">88%</div>
               <div className="text-gray-600 text-sm md:text-base">Client Satisfaction</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">3x</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">1.5x</div>
               <div className="text-gray-600 text-sm md:text-base">Average Sales Increase</div>
             </div>
             <div className="text-center">

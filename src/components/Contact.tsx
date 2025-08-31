@@ -87,7 +87,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
+      value: "(+91) 63939 74340",
       description: "24/7 support available"
     }
   ];
@@ -321,7 +321,7 @@ const Contact = () => {
             </motion.div>
 
             {/* Social Links */}
-            <motion.div variants={itemVariants} className="pt-6">
+            {/* <motion.div variants={itemVariants} className="pt-6">
               <h4 className="text-lg font-semibold text-gray-900 mb-4">
                 Follow Us
               </h4>
@@ -343,7 +343,7 @@ const Contact = () => {
                   </motion.a>
                 ))}
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>
