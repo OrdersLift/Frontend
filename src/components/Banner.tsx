@@ -100,25 +100,25 @@ const Banner = () => {
           >
             {[
               { 
-                number: '10+', 
+                number: '3+', 
                 label: 'Years Combined Experience',
                 icon: Award,
                 color: 'text-primary-600'
               },
               { 
-                number: '500+', 
+                number: '100+', 
                 label: 'Restaurants Served',
                 icon: Users,
                 color: 'text-primary-600'
               },
               { 
-                number: '95%', 
+                number: '88%', 
                 label: 'Client Satisfaction',
                 icon: Star,
                 color: 'text-primary-600'
               },
               { 
-                number: '300%', 
+                number: '150%', 
                 label: 'Average Sales Increase',
                 icon: TrendingUp,
                 color: 'text-primary-600'

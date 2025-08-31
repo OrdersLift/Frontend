@@ -99,27 +99,27 @@ const DeliveryIntegrationModal = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-4 bg-white rounded-lg border">
             <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-orange-600 font-bold text-lg">S</span>
+              <span className="text-orange-600 font-bold text-lg">D</span>
             </div>
-            <span className="text-sm font-medium text-gray-700">Swiggy</span>
+            <span className="text-sm font-medium text-gray-700">DoorDash Drive</span>
           </div>
           <div className="text-center p-4 bg-white rounded-lg border">
             <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-red-600 font-bold text-lg">Z</span>
+              <span className="text-red-600 font-bold text-lg">U</span>
             </div>
-            <span className="text-sm font-medium text-gray-700">Zomato</span>
+            <span className="text-sm font-medium text-gray-700">UberDirect</span>
           </div>
           <div className="text-center p-4 bg-white rounded-lg border">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-blue-600 font-bold text-lg">D</span>
+              <span className="text-blue-600 font-bold text-lg">G</span>
             </div>
-            <span className="text-sm font-medium text-gray-700">Dunzo</span>
+            <span className="text-sm font-medium text-gray-700">GrubHub</span>
           </div>
           <div className="text-center p-4 bg-white rounded-lg border">
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-green-600 font-bold text-lg">U</span>
+              <span className="text-green-600 font-bold text-lg">P</span>
             </div>
-            <span className="text-sm font-medium text-gray-700">UberEats</span>
+            <span className="text-sm font-medium text-gray-700">Porter</span>
           </div>
         </div>
       </div>

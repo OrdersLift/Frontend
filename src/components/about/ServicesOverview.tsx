@@ -11,7 +11,7 @@ const ServicesOverview = () => {
     {
       title: "One-Time Full Purchase",
       subtitle: "Complete Ownership",
-      price: "Starting from $2,999",
+      price: "Starting from $1,999",
       description: "Own your AI-powered restaurant website completely. Perfect for established restaurants looking for full control and long-term investment.",
       features: [
         "Complete website ownership",

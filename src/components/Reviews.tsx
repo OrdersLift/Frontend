@@ -8,17 +8,18 @@ type Review = {
   avatar: string;
 };
 
+
 const reviews: Review[] = [
-  { name: "Isabella Davis", rating: 4.8,  avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" },
-  { name: "Liam Johnson",    rating: 4.7,  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" },
-  { name: "Ava Martinez",    rating: 5.0,  avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" },
-  { name: "Noah Thompson",   rating: 4.85, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" },
-  { name: "Sophia Wilson",   rating: 4.9,  avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" },
-  { name: "Daniel Williams", rating: 4.85, avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" },
-  { name: "Olivia Brown",    rating: 4.95, avatar: "https://images.unsplash.com/photo-1542206395-9feb3edaa68d?w=150&h=150&fit=crop&crop=face" },
-  { name: "Jacob Bennett",   rating: 4.9,  avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" },
-  { name: "Emily Carter",    rating: 4.8,  avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face" },
-  { name: "Michael Garcia",  rating: 4.75, avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" },
+  { name: "Rahul Kumar", rating: 4.5,  avatar: "userIcon.png"},
+  { name: "Liam Johnson",    rating: 4.0,  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" },
+  { name: "Akash",    rating: 5.0,  avatar: "userIcon.png" },
+  { name: "Rohit Kumar",   rating: 4.5, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face" },
+  { name: "Sophia Wilson",   rating: 3.5,  avatar: "userIcon.png" },
+  { name: "Daniel Williams", rating: 5.0, avatar: "userIcon.png" },
+  { name: "David",    rating: 5.0, avatar: "userIcon.png" },
+  { name: "Jacob Bennett",   rating: 4.5,  avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face" },
+  { name: "Soumya Ranjan",    rating: 4.5,  avatar: "userIcon.png" },
+  { name: "Priyanshu Kumar",  rating: 4.0, avatar: "userIcon.png" },
 ];
 
 const firstRow = reviews.slice(0, 5);
@@ -160,15 +161,15 @@ const Reviews = () => {
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div>
-              <div className="mb-2 text-4xl font-bold text-primary-600">500+</div>
+              <div className="mb-2 text-4xl font-bold text-primary-600">100+</div>
               <div className="text-gray-600">Happy Restaurants</div>
             </div>
             <div>
-              <div className="mb-2 text-4xl font-bold text-primary-600">4.9/5</div>
+              <div className="mb-2 text-4xl font-bold text-primary-600">4.4/5</div>
               <div className="text-gray-600">Average Rating</div>
             </div>
             <div>
-              <div className="mb-2 text-4xl font-bold text-primary-600">98%</div>
+              <div className="mb-2 text-4xl font-bold text-primary-600">88%</div>
               <div className="text-gray-600">Satisfaction Rate</div>
             </div>
           </div>
