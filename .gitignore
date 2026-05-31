@@ -20,5 +20,8 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Flowise local data (auto-generated, should not be committed)
+flowise_data/
+
 # jetbrains setting folder
 .idea/

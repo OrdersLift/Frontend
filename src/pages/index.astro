@@ -1,25 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
-import Banner from '../components/Banner';
+import Hero from '../components/Hero';
+import Industries from '../components/Industries';
+import Products from '../components/Products';
+import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
-import FAQ from '../components/FAQ';
+import Pricing from '../components/Pricing';
 import Reviews from '../components/Reviews';
+import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 ---
 
-<Layout 
-  title="OrdersLift - Global AI Restaurant Website Agency | Transform Restaurants Worldwide"
-  description="Transform restaurants worldwide with AI-powered websites. Boost direct sales, reduce delivery app dependency, and create exceptional customer experiences globally. Get your AI restaurant website today."
-  keywords="global restaurant website agency, international restaurant technology, AI restaurant website worldwide, restaurant website development global, AI chatbot for restaurants international, restaurant delivery integration worldwide, restaurant analytics global, restaurant marketing international, restaurant technology worldwide, AI-powered ordering system global, restaurant website design international, restaurant SEO worldwide, restaurant online ordering global, restaurant management system international, restaurant website agency worldwide, restaurant digital transformation global"
+<Layout
+  title="OrdersLift - AI Platform for Every Business | Worldwide"
+  description="OrdersLift builds complete AI-powered platforms for local businesses — custom website, admin panel, AI chatbot, internal RAG bot, and 2 years free maintenance. Serving restaurants, dental clinics, gyms, salons, garages and more worldwide."
+  keywords="AI platform for business, AI chatbot for small business, internal RAG bot, business website AI agency, AI website agency, restaurant AI platform, dental clinic website, gym management system, salon booking AI, auto garage website"
   canonical="https://orderslift.com/"
 >
   <Header client:load />
-  <Banner client:load />
+  <Hero client:load />
+  <Industries client:load />
+  <Products client:load />
+  <HowItWorks client:load />
   <Features client:load />
-  <FAQ client:load />
+  <Pricing client:load />
   <Reviews client:load />
+  <FAQ client:load />
   <Contact client:load />
   <Footer client:load />
 </Layout>

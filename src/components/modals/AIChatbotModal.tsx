@@ -1,121 +1,144 @@
-import { MessageCircle, Mic, Brain, Zap, Users, Clock } from 'lucide-react';
+import { MessageCircle, Mic, Brain, Zap, Users, Clock, CheckCircle } from 'lucide-react';
 
-const AIChatbotModal = () => {
-  return (
-    <div className="space-y-6">
-      {/* Hero Section */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-          <MessageCircle className="w-8 h-8 text-primary-600" />
-        </div>
-        <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
-          AI Menu Chatbot
-        </h3>
-        <p className="text-gray-600">
-          Your restaurant's intelligent conversational assistant that understands natural language and provides instant menu information.
+const capabilities = [
+  {
+    icon: Mic,
+    title: 'Voice & Text',
+    desc: 'Customers interact by typing or speaking. The bot responds naturally in both modes.',
+    color: 'text-primary-400',
+    bg: 'bg-primary-500/10',
+  },
+  {
+    icon: Brain,
+    title: 'Trained on Your Data',
+    desc: 'Understands your specific services, prices, hours, FAQs — not a generic bot.',
+    color: 'text-glow-400',
+    bg: 'bg-glow-500/10',
+  },
+  {
+    icon: Zap,
+    title: 'Instant Answers',
+    desc: 'Zero wait time. Customers get accurate answers 24/7 without human intervention.',
+    color: 'text-accent-400',
+    bg: 'bg-accent-500/10',
+  },
+  {
+    icon: Users,
+    title: 'Personalised',
+    desc: 'Remembers returning customers and tailors responses based on history.',
+    color: 'text-orange-400',
+    bg: 'bg-orange-500/10',
+  },
+];
+
+const steps = [
+  { n: '01', title: 'We learn your business', desc: 'Services, prices, FAQs, hours, policies — all fed into the AI.' },
+  { n: '02', title: 'We build & embed the bot', desc: 'A branded widget integrated directly into your website.' },
+  { n: '03', title: 'Goes live, stays updated', desc: 'AI improves automatically. You update services → bot updates too.' },
+];
+
+const examples = [
+  { label: 'Dental patient asks:', q: '"Do you accept NHS patients and what are your opening hours?"' },
+  { label: 'Gym member asks:', q: '"What time is the Thursday spin class and how do I book a spot?"' },
+  { label: 'Restaurant customer asks:', q: '"Do you have gluten-free options under £12?"' },
+];
+
+const AIChatbotModal = () => (
+  <div className="space-y-8 text-slate-300">
+    {/* Intro */}
+    <div className="flex items-start gap-5">
+      <div className="w-14 h-14 rounded-2xl bg-primary-500/15 border border-primary-500/20
+                      flex items-center justify-center flex-shrink-0">
+        <MessageCircle className="w-7 h-7 text-primary-400" />
+      </div>
+      <div>
+        <p className="text-slate-300 leading-relaxed">
+          A 24/7 AI assistant trained specifically on your business. It handles customer questions
+          instantly — freeing your staff for the work that actually needs a human.
+          Works on your website, WhatsApp, and SMS.
         </p>
       </div>
+    </div>
 
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Mic className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Voice & Text Support</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Customers can interact through both voice commands and text messages. The chatbot reads menu items aloud and responds naturally to questions.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Brain className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Natural Language Processing</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Understands complex queries like "What's good for vegetarians?" or "Show me spicy dishes under $15" with contextual awareness.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Zap className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Instant Responses</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Provides immediate answers about ingredients, preparation methods, allergens, and dietary restrictions without human intervention.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Users className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Personalized Recommendations</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Learns from customer preferences and suggests dishes based on past orders, dietary restrictions, and current mood.
-          </p>
-        </div>
-      </div>
-
-      {/* How It Works */}
-      <div className="bg-primary-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">How It Works</h4>
-        <div className="space-y-4">
-          <div className="flex items-start">
-            <div className="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-              1
+    {/* Capabilities */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">What it can do</h4>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {capabilities.map((c) => (
+          <div key={c.title} className="flex items-start gap-4 p-4 rounded-xl bg-white/03 border border-white/06">
+            <div className={`w-9 h-9 rounded-lg ${c.bg} flex items-center justify-center flex-shrink-0`}>
+              <c.icon className={`w-4 h-4 ${c.color}`} />
             </div>
             <div>
-              <h5 className="font-medium text-gray-900">Menu Training</h5>
-              <p className="text-gray-600 text-sm">We upload your complete menu and train the AI to understand your dishes, ingredients, and preparation methods.</p>
+              <div className="text-white text-sm font-semibold mb-1">{c.title}</div>
+              <div className="text-slate-500 text-xs leading-relaxed">{c.desc}</div>
             </div>
           </div>
-          <div className="flex items-start">
-            <div className="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-              2
-            </div>
-            <div>
-              <h5 className="font-medium text-gray-900">Integration</h5>
-              <p className="text-gray-600 text-sm">The chatbot is seamlessly integrated into your website with a friendly interface that matches your brand.</p>
-            </div>
-          </div>
-          <div className="flex items-start">
-            <div className="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">
-              3
-            </div>
-            <div>
-              <h5 className="font-medium text-gray-900">Live Interaction</h5>
-              <p className="text-gray-600 text-sm">Customers can ask questions 24/7 and get instant, accurate responses about your menu and services.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Benefits */}
-      <div className="border-t pt-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Key Benefits</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-4">
-            <Clock className="w-8 h-8 text-primary-600 mx-auto mb-2" />
-            <h5 className="font-medium text-gray-900 mb-1">24/7 Availability</h5>
-            <p className="text-gray-600 text-sm">Never miss a customer inquiry, even outside business hours</p>
-          </div>
-          <div className="text-center p-4">
-            <Users className="w-8 h-8 text-primary-600 mx-auto mb-2" />
-            <h5 className="font-medium text-gray-900 mb-1">Reduced Wait Times</h5>
-            <p className="text-gray-600 text-sm">Instant responses eliminate customer frustration and improve satisfaction</p>
-          </div>
-          <div className="text-center p-4">
-            <Zap className="w-8 h-8 text-primary-600 mx-auto mb-2" />
-            <h5 className="font-medium text-gray-900 mb-1">Increased Sales</h5>
-            <p className="text-gray-600 text-sm">Better menu understanding leads to higher order values and repeat customers</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  );
-};
 
-export default AIChatbotModal; 
+    {/* Real examples */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Real conversation examples</h4>
+      <div className="space-y-3">
+        {examples.map((e) => (
+          <div key={e.label} className="p-4 rounded-xl bg-white/03 border border-white/06">
+            <div className="text-xs text-slate-500 mb-2 font-medium">{e.label}</div>
+            <div className="text-sm text-slate-200 italic">{e.q}</div>
+            <div className="flex items-center gap-1.5 mt-2">
+              <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+              <span className="text-xs text-green-400">Bot answers instantly, correctly</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* How it works */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">How we set it up</h4>
+      <div className="space-y-3">
+        {steps.map((s) => (
+          <div key={s.n} className="flex items-start gap-4">
+            <span className="text-3xl font-bold text-primary-500/30 font-display leading-none flex-shrink-0 w-10">{s.n}</span>
+            <div className="pt-0.5">
+              <div className="text-white text-sm font-semibold mb-0.5">{s.title}</div>
+              <div className="text-slate-500 text-xs">{s.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Stats */}
+    <div className="grid grid-cols-3 gap-4 p-5 rounded-xl bg-gradient-to-r from-primary-500/08 to-glow-500/08 border border-white/06">
+      {[
+        { v: '24/7', l: 'Always available' },
+        { v: '<1s',  l: 'Response time' },
+        { v: '85%',  l: 'Queries resolved without human' },
+      ].map((s) => (
+        <div key={s.l} className="text-center">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-accent-400
+                          bg-clip-text text-transparent mb-1">{s.v}</div>
+          <div className="text-slate-500 text-xs">{s.l}</div>
+        </div>
+      ))}
+    </div>
+
+    {/* Channels */}
+    <div>
+      <h4 className="text-white font-semibold mb-3">Works across channels</h4>
+      <div className="flex flex-wrap gap-2">
+        {['Website widget', 'WhatsApp Business', 'SMS', 'Embedded chat bubble', 'Facebook Messenger'].map((c) => (
+          <span key={c} className="px-3 py-1.5 rounded-full bg-white/05 border border-white/08
+                                   text-slate-300 text-xs font-medium">
+            {c}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+export default AIChatbotModal;

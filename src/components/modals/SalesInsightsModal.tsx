@@ -1,150 +1,103 @@
-import { BarChart3, TrendingUp, DollarSign, Calendar, Target, PieChart } from 'lucide-react';
+import { BarChart3, TrendingUp, DollarSign, Calendar, Target, Users } from 'lucide-react';
 
-const SalesInsightsModal = () => {
-  return (
-    <div className="space-y-6">
-      {/* Hero Section */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-          <BarChart3 className="w-8 h-8 text-primary-600" />
-        </div>
-        <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
-          Sales Insights Dashboard
-        </h3>
-        <p className="text-gray-600">
-          Transform raw data into actionable insights. Make informed decisions about your menu, pricing, and business strategy.
+const metrics = [
+  { icon: TrendingUp, title: 'Revenue trends',         desc: 'Daily, weekly, monthly breakdowns with growth percentages and comparisons.', color: 'text-green-400', bg: 'bg-green-500/10' },
+  { icon: DollarSign, title: 'Profit margin per item', desc: 'Understand which services or products are most profitable and which drain margin.', color: 'text-primary-400', bg: 'bg-primary-500/10' },
+  { icon: Calendar,   title: 'Peak hour analysis',     desc: 'See exactly when you\'re busiest so you can staff accordingly and run better promotions.', color: 'text-accent-400', bg: 'bg-accent-500/10' },
+  { icon: Target,     title: 'Goal tracking',          desc: 'Set weekly or monthly targets. Dashboard shows progress in real time with alerts.', color: 'text-glow-400', bg: 'bg-glow-500/10' },
+  { icon: Users,      title: 'Customer lifetime value', desc: 'Know which customers are worth the most and focus retention efforts where they matter.', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  { icon: BarChart3,  title: 'Service performance',    desc: 'Rank your services or menu items by revenue, volume, and growth rate.', color: 'text-pink-400', bg: 'bg-pink-500/10' },
+];
+
+const mockStats = [
+  { label: "This Week's Revenue", value: '£8,420', change: '+14%', up: true },
+  { label: 'Top Service',         value: 'Haircut + Style', change: '38 bookings', up: true },
+  { label: 'Avg Booking Value',   value: '£47.50', change: '+£6 vs last month', up: true },
+  { label: 'New Customers',       value: '23', change: '+8 vs last week', up: true },
+];
+
+const SalesInsightsModal = () => (
+  <div className="space-y-8 text-slate-300">
+    {/* Intro */}
+    <div className="flex items-start gap-5">
+      <div className="w-14 h-14 rounded-2xl bg-green-500/15 border border-green-500/20
+                      flex items-center justify-center flex-shrink-0">
+        <BarChart3 className="w-7 h-7 text-green-400" />
+      </div>
+      <div>
+        <p className="text-slate-300 leading-relaxed">
+          Your business generates data every day. Most owners never see it clearly.
+          Our dashboard turns your raw transactions into plain-English insights —
+          so you always know what's working, what's not, and what to do next.
         </p>
       </div>
+    </div>
 
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <TrendingUp className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Performance Analytics</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Track sales trends, identify peak hours, and understand customer behavior patterns with real-time data visualization.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <DollarSign className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Profit Margin Analysis</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Calculate exact profit margins for each dish, identify your most profitable items, and optimize pricing strategies.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Calendar className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Seasonal Trends</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Discover seasonal patterns, plan menu changes, and prepare for peak periods with historical data analysis.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Target className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Goal Tracking</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Set sales targets, track progress, and receive alerts when you're ahead or behind your business goals.
-          </p>
-        </div>
-      </div>
-
-      {/* Dashboard Preview */}
-      <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Dashboard Overview</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Today's Sales</span>
-              <TrendingUp className="w-4 h-4 text-green-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900">$2,847</div>
-            <div className="text-sm text-green-600">+12% vs yesterday</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Top Seller</span>
-              <PieChart className="w-4 h-4 text-primary-500" />
-            </div>
-            <div className="text-lg font-semibold text-gray-900">Butter Chicken</div>
-            <div className="text-sm text-gray-600">23 orders today</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Avg Order Value</span>
-              <DollarSign className="w-4 h-4 text-blue-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900">$34.50</div>
-            <div className="text-sm text-blue-600">+8% this week</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="border-t pt-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Key Metrics You'll Track</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-3">
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Daily, weekly, and monthly sales reports</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Best and worst performing menu items</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Customer order patterns and preferences</span>
+    {/* Mock dashboard */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Example dashboard snapshot</h4>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-5 rounded-xl bg-white/03 border border-white/07">
+        {mockStats.map((s) => (
+          <div key={s.label} className="p-3 rounded-lg bg-white/04 border border-white/06">
+            <div className="text-slate-500 text-xs mb-2">{s.label}</div>
+            <div className="text-white font-bold text-lg mb-1">{s.value}</div>
+            <div className={`text-xs font-medium ${s.up ? 'text-green-400' : 'text-red-400'}`}>
+              {s.change}
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Peak ordering hours and days</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Inventory usage and waste tracking</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-primary-600 rounded-full mr-3"></div>
-              <span className="text-gray-700">Revenue growth and trend analysis</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Benefits */}
-      <div className="bg-gray-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Business Impact</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">25%</div>
-            <p className="text-gray-600 text-sm">Average increase in profit margins</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">40%</div>
-            <p className="text-gray-600 text-sm">Reduction in food waste</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">3x</div>
-            <p className="text-gray-600 text-sm">Faster decision making</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  );
-};
 
-export default SalesInsightsModal; 
+    {/* Metric cards */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">What you'll track</h4>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {metrics.map((m) => (
+          <div key={m.title} className="flex items-start gap-4 p-4 rounded-xl bg-white/03 border border-white/06">
+            <div className={`w-9 h-9 rounded-lg ${m.bg} flex items-center justify-center flex-shrink-0`}>
+              <m.icon className={`w-4 h-4 ${m.color}`} />
+            </div>
+            <div>
+              <div className="text-white text-sm font-semibold mb-0.5">{m.title}</div>
+              <div className="text-slate-500 text-xs leading-relaxed">{m.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Report cadence */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Report cadence</h4>
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { period: 'Daily',   desc: 'Real-time updates. Yesterday vs today at a glance.' },
+          { period: 'Weekly',  desc: 'Trend analysis. What changed and why.' },
+          { period: 'Monthly', desc: 'Full business review with AI-generated recommendations.' },
+        ].map((r) => (
+          <div key={r.period} className="p-4 rounded-xl bg-white/03 border border-white/06 text-center">
+            <div className="text-xl font-bold gradient-text-blue mb-2">{r.period}</div>
+            <div className="text-slate-500 text-xs">{r.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Impact */}
+    <div className="grid grid-cols-3 gap-4 p-5 rounded-xl bg-gradient-to-r from-green-500/08 to-accent-500/08 border border-white/06">
+      {[
+        { v: '25%', l: 'Average margin improvement' },
+        { v: '3×',  l: 'Faster business decisions' },
+        { v: '40%', l: 'Less time in spreadsheets' },
+      ].map((s) => (
+        <div key={s.l} className="text-center">
+          <div className="text-2xl font-bold text-green-400 mb-1">{s.v}</div>
+          <div className="text-slate-500 text-xs">{s.l}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export default SalesInsightsModal;
