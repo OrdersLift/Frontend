@@ -1,206 +1,138 @@
 import { motion } from 'framer-motion';
-import { Heart, ArrowUp } from 'lucide-react';
+import { ArrowUp, Zap } from 'lucide-react';
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const footerLinks = {
-    features: [
-      { name: 'AI Menu Chatbot', href: '/#features' },
-      { name: 'Sales Dashboard', href: '/#features' },
-      { name: 'Direct Delivery', href: '/#features' },
-      { name: 'Customer Engagement', href: '/#features' },
-      { name: 'Restaurant Analytics', href: '/#features' }
+  const links = {
+    services: [
+      { name: 'Custom Website',      href: '/#products' },
+      { name: 'AI Customer Chatbot', href: '/#features' },
+      { name: 'Internal RAG Bot',    href: '/#features' },
+      { name: 'Admin Panel',         href: '/#products' },
+      { name: 'Managed Hosting',     href: '/#products' },
+    ],
+    industries: [
+      { name: 'Restaurants',     href: '/#industries' },
+      { name: 'Dental Clinics',  href: '/#industries' },
+      { name: 'Gyms & Fitness',  href: '/#industries' },
+      { name: 'Salons & Spas',   href: '/#industries' },
+      { name: 'Auto Garages',    href: '/#industries' },
     ],
     company: [
-      { name: 'About OrdersLift', href: '/#about' },
-      { name: 'How It Works', href: '/#features' },
-      { name: 'Success Stories', href: '/#about' },
-      { name: 'Restaurant Partners', href: '/#about' },
-      { name: 'Contact Us', href: '/#contact' }
+      { name: 'How It Works',  href: '/#how-it-works' },
+      { name: 'Pricing',       href: '/#pricing' },
+      { name: 'Reviews',       href: '/#reviews' },
+      { name: 'FAQ',           href: '/#faq' },
+      { name: 'Contact Us',    href: '/#contact' },
     ],
-    support: [
-      { name: 'Privacy Policy', href: '/privacy' },
+    legal: [
+      { name: 'Privacy Policy',   href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy', href: '/cookies' }
-    ]
+      { name: 'Cookie Policy',    href: '/cookies' },
+    ],
   };
 
-  const socialLinks = [
-    { name: 'Twitter', href: '#', icon: '𝕏' },
-    { name: 'LinkedIn', href: '#', icon: 'in' },
-    { name: 'Instagram', href: '#', icon: '📷' },
-    { name: 'YouTube', href: '#', icon: '▶️' }
-  ];
-
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-dark-950 border-t border-white/06 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {/* Company Info */}
-            <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div className="mb-6">
-                  <a href="/" className="flex items-center">
-                    <img 
-                      src="/logo.png" 
-                      alt="OrdersLift Logo" 
-                      className="h-12 w-auto mr-3"
-                    />
-                    <span className="text-2xl font-display font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
-                      OrdersLift
-                    </span>
-                  </a>
-                </div>
-                <p className="text-gray-400 mb-6 leading-relaxed max-w-md">
-                  We build AI-powered websites that transform restaurants into revenue-generating machines. Boost direct sales, reduce delivery app dependency, and make data-driven decisions.
-                </p>
-                
-                {/* Social Links */}
-                {/* <div className="flex space-x-4">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-10 h-10 bg-gray-800 hover:bg-primary-600 rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200"
-                    >
-                      <span className="text-sm font-semibold">{social.icon}</span>
-                    </motion.a>
-                  ))}
-                </div> */}
-              </motion.div>
+        {/* Main content */}
+        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
+          {/* Brand — 2 cols */}
+          <div className="lg:col-span-2">
+            <a href="/" className="flex items-center gap-3 mb-5">
+              <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
+              <span className="text-xl font-display font-bold gradient-text">OrdersLift</span>
+            </a>
+            <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
+              The complete AI platform for local and SMB businesses — custom website, AI chatbot,
+              internal knowledge bot, and 2 years free maintenance. Serving businesses worldwide.
+            </p>
+            <div className="mt-6 flex items-center gap-2">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-xs text-slate-500">Actively onboarding new clients</span>
             </div>
+          </div>
 
-            {/* Features Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-lg font-semibold mb-6">AI Features</h3>
-              <ul className="space-y-3">
-                {footerLinks.features.map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.05 }}
-                    viewport={{ once: true }}
-                  >
-                    <a
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          {/* Services */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Services</h4>
+            <ul className="space-y-2.5">
+              {links.services.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Company Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-lg font-semibold mb-6">Company</h3>
-              <ul className="space-y-3">
-                {footerLinks.company.map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + index * 0.05 }}
-                    viewport={{ once: true }}
-                  >
-                    <a
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          {/* Industries */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Industries</h4>
+            <ul className="space-y-2.5">
+              {links.industries.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Support Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-lg font-semibold mb-6">Support</h3>
-              <ul className="space-y-3">
-                {footerLinks.support.map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 + index * 0.05 }}
-                    viewport={{ once: true }}
-                  >
-                    <a
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          {/* Company */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
+            <ul className="space-y-2.5">
+              {links.company.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal + CTA */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Legal</h4>
+            <ul className="space-y-2.5 mb-8">
+              {links.legal.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href="/#contact" className="btn-primary text-sm py-2.5 px-5">
+              <Zap className="w-4 h-4 mr-1.5" />
+              Get Started
+            </a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 py-8">
-          <div className="flex flex-col items-center space-y-4">
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-gray-400 text-sm flex items-center"
-            >
-              © 2022-2025 OrdersLift. All rights reserved. 
-            </motion.p>
-            
-            <motion.button
-              onClick={scrollToTop}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              viewport={{ once: true }}
-              className="w-12 h-12 bg-primary-600 hover:bg-primary-700 rounded-lg flex items-center justify-center transition-all duration-200"
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.button>
-          </div>
+        {/* Bottom bar */}
+        <div className="border-t border-white/06 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-slate-600 text-xs">
+            © {new Date().getFullYear()} OrdersLift. All rights reserved.
+          </p>
+          <motion.button
+            onClick={scrollToTop}
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-9 h-9 bg-white/08 hover:bg-primary-600 rounded-lg flex items-center justify-center
+                       transition-all duration-200"
+          >
+            <ArrowUp className="w-4 h-4" />
+          </motion.button>
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer; 
+export default Footer;

@@ -1,158 +1,180 @@
-import { MessageSquare, Bell, Users, Target, Zap, Heart } from 'lucide-react';
+import { Bell, MessageSquare, Heart, Target, Zap, CheckCircle } from 'lucide-react';
 
-const CustomerEngagementModal = () => {
-  return (
-    <div className="space-y-6">
-      {/* Hero Section */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-          <MessageSquare className="w-8 h-8 text-primary-600" />
-        </div>
-        <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
-          Smart Customer Engagement
-        </h3>
-        <p className="text-gray-600">
-          Build lasting relationships with your customers through personalized communication and automated engagement campaigns.
+const channels = [
+  {
+    icon: MessageSquare,
+    name: 'WhatsApp Business',
+    tag: 'Highest open rate',
+    items: ['Order confirmations', 'Appointment reminders', 'Special offers', 'Re-engagement nudges'],
+    color: 'text-green-400',
+    bg: 'bg-green-500/10',
+    border: 'border-green-500/20',
+  },
+  {
+    icon: Bell,
+    name: 'SMS',
+    tag: 'Instant delivery',
+    items: ['Flash sale alerts', 'Booking reminders', 'Loyalty reward alerts', 'Short-notice promos'],
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+  },
+  {
+    icon: Target,
+    name: 'Email',
+    tag: 'Rich content',
+    items: ['Monthly newsletters', 'Seasonal campaigns', 'Review requests', 'Customer surveys'],
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+  },
+];
+
+const campaigns = [
+  {
+    emoji: '🎂',
+    title: 'Birthday Reward',
+    desc: 'Auto-sends a personalised discount on the customer\'s birthday. Zero manual effort.',
+    tag: 'Automated',
+  },
+  {
+    emoji: '🔄',
+    title: 'Win-Back Campaign',
+    desc: 'Detects customers who haven\'t returned in 30+ days. Sends a compelling offer automatically.',
+    tag: 'AI-triggered',
+  },
+  {
+    emoji: '⭐',
+    title: 'Loyalty Milestone',
+    desc: 'When a customer hits 5 or 10 visits, they get an automatic reward — building long-term loyalty.',
+    tag: 'Automated',
+  },
+  {
+    emoji: '📢',
+    title: 'New Service Launch',
+    desc: 'When you add a new service or menu item, we notify your most relevant customer segments instantly.',
+    tag: 'One-click blast',
+  },
+];
+
+const CustomerEngagementModal = () => (
+  <div className="space-y-8 text-slate-300">
+    {/* Intro */}
+    <div className="flex items-start gap-5">
+      <div className="w-14 h-14 rounded-2xl bg-purple-500/15 border border-purple-500/20
+                      flex items-center justify-center flex-shrink-0">
+        <Bell className="w-7 h-7 text-purple-400" />
+      </div>
+      <div>
+        <p className="text-slate-300 leading-relaxed">
+          Most businesses lose customers through silence. We keep your customers engaged —
+          automatically — with personalised messages across WhatsApp, SMS, and email.
+          You set the rules once. The AI handles the rest.
         </p>
       </div>
+    </div>
 
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Bell className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Automated Notifications</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Send personalized offers, order updates, and special promotions via WhatsApp, SMS, and email automatically.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Target className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Smart Segmentation</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Group customers by preferences, order history, and behavior to deliver highly targeted marketing campaigns.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Heart className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">Loyalty Programs</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Reward repeat customers with points, discounts, and exclusive offers to increase retention and lifetime value.
-          </p>
-        </div>
-
-        <div className="p-6 bg-gray-50 rounded-xl">
-          <div className="flex items-center mb-3">
-            <Zap className="w-5 h-5 text-primary-600 mr-3" />
-            <h4 className="font-semibold text-gray-900">AI-Powered Insights</h4>
-          </div>
-          <p className="text-gray-600 text-sm">
-            Analyze customer behavior to predict preferences and send timely, relevant offers that drive conversions.
-          </p>
-        </div>
-      </div>
-
-      {/* Engagement Channels */}
-      <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Engagement Channels</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center mb-3">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                <MessageSquare className="w-5 h-5 text-green-600" />
+    {/* Channels */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Engagement channels</h4>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {channels.map((c) => (
+          <div key={c.name} className={`p-4 rounded-xl bg-white/03 border ${c.border}`}>
+            <div className="flex items-center gap-2 mb-3">
+              <div className={`w-8 h-8 rounded-lg ${c.bg} flex items-center justify-center`}>
+                <c.icon className={`w-4 h-4 ${c.color}`} />
               </div>
               <div>
-                <h5 className="font-semibold text-gray-900">WhatsApp</h5>
-                <p className="text-sm text-gray-600">High engagement rate</p>
+                <div className="text-white text-sm font-semibold">{c.name}</div>
+                <div className={`text-xs ${c.color}`}>{c.tag}</div>
               </div>
             </div>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Order confirmations</li>
-              <li>• Delivery updates</li>
-              <li>• Special offers</li>
+            <ul className="space-y-1">
+              {c.items.map((i) => (
+                <li key={i} className="flex items-center gap-2 text-xs text-slate-400">
+                  <span className={`w-1 h-1 rounded-full ${c.color} bg-current`} />
+                  {i}
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center mb-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                <Bell className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h5 className="font-semibold text-gray-900">SMS</h5>
-                <p className="text-sm text-gray-600">Instant delivery</p>
-              </div>
-            </div>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Quick notifications</li>
-              <li>• Promotional alerts</li>
-              <li>• Reminder messages</li>
-            </ul>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex items-center mb-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                <Users className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <h5 className="font-semibold text-gray-900">Email</h5>
-                <p className="text-sm text-gray-600">Detailed content</p>
-              </div>
-            </div>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Newsletter campaigns</li>
-              <li>• Detailed promotions</li>
-              <li>• Customer surveys</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Campaign Examples */}
-      <div className="border-t pt-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Campaign Examples</h4>
-        <div className="space-y-4">
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h5 className="font-medium text-gray-900 mb-2">🎉 Happy Hour Alert</h5>
-            <p className="text-gray-600 text-sm">Automatically notify customers about daily happy hour specials 30 minutes before they start.</p>
-          </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h5 className="font-medium text-gray-900 mb-2">🎂 Birthday Specials</h5>
-            <p className="text-gray-600 text-sm">Send personalized birthday offers to customers with a special discount on their favorite dishes.</p>
-          </div>
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h5 className="font-medium text-gray-900 mb-2">🔄 Re-engagement Campaign</h5>
-            <p className="text-gray-600 text-sm">Reach out to customers who haven't ordered in 30+ days with a compelling comeback offer.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Benefits */}
-      <div className="bg-gray-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4">Business Impact</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">35%</div>
-            <p className="text-gray-600 text-sm">Increase in repeat orders</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">2.5x</div>
-            <p className="text-gray-600 text-sm">Higher customer lifetime value</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 mb-1">60%</div>
-            <p className="text-gray-600 text-sm">Reduction in customer churn</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  );
-};
 
-export default CustomerEngagementModal; 
+    {/* Campaign examples */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Automated campaign examples</h4>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {campaigns.map((c) => (
+          <div key={c.title} className="p-4 rounded-xl bg-white/03 border border-white/06">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{c.emoji}</span>
+                <div className="text-white text-sm font-semibold">{c.title}</div>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-primary-500/15 text-primary-400
+                               text-xs font-medium flex-shrink-0">
+                {c.tag}
+              </span>
+            </div>
+            <div className="text-slate-500 text-xs leading-relaxed">{c.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Smart segmentation */}
+    <div>
+      <h4 className="text-white font-semibold mb-4">Smart customer segmentation</h4>
+      <div className="space-y-2">
+        {[
+          'High-value regulars (top 20% by spend)',
+          'At-risk customers (not visited in 21+ days)',
+          'New customers (first 3 visits)',
+          'Service-specific segments (e.g. "always books haircuts")',
+          'Birthday month customers',
+        ].map((s) => (
+          <div key={s} className="flex items-center gap-3 p-3 rounded-lg bg-white/03 border border-white/06">
+            <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
+            <span className="text-slate-300 text-sm">{s}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-slate-500 text-xs mt-3">
+        You choose the segment → we build the campaign → AI sends at the optimal time.
+      </p>
+    </div>
+
+    {/* Impact stats */}
+    <div className="grid grid-cols-3 gap-4 p-5 rounded-xl bg-gradient-to-r from-purple-500/08 to-glow-500/08 border border-white/06">
+      {[
+        { v: '35%', l: 'More repeat visits' },
+        { v: '2.5×', l: 'Customer lifetime value' },
+        { v: '60%', l: 'Reduction in churn' },
+      ].map((s) => (
+        <div key={s.l} className="text-center">
+          <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-glow-400
+                          bg-clip-text text-transparent mb-1">{s.v}</div>
+          <div className="text-slate-500 text-xs">{s.l}</div>
+        </div>
+      ))}
+    </div>
+
+    {/* Works for */}
+    <div>
+      <h4 className="text-white font-semibold mb-3">Works for any business</h4>
+      <div className="flex flex-wrap gap-2">
+        {['Restaurants', 'Salons', 'Gyms', 'Dental clinics', 'Hotels', 'Retail shops', 'Auto garages'].map((t) => (
+          <span key={t} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                                    bg-white/05 border border-white/08 text-xs text-slate-300">
+            <Zap className="w-3 h-3 text-purple-400" />
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+export default CustomerEngagementModal;
