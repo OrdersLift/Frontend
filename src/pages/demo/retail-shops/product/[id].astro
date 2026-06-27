@@ -1,0 +1,27 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Header from '../../../../components/Header';
+import BrandNav from '../../../../components/demos/retail-shops/BrandNav';
+import BrandFooter from '../../../../components/demos/retail-shops/BrandFooter';
+import ProductPage from '../../../../components/demos/retail-shops/ProductPage';
+import ChatWidget from '../../../../components/demos/retail-shops/ChatWidget';
+import { products } from '../../../../components/demos/retail-shops/data';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { id: p.id } }));
+}
+
+const id = Astro.params.id ?? products[0].id;
+const product = products.find((p) => p.id === id);
+const title = product ? `${product.name} — Fernweh` : 'Product — Fernweh';
+---
+
+<Layout title={title}>
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <ProductPage id={id} client:load />
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/law-firms/BrandNav';
+import Booking from '../../../components/demos/law-firms/Booking';
+import Footer from '../../../components/demos/law-firms/Footer';
+import ChatBot from '../../../components/demos/law-firms/ChatBot';
+---
+
+<Layout title="Book a Consultation — Ashford & Vane LLP">
+  <div class="min-h-screen bg-[#0f1a2e]">
+    <Header client:load />
+    <BrandNav client:load />
+    <main>
+      <Booking client:load />
+    </main>
+    <Footer />
+    <ChatBot client:load />
+  </div>
+</Layout>

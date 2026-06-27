@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/dental-clinics/BrandNav';
+import BrandFooter from '../../../components/demos/dental-clinics/BrandFooter';
+import HomeSections from '../../../components/demos/dental-clinics/HomeSections';
+import ChatWidget from '../../../components/demos/dental-clinics/ChatWidget';
+---
+
+<Layout title="Lumina Dental — Calm, modern dentistry">
+  <Header client:load />
+  <BrandNav client:load />
+  <div class="min-h-screen bg-slate-50">
+    <main>
+      <HomeSections client:load />
+    </main>
+    <BrandFooter />
+  </div>
+  <ChatWidget client:load />
+</Layout>

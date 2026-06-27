@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/restaurants/BrandNav';
+import HomeView from '../../../components/demos/restaurants/HomeView';
+import Footer from '../../../components/demos/restaurants/Footer';
+import ChatWidget from '../../../components/demos/restaurants/ChatWidget';
+---
+
+<Layout title="Saffron & Ember — Wood-fire Indo-Mediterranean in Lisbon">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <HomeView client:load />
+  </main>
+  <Footer />
+  <ChatWidget client:load />
+</Layout>

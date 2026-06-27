@@ -1,0 +1,27 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/clinics-physio/BrandNav';
+import Footer from '../../../components/demos/clinics-physio/Footer';
+import BookingFlow from '../../../components/demos/clinics-physio/BookingFlow';
+import ChatWidget from '../../../components/demos/clinics-physio/ChatWidget';
+---
+
+<Layout title="Book an Appointment — Verdant Physio">
+  <Header client:load />
+  <BrandNav client:load />
+  <div class="min-h-screen bg-emerald-50/40 font-sans">
+    <section class="pt-32 pb-12 bg-gradient-to-b from-emerald-700 to-teal-600">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-white/15 text-emerald-50 text-xs font-medium mb-4">Book online</span>
+        <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white mb-3">Let’s get you booked in</h1>
+        <p class="text-emerald-50/90 max-w-2xl mx-auto">Pick a treatment, a practitioner and a time — it takes under a minute.</p>
+      </div>
+    </section>
+    <main class="px-4 sm:px-6 lg:px-8 py-14">
+      <BookingFlow client:load />
+    </main>
+    <Footer />
+  </div>
+  <ChatWidget client:load />
+</Layout>

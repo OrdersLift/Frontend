@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/dental-clinics/BrandNav';
+import BrandFooter from '../../../components/demos/dental-clinics/BrandFooter';
+import DentistGrid from '../../../components/demos/dental-clinics/DentistGrid';
+import ChatWidget from '../../../components/demos/dental-clinics/ChatWidget';
+---
+
+<Layout title="Meet Our Dentists — Lumina Dental">
+  <Header client:load />
+  <BrandNav client:load />
+  <div class="min-h-screen bg-slate-50">
+    <main>
+      <section class="bg-gradient-to-b from-slate-900 to-teal-800 pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p class="text-teal-300 font-semibold">The team behind your smile</p>
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white mt-2">Meet our dentists</h1>
+          <p class="text-teal-50/80 mt-3 max-w-xl mx-auto">Gentle, experienced and genuinely kind. Choose the dentist who's right for you.</p>
+        </div>
+      </section>
+
+      <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <DentistGrid client:visible />
+      </section>
+    </main>
+    <BrandFooter />
+  </div>
+  <ChatWidget client:load />
+</Layout>

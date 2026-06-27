@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/clinics-physio/BrandNav';
+import Footer from '../../../components/demos/clinics-physio/Footer';
+import HomeContent from '../../../components/demos/clinics-physio/HomeContent';
+import ChatWidget from '../../../components/demos/clinics-physio/ChatWidget';
+---
+
+<Layout title="Verdant Physio & Health Clinic — Move well. Live well.">
+  <Header client:load />
+  <BrandNav client:load />
+  <div class="min-h-screen bg-white font-sans">
+    <main>
+      <HomeContent client:load />
+    </main>
+    <Footer />
+  </div>
+  <ChatWidget client:load />
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/salons-spas/BrandNav';
+import BrandFooter from '../../../components/demos/salons-spas/BrandFooter';
+import ContactSection from '../../../components/demos/salons-spas/ContactSection';
+import ChatWidget from '../../../components/demos/salons-spas/ChatWidget';
+---
+
+<Layout title="Contact — Lumière Salon & Spa">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7f3] min-h-screen">
+    <section class="pt-32 pb-12 bg-gradient-to-br from-stone-900 to-rose-900/80 text-white text-center">
+      <div class="max-w-2xl mx-auto px-6">
+        <p class="text-xs uppercase tracking-[0.3em] text-rose-200 mb-3">Get in touch</p>
+        <h1 class="font-serif text-5xl sm:text-6xl mb-4">Contact</h1>
+        <p class="text-stone-200">Questions, special occasions, or a warm hello — we’re all ears.</p>
+      </div>
+    </section>
+    <section class="py-16">
+      <ContactSection client:load />
+    </section>
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

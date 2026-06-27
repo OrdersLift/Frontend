@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/auto-garages/BrandNav';
+import Footer from '../../../components/demos/auto-garages/Footer';
+import HomeSections from '../../../components/demos/auto-garages/HomeSections';
+import ChatBot from '../../../components/demos/auto-garages/ChatBot';
+---
+
+<Layout title="Ironclad Auto Works — Honest Car Repairs & MOTs in Manchester">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <HomeSections client:load />
+  </main>
+  <Footer />
+  <ChatBot client:load />
+</Layout>

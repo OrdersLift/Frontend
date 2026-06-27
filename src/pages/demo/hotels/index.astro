@@ -1,0 +1,34 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/hotels/BrandNav';
+import BrandFooter from '../../../components/demos/hotels/BrandFooter';
+import Concierge from '../../../components/demos/hotels/Concierge';
+import Hero from '../../../components/demos/hotels/Hero';
+import { Highlights, FeaturedRooms, Testimonials } from '../../../components/demos/hotels/HomeSections';
+---
+
+<Layout title="Maple & Mist · Boutique B&B in Aldergrove Valley">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7ef]">
+    <Hero client:load />
+    <Highlights client:visible />
+    <FeaturedRooms client:visible />
+    <Testimonials client:visible />
+
+    <!-- CTA band -->
+    <section class="bg-gradient-to-r from-amber-400 to-orange-500 py-16">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <h2 class="font-serif text-3xl sm:text-4xl text-[#1c2b24]">Your hearth is waiting</h2>
+        <p class="mt-3 text-[#1c2b24]/80">Book direct for 10% off, free breakfast, and the latest checkout in the valley.</p>
+        <a href="/demo/hotels/book"
+          class="inline-block mt-6 px-8 py-3 rounded-full bg-[#1c2b24] text-amber-100 font-semibold hover:bg-[#16221c] transition">
+          Check availability
+        </a>
+      </div>
+    </section>
+  </main>
+  <BrandFooter />
+  <Concierge client:load />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/auto-garages/BrandNav';
+import Footer from '../../../components/demos/auto-garages/Footer';
+import JobTracker from '../../../components/demos/auto-garages/JobTracker';
+import ChatBot from '../../../components/demos/auto-garages/ChatBot';
+---
+
+<Layout title="Track My Job — Ironclad Auto Works">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <JobTracker client:load />
+  </main>
+  <Footer />
+  <ChatBot client:load />
+</Layout>
