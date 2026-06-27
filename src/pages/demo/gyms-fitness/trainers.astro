@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/gyms-fitness/BrandNav';
+import BrandFooter from '../../../components/demos/gyms-fitness/BrandFooter';
+import TrainersGrid from '../../../components/demos/gyms-fitness/TrainersGrid';
+import ChatWidget from '../../../components/demos/gyms-fitness/ChatWidget';
+---
+
+<Layout title="Trainers | PULSE FORGE">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="min-h-screen bg-black">
+    <section class="pt-32 pb-20 relative overflow-hidden">
+      <div class="pointer-events-none absolute -top-10 left-1/4 h-80 w-80 rounded-full bg-lime-500/15 blur-[120px]"></div>
+      <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+          <span class="inline-block rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-bold text-lime-300">Meet the crew</span>
+          <h1 class="mt-5 font-display text-4xl sm:text-5xl font-extrabold text-white">Coaches who push you further</h1>
+          <p class="mt-3 text-zinc-400">Certified, relentless, and genuinely invested in your progress.</p>
+        </div>
+        <div class="mt-12">
+          <TrainersGrid client:visible />
+        </div>
+      </div>
+    </section>
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

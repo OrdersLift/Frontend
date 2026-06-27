@@ -1,0 +1,28 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Header from '../../../../components/Header';
+import BrandNav from '../../../../components/demos/real-estate/BrandNav';
+import PropertyDetail from '../../../../components/demos/real-estate/PropertyDetail';
+import Footer from '../../../../components/demos/real-estate/Footer';
+import Chatbot from '../../../../components/demos/real-estate/Chatbot';
+import { listings } from '../../../../components/demos/real-estate/data';
+
+export function getStaticPaths() {
+  return listings.map((l) => ({ params: { id: l.id }, props: { id: l.id } }));
+}
+
+const { id } = Astro.props;
+const listing = listings.find((l) => l.id === id);
+---
+
+<Layout title={`${listing ? listing.title : 'Property'} — Aurelia Estates`}>
+  <div class="min-h-screen bg-white font-sans">
+    <Header client:load />
+    <BrandNav client:load />
+    <main class="pt-28">
+      <PropertyDetail client:load id={id} />
+    </main>
+    <Footer />
+    <Chatbot client:load />
+  </div>
+</Layout>

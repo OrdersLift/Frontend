@@ -1,10 +1,25 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X, Zap, ChevronDown } from 'lucide-react';
+
+const demoItems = [
+  { name: 'Restaurants',     href: '/demo/restaurants' },
+  { name: 'Dental Clinics',  href: '/demo/dental-clinics' },
+  { name: 'Gyms & Fitness',  href: '/demo/gyms-fitness' },
+  { name: 'Auto Garages',    href: '/demo/auto-garages' },
+  { name: 'Salons & Spas',   href: '/demo/salons-spas' },
+  { name: 'Law Firms',       href: '/demo/law-firms' },
+  { name: 'Hotels & B&Bs',   href: '/demo/hotels' },
+  { name: 'Retail Shops',    href: '/demo/retail-shops' },
+  { name: 'Real Estate',     href: '/demo/real-estate' },
+  { name: 'Clinics & Physio', href: '/demo/clinics-physio' },
+];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -18,7 +33,6 @@ const Header = () => {
     { name: 'Services',   href: '/#products' },
     { name: 'Features',   href: '/#features' },
     { name: 'Pricing',    href: '/#pricing' },
-    { name: 'FAQ',        href: '/#faq' },
   ];
 
   return (
@@ -51,6 +65,60 @@ const Header = () => {
                                  group-hover:w-4" />
               </a>
             ))}
+
+            {/* Demo dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setDemoOpen(true)}
+              onMouseLeave={() => setDemoOpen(false)}
+            >
+              <a
+                href="/demo"
+                className="flex items-center gap-1 text-slate-400 hover:text-white px-4 py-2 rounded-lg
+                           text-sm font-medium transition-all duration-200 hover:bg-white/5"
+              >
+                Demo
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${demoOpen ? 'rotate-180' : ''}`}
+                />
+              </a>
+
+              <AnimatePresence>
+                {demoOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.18 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56"
+                  >
+                    <div className="glass rounded-xl border border-white/10 shadow-xl shadow-black/30 p-2">
+                      {demoItems.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="block text-slate-300 hover:text-white hover:bg-white/5
+                                     text-sm font-medium py-2 px-3 rounded-lg transition-all duration-200"
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <a
+              href="/#faq"
+              className="text-slate-400 hover:text-white px-4 py-2 rounded-lg text-sm font-medium
+                         transition-all duration-200 hover:bg-white/5 relative group"
+            >
+              FAQ
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
+                               bg-primary-400 rounded-full transition-all duration-300
+                               group-hover:w-4" />
+            </a>
           </nav>
 
           {/* CTA */}
@@ -96,6 +164,51 @@ const Header = () => {
                   {item.name}
                 </a>
               ))}
+
+              {/* Mobile Demo accordion */}
+              <button
+                onClick={() => setMobileDemoOpen((v) => !v)}
+                className="w-full flex items-center justify-between text-slate-300 hover:text-white
+                           hover:bg-white/5 font-medium py-3 px-4 rounded-lg transition-all duration-200"
+              >
+                Demo
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${mobileDemoOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+              <AnimatePresence>
+                {mobileDemoOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden pl-3"
+                  >
+                    {demoItems.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="block text-slate-400 hover:text-white hover:bg-white/5
+                                   text-sm font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <a
+                href="/#faq"
+                onClick={() => setIsOpen(false)}
+                className="block text-slate-300 hover:text-white hover:bg-white/5
+                           font-medium py-3 px-4 rounded-lg transition-all duration-200"
+              >
+                FAQ
+              </a>
+
               <div className="pt-4">
                 <a href="/#contact" className="btn-primary w-full justify-center text-sm">
                   <Zap className="w-4 h-4 mr-1.5" />

@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/real-estate/BrandNav';
+import ListingsExplorer from '../../../components/demos/real-estate/ListingsExplorer';
+import Footer from '../../../components/demos/real-estate/Footer';
+import Chatbot from '../../../components/demos/real-estate/Chatbot';
+---
+
+<Layout title="Listings — Aurelia Estates">
+  <div class="min-h-screen bg-emerald-50/30 font-sans">
+    <Header client:load />
+    <BrandNav client:load />
+    <main>
+      <section class="bg-[#0b1f17] pt-32 pb-12 relative overflow-hidden">
+        <div class="absolute -top-24 right-0 w-96 h-96 rounded-full bg-emerald-600/20 blur-3xl"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Available now</p>
+          <h1 class="mt-2 font-serif text-4xl sm:text-5xl text-emerald-50">Browse our listings</h1>
+          <p class="mt-3 text-emerald-100/70 max-w-xl">Filter by type, price and bedrooms to find your next home.</p>
+        </div>
+      </section>
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <ListingsExplorer client:load />
+      </section>
+    </main>
+    <Footer />
+    <Chatbot client:load />
+  </div>
+</Layout>

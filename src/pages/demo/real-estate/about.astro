@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/real-estate/BrandNav';
+import About from '../../../components/demos/real-estate/About';
+import Footer from '../../../components/demos/real-estate/Footer';
+import Chatbot from '../../../components/demos/real-estate/Chatbot';
+---
+
+<Layout title="About — Aurelia Estates">
+  <div class="min-h-screen bg-white font-sans">
+    <Header client:load />
+    <BrandNav client:load />
+    <main>
+      <About client:load />
+    </main>
+    <Footer />
+    <Chatbot client:load />
+  </div>
+</Layout>

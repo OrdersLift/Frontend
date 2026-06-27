@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/real-estate/BrandNav';
+import Home from '../../../components/demos/real-estate/Home';
+import Footer from '../../../components/demos/real-estate/Footer';
+import Chatbot from '../../../components/demos/real-estate/Chatbot';
+---
+
+<Layout title="Aurelia Estates — Prime London Property">
+  <div class="min-h-screen bg-white font-sans">
+    <Header client:load />
+    <BrandNav client:load />
+    <main>
+      <Home client:load />
+    </main>
+    <Footer />
+    <Chatbot client:load />
+  </div>
+</Layout>

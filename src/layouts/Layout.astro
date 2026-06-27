@@ -27,6 +27,11 @@ const {
 
 const siteName = "OrdersLift";
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+
+// The OrdersLift assistant appears on marketing pages only — demo pages under
+// /demo/* render their own brand-specific chat widgets.
+import AIChat from '../components/AIChat';
+const showAssistant = !Astro.url.pathname.startsWith('/demo');
 ---
 
 <!DOCTYPE html>
@@ -172,6 +177,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
   </head>
   <body class="font-sans antialiased bg-dark-900 text-slate-100">
     <slot />
+    {showAssistant && <AIChat client:load />}
   </body>
   
   <!-- Global Styles -->

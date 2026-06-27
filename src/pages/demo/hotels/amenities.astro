@@ -1,0 +1,58 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/hotels/BrandNav';
+import BrandFooter from '../../../components/demos/hotels/BrandFooter';
+import Concierge from '../../../components/demos/hotels/Concierge';
+import AmenityGrid from '../../../components/demos/hotels/AmenityGrid';
+import { hours } from '../../../components/demos/hotels/data';
+---
+
+<Layout title="Amenities · Maple & Mist">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7ef] min-h-screen">
+    <section class="bg-[#1c2b24] pt-32 pb-14">
+      <div class="max-w-7xl mx-auto px-6">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">Included with every stay</span>
+        <h1 class="mt-2 font-serif text-4xl sm:text-5xl text-amber-50">Amenities &amp; comforts</h1>
+        <p class="mt-3 max-w-xl text-emerald-100/80">
+          The small touches that turn a night away into a proper retreat — most of them on the house.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 py-12">
+      <AmenityGrid client:visible />
+
+      <!-- A day at Maple & Mist -->
+      <div class="mt-16 rounded-3xl bg-white border border-stone-200 p-8 shadow-sm">
+        <h2 class="font-serif text-2xl text-stone-800">A day, unhurried</h2>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 text-sm">
+          <div>
+            <p class="text-amber-600 font-semibold">{hours.breakfast.split('–')[0].trim()}</p>
+            <p class="text-stone-700 font-medium">Breakfast bell</p>
+            <p class="text-stone-500">Granola, fresh eggs, and a pot of valley coffee.</p>
+          </div>
+          <div>
+            <p class="text-amber-600 font-semibold">Midday</p>
+            <p class="text-stone-700 font-medium">Hit the trails</p>
+            <p class="text-stone-500">Grab a packed lunch and borrow an e-bike.</p>
+          </div>
+          <div>
+            <p class="text-amber-600 font-semibold">4:00 PM</p>
+            <p class="text-stone-700 font-medium">Sauna &amp; soak</p>
+            <p class="text-stone-500">Fire up the cedar barrel sauna by the creek.</p>
+          </div>
+          <div>
+            <p class="text-amber-600 font-semibold">6:00 PM</p>
+            <p class="text-stone-700 font-medium">Hearth social</p>
+            <p class="text-stone-500">Local wine, cheese, and stories by the fire.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <BrandFooter />
+  <Concierge client:load />
+</Layout>

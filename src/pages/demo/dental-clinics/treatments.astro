@@ -1,0 +1,42 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/dental-clinics/BrandNav';
+import BrandFooter from '../../../components/demos/dental-clinics/BrandFooter';
+import TreatmentsList from '../../../components/demos/dental-clinics/TreatmentsList';
+import CostEstimator from '../../../components/demos/dental-clinics/CostEstimator';
+import ChatWidget from '../../../components/demos/dental-clinics/ChatWidget';
+---
+
+<Layout title="Treatments & Pricing — Lumina Dental">
+  <Header client:load />
+  <BrandNav client:load />
+  <div class="min-h-screen bg-slate-50">
+    <main>
+      <section class="bg-gradient-to-b from-slate-900 to-teal-800 pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p class="text-teal-300 font-semibold">Treatments & transparent pricing</p>
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white mt-2">Care for every smile</h1>
+          <p class="text-teal-50/80 mt-3 max-w-xl mx-auto">Clear, upfront prices. We confirm exactly what your insurance covers before any treatment.</p>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <TreatmentsList client:load />
+      </section>
+
+      <section class="bg-white py-16 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-xl mx-auto mb-10">
+            <p class="text-teal-600 font-semibold">No surprises</p>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-slate-800 mt-2">Estimate your cost</h2>
+            <p class="text-slate-500 mt-3">Pick what you need and we'll show a ballpark — including a typical insurance estimate.</p>
+          </div>
+          <CostEstimator client:visible />
+        </div>
+      </section>
+    </main>
+    <BrandFooter />
+  </div>
+  <ChatWidget client:load />
+</Layout>

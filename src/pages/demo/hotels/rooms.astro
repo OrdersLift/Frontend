@@ -1,0 +1,31 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/hotels/BrandNav';
+import BrandFooter from '../../../components/demos/hotels/BrandFooter';
+import Concierge from '../../../components/demos/hotels/Concierge';
+import RoomsExplorer from '../../../components/demos/hotels/RoomsExplorer';
+---
+
+<Layout title="Rooms & Suites · Maple & Mist">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7ef] min-h-screen">
+    <!-- page header band (dark so OrdersLift bar stays legible) -->
+    <section class="bg-[#1c2b24] pt-32 pb-14">
+      <div class="max-w-7xl mx-auto px-6">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">Six rooms, no two alike</span>
+        <h1 class="mt-2 font-serif text-4xl sm:text-5xl text-amber-50">Rooms &amp; Suites</h1>
+        <p class="mt-3 max-w-xl text-emerald-100/80">
+          From a sun-drenched loft to a standalone lakeside cabin — filter by type, view, and budget to find your fit.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 py-12">
+      <RoomsExplorer client:load />
+    </section>
+  </main>
+  <BrandFooter />
+  <Concierge client:load />
+</Layout>

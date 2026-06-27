@@ -1,0 +1,39 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/hotels/BrandNav';
+import BrandFooter from '../../../components/demos/hotels/BrandFooter';
+import Concierge from '../../../components/demos/hotels/Concierge';
+import GuideSections from '../../../components/demos/hotels/GuideSections';
+---
+
+<Layout title="Local Guide · Maple & Mist">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7ef] min-h-screen">
+    <section class="bg-[#1c2b24] pt-32 pb-14">
+      <div class="max-w-7xl mx-auto px-6">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500">Notes from your hosts</span>
+        <h1 class="mt-2 font-serif text-4xl sm:text-5xl text-amber-50">The Valley, our way</h1>
+        <p class="mt-3 max-w-xl text-emerald-100/80">
+          Hand-picked trails, tables, and curiosities we send every guest to. Ask Misty, our concierge, for more.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-12">
+      <GuideSections client:visible />
+
+      <div class="mt-14 rounded-3xl bg-emerald-900 text-amber-50 p-8 text-center">
+        <h2 class="font-serif text-2xl">Want a custom itinerary?</h2>
+        <p class="mt-2 text-emerald-100/80 text-sm">Tell our AI concierge what you're into and we'll plan your days. Or just book your stay and sort it later.</p>
+        <a href="/demo/hotels/book"
+          class="inline-block mt-5 px-7 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-[#1c2b24] font-semibold hover:from-amber-300 hover:to-orange-400 transition">
+          Book your stay
+        </a>
+      </div>
+    </section>
+  </main>
+  <BrandFooter />
+  <Concierge client:load />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/restaurants/BrandNav';
+import OrderView from '../../../components/demos/restaurants/OrderView';
+import Footer from '../../../components/demos/restaurants/Footer';
+import ChatWidget from '../../../components/demos/restaurants/ChatWidget';
+---
+
+<Layout title="Order Online — Saffron & Ember">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <OrderView client:load />
+  </main>
+  <Footer />
+  <ChatWidget client:load />
+</Layout>

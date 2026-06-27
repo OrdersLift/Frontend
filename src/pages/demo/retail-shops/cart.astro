@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/retail-shops/BrandNav';
+import BrandFooter from '../../../components/demos/retail-shops/BrandFooter';
+import CartPage from '../../../components/demos/retail-shops/CartPage';
+import ChatWidget from '../../../components/demos/retail-shops/ChatWidget';
+---
+
+<Layout title="Cart & Checkout — Fernweh">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <CartPage client:load />
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

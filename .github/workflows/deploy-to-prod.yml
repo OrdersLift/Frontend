@@ -1,0 +1,32 @@
+name: deploy to prod
+
+# Manually triggered from the GitHub Actions tab ("Run workflow").
+# Promotes everything currently on `main` into the `production` branch.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-to-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production branch
+        uses: actions/checkout@v4
+        with:
+          ref: production
+          fetch-depth: 0
+
+      - name: Merge main into production and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          # Bring all changes from main into production (fast-forward when possible).
+          git merge --no-edit origin/main
+          git push origin production

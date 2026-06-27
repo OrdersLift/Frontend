@@ -1,0 +1,82 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header';
+
+const demos = [
+  { slug: 'restaurants',     brand: 'Saffron & Ember',              tagline: 'Indo-Mediterranean wood-fire dining', emoji: '🔥', industry: 'Restaurant',        accent: 'from-amber-500/20 to-rose-500/20',    ring: 'hover:border-amber-400/50' },
+  { slug: 'dental-clinics',  brand: 'Lumina Dental',                tagline: 'Modern, calming dental care',        emoji: '🦷', industry: 'Dental Clinic',     accent: 'from-teal-500/20 to-emerald-500/20',  ring: 'hover:border-teal-400/50' },
+  { slug: 'gyms-fitness',    brand: 'PULSE FORGE',                  tagline: 'High-energy strength & fitness',     emoji: '💪', industry: 'Gym & Fitness',     accent: 'from-lime-500/20 to-fuchsia-500/20',  ring: 'hover:border-lime-400/50' },
+  { slug: 'auto-garages',    brand: 'Ironclad Auto Works',          tagline: 'Trusted repairs & live tracking',    emoji: '🔧', industry: 'Auto Garage',       accent: 'from-amber-500/20 to-orange-600/20',  ring: 'hover:border-orange-400/50' },
+  { slug: 'salons-spas',     brand: 'Lumière Salon & Spa',          tagline: 'Luxe hair, nails & spa rituals',     emoji: '💇', industry: 'Salon & Spa',       accent: 'from-rose-400/20 to-amber-300/20',    ring: 'hover:border-rose-400/50' },
+  { slug: 'law-firms',       brand: 'Ashford & Vane LLP',           tagline: 'Counsel of consequence since 1987',  emoji: '⚖️', industry: 'Law Firm',          accent: 'from-blue-900/30 to-amber-500/20',    ring: 'hover:border-amber-400/50' },
+  { slug: 'hotels',          brand: 'Maple & Mist',                 tagline: 'A charming boutique mountain inn',   emoji: '🏨', industry: 'Hotel & B&B',       accent: 'from-emerald-700/30 to-amber-500/20', ring: 'hover:border-emerald-400/50' },
+  { slug: 'retail-shops',    brand: 'Fernweh — Botanical Goods',    tagline: 'Plants & pet-safe botanical decor',  emoji: '🪴', industry: 'Retail Store',      accent: 'from-emerald-600/25 to-lime-400/20',  ring: 'hover:border-emerald-400/50' },
+  { slug: 'real-estate',     brand: 'Aurelia Estates',              tagline: 'Premium homes, instant valuations',  emoji: '🏡', industry: 'Real Estate',      accent: 'from-emerald-700/25 to-teal-500/20',  ring: 'hover:border-teal-400/50' },
+  { slug: 'clinics-physio',  brand: 'Verdant Physio & Health',      tagline: 'Move well. Live well.',              emoji: '🌿', industry: 'Physio Clinic',     accent: 'from-emerald-500/25 to-teal-400/20',  ring: 'hover:border-emerald-400/50' },
+];
+---
+
+<Layout
+  title="Live Demos — See What OrdersLift Builds"
+  description="Explore live, interactive demo websites OrdersLift builds for every industry — restaurants, dental clinics, gyms, salons, law firms, hotels, retail, real estate and more. Each is a full multi-page site with AI chatbot and online services."
+  canonical="https://orderslift.com/demo/"
+>
+  <Header client:load />
+
+  <main class="relative min-h-screen bg-dark-900 overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-glow-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <section class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-24">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-primary-500/30 text-primary-300 text-sm font-medium mb-6">
+          ✨ Live Interactive Demos
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-5">
+          See What We Build —{' '}
+          <span class="gradient-text">For Every Business</span>
+        </h1>
+        <p class="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          Each demo below is a complete, multi-page website with its own brand, online services,
+          and a built-in AI chatbot — exactly the kind of platform OrdersLift builds for your business.
+          Click any one to explore it live.
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {demos.map((d) => (
+          <a
+            href={`/demo/${d.slug}/`}
+            class={`group relative rounded-2xl border border-white/08 bg-gradient-to-br ${d.accent} p-7 flex flex-col card-hover transition-all duration-300 ${d.ring}`}
+          >
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-white/08 border border-white/10 flex items-center justify-center text-3xl">
+                {d.emoji}
+              </div>
+              <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/08 text-slate-300 border border-white/10">
+                {d.industry}
+              </span>
+            </div>
+            <h2 class="text-xl font-bold text-white mb-1.5">{d.brand}</h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">{d.tagline}</p>
+            <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-300 group-hover:text-primary-200 transition-colors">
+              Explore demo
+              <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-16">
+        <p class="text-slate-400 text-sm mb-5">Want a demo tailored to your own business?</p>
+        <a href="/#contact" class="btn-primary text-base px-8 py-4 glow-primary">
+          Start Your Project →
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>

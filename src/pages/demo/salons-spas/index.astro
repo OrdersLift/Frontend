@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/salons-spas/BrandNav';
+import BrandFooter from '../../../components/demos/salons-spas/BrandFooter';
+import HomeSections from '../../../components/demos/salons-spas/HomeSections';
+import ChatWidget from '../../../components/demos/salons-spas/ChatWidget';
+---
+
+<Layout title="Lumière Salon & Spa — Beauty, Unhurried">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7f3]">
+    <HomeSections client:load />
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

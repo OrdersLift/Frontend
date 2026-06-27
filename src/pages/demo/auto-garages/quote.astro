@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/auto-garages/BrandNav';
+import Footer from '../../../components/demos/auto-garages/Footer';
+import QuoteBuilder from '../../../components/demos/auto-garages/QuoteBuilder';
+import ChatBot from '../../../components/demos/auto-garages/ChatBot';
+---
+
+<Layout title="Get a Quote & Book a Service — Ironclad Auto Works">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <QuoteBuilder client:load />
+  </main>
+  <Footer />
+  <ChatBot client:load />
+</Layout>

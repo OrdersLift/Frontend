@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/gyms-fitness/BrandNav';
+import BrandFooter from '../../../components/demos/gyms-fitness/BrandFooter';
+import Pricing from '../../../components/demos/gyms-fitness/Pricing';
+import ChatWidget from '../../../components/demos/gyms-fitness/ChatWidget';
+---
+
+<Layout title="Membership | PULSE FORGE">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="min-h-screen bg-black">
+    <section class="pt-32 pb-20 relative overflow-hidden">
+      <div class="pointer-events-none absolute top-0 right-1/4 h-80 w-80 rounded-full bg-fuchsia-600/15 blur-[120px]"></div>
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto">
+          <span class="inline-block rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-bold text-lime-300">No contracts. Cancel anytime.</span>
+          <h1 class="mt-5 font-display text-4xl sm:text-5xl font-extrabold text-white">Pick your power level</h1>
+          <p class="mt-3 text-zinc-400">Tap a plan to compare. Every membership starts with a free 3-day trial.</p>
+        </div>
+        <div class="mt-12">
+          <Pricing client:load />
+        </div>
+      </div>
+    </section>
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

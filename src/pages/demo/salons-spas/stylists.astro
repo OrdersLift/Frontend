@@ -1,0 +1,27 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/salons-spas/BrandNav';
+import BrandFooter from '../../../components/demos/salons-spas/BrandFooter';
+import StylistsGallery from '../../../components/demos/salons-spas/StylistsGallery';
+import ChatWidget from '../../../components/demos/salons-spas/ChatWidget';
+---
+
+<Layout title="Stylists & Gallery — Lumière Salon & Spa">
+  <Header client:load />
+  <BrandNav client:load />
+  <main class="bg-[#fbf7f3] min-h-screen">
+    <section class="pt-32 pb-12 bg-gradient-to-br from-stone-900 to-rose-900/80 text-white text-center">
+      <div class="max-w-2xl mx-auto px-6">
+        <p class="text-xs uppercase tracking-[0.3em] text-rose-200 mb-3">The team</p>
+        <h1 class="font-serif text-5xl sm:text-6xl mb-4">Stylists &amp; Gallery</h1>
+        <p class="text-stone-200">Meet the artists behind the chair, and browse a little of our recent work.</p>
+      </div>
+    </section>
+    <section class="py-16">
+      <StylistsGallery client:load />
+    </section>
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>

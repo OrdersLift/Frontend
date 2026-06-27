@@ -1,0 +1,18 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header';
+import BrandNav from '../../../components/demos/retail-shops/BrandNav';
+import BrandFooter from '../../../components/demos/retail-shops/BrandFooter';
+import ContactPage from '../../../components/demos/retail-shops/ContactPage';
+import ChatWidget from '../../../components/demos/retail-shops/ChatWidget';
+---
+
+<Layout title="Contact — Fernweh Botanical Goods">
+  <Header client:load />
+  <BrandNav client:load />
+  <main>
+    <ContactPage client:load />
+  </main>
+  <BrandFooter />
+  <ChatWidget client:load />
+</Layout>
