@@ -8,26 +8,26 @@ const AboutBanner = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50 pt-20">
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-black dark:via-neutral-950 dark:to-black pt-20">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 dark:opacity-25"
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="absolute top-40 right-10 w-72 h-72 bg-secondary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className="absolute top-40 right-10 w-72 h-72 bg-accent-200 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 dark:opacity-25"
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="absolute -bottom-8 left-20 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className="absolute -bottom-8 left-20 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 dark:opacity-25"
         />
       </div>
 
@@ -38,7 +38,7 @@ const AboutBanner = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-8"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-8"
           >
             <Award className="w-4 h-4 mr-2 fill-current" />
             <span>Leading AI Restaurant Website Agency</span>
@@ -49,7 +49,7 @@ const AboutBanner = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-gray-900 leading-tight mb-6"
+            className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-neutral-900 dark:text-white leading-tight mb-6"
           >
             We're Building the
             <span className="block bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
@@ -63,7 +63,7 @@ const AboutBanner = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl sm:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl mx-auto leading-relaxed"
           >
             OrdersLift is a specialized agency that transforms restaurants into digital powerhouses. 
             We combine cutting-edge AI technology with restaurant expertise to create websites that 
@@ -79,19 +79,19 @@ const AboutBanner = () => {
           >
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">100+</div>
-              <div className="text-gray-600 text-sm md:text-base">Restaurants Served</div>
+              <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Restaurants Served</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">88%</div>
-              <div className="text-gray-600 text-sm md:text-base">Client Satisfaction</div>
+              <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Client Satisfaction</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">1.5x</div>
-              <div className="text-gray-600 text-sm md:text-base">Average Sales Increase</div>
+              <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">Average Sales Increase</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">24/7</div>
-              <div className="text-gray-600 text-sm md:text-base">AI Support</div>
+              <div className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base">AI Support</div>
             </div>
           </motion.div>
 
@@ -116,7 +116,7 @@ const AboutBanner = () => {
               href="#team"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center px-8 py-4 rounded-lg font-semibold text-lg text-gray-700 hover:text-primary-600 transition-colors duration-200"
+              className="group flex items-center px-8 py-4 rounded-lg font-semibold text-lg text-neutral-700 dark:text-neutral-300 hover:text-primary-600 transition-colors duration-200"
             >
               <Users className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               Meet Our Team

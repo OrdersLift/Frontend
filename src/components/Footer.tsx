@@ -34,7 +34,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-dark-950 border-t border-white/06 text-white">
+    <footer className="bg-cream-200 dark:bg-black border-t border-primary-200 dark:border-white/10
+                       text-neutral-900 dark:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main content */}
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
@@ -44,23 +45,24 @@ const Footer = () => {
               <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
               <span className="text-xl font-display font-bold gradient-text">OrdersLift</span>
             </a>
-            <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
+            <p className="text-neutral-600 dark:text-slate-500 text-sm leading-relaxed max-w-xs">
               The complete AI platform for local and SMB businesses — custom website, AI chatbot,
               internal knowledge bot, and 2 years free maintenance. Serving businesses worldwide.
             </p>
             <div className="mt-6 flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-xs text-slate-500">Actively onboarding new clients</span>
+              <span className="w-2 h-2 bg-primary-500 dark:bg-glow-400 rounded-full animate-pulse" />
+              <span className="text-xs text-neutral-600 dark:text-slate-500">Actively onboarding new clients</span>
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Services</h4>
+            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Services</h4>
             <ul className="space-y-2.5">
               {links.services.map((l) => (
                 <li key={l.name}>
-                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
+                                      dark:hover:text-white text-sm transition-colors duration-200">
                     {l.name}
                   </a>
                 </li>
@@ -70,11 +72,12 @@ const Footer = () => {
 
           {/* Industries */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Industries</h4>
+            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Industries</h4>
             <ul className="space-y-2.5">
               {links.industries.map((l) => (
                 <li key={l.name}>
-                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
+                                      dark:hover:text-white text-sm transition-colors duration-200">
                     {l.name}
                   </a>
                 </li>
@@ -84,11 +87,12 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
+            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Company</h4>
             <ul className="space-y-2.5">
               {links.company.map((l) => (
                 <li key={l.name}>
-                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
+                                      dark:hover:text-white text-sm transition-colors duration-200">
                     {l.name}
                   </a>
                 </li>
@@ -98,11 +102,12 @@ const Footer = () => {
 
           {/* Legal + CTA */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Legal</h4>
+            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Legal</h4>
             <ul className="space-y-2.5 mb-8">
               {links.legal.map((l) => (
                 <li key={l.name}>
-                  <a href={l.href} className="text-slate-500 hover:text-white text-sm transition-colors duration-200">
+                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
+                                      dark:hover:text-white text-sm transition-colors duration-200">
                     {l.name}
                   </a>
                 </li>
@@ -116,16 +121,19 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/06 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-slate-600 text-xs">
+        <div className="border-t border-primary-200 dark:border-white/10 py-6 flex flex-col
+                        sm:flex-row items-center justify-between gap-4">
+          <p className="text-neutral-500 dark:text-slate-600 text-xs">
             © {new Date().getFullYear()} OrdersLift. All rights reserved.
           </p>
           <motion.button
             onClick={scrollToTop}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
-            className="w-9 h-9 bg-white/08 hover:bg-primary-600 rounded-lg flex items-center justify-center
-                       transition-all duration-200"
+            className="w-9 h-9 bg-white border border-primary-200 text-neutral-700
+                       hover:bg-primary-600 hover:text-white hover:border-primary-600
+                       dark:bg-white/[0.08] dark:border-transparent dark:text-white dark:hover:bg-primary-600
+                       rounded-lg flex items-center justify-center transition-all duration-200"
           >
             <ArrowUp className="w-4 h-4" />
           </motion.button>

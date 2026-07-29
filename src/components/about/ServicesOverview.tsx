@@ -47,7 +47,7 @@ const ServicesOverview = () => {
   ];
 
   return (
-    <section id="services" ref={ref} className="py-20 bg-gray-50">
+    <section id="services" ref={ref} className="py-20 bg-cream-100 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -60,17 +60,17 @@ const ServicesOverview = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-6"
           >
             <DollarSign className="w-4 h-4 mr-2" />
             Our Service Plans
           </motion.div>
           
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
             Choose Your Perfect Plan
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-4xl mx-auto leading-relaxed">
             We offer two flexible service options to meet the unique needs of every restaurant. 
             Whether you prefer complete ownership or ongoing support, we have the perfect solution for you.
           </p>
@@ -95,22 +95,22 @@ const ServicesOverview = () => {
                 </div>
               )}
               
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 h-full">
+              <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg border border-primary-200 dark:border-white/10 p-8 h-full">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
+                  <h3 className="text-2xl font-display font-bold text-neutral-900 dark:text-white mb-2">
                     {service.title}
                   </h3>
                   <p className="text-primary-600 font-medium mb-4">{service.subtitle}</p>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{service.price}</div>
-                  <p className="text-gray-600">{service.description}</p>
+                  <div className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">{service.price}</div>
+                  <p className="text-neutral-600 dark:text-neutral-400">{service.description}</p>
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <h4 className="font-semibold text-gray-900 mb-4">What's Included:</h4>
+                  <h4 className="font-semibold text-neutral-900 dark:text-white mb-4">What's Included:</h4>
                   {service.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-start">
-                      <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+                      <Check className="w-5 h-5 text-glow-600 dark:text-glow-400 mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-neutral-700 dark:text-neutral-300">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -119,8 +119,8 @@ const ServicesOverview = () => {
                   <div className="flex items-start">
                     <Shield className="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h5 className="font-semibold text-gray-900 mb-1">Maintenance & Support</h5>
-                      <p className="text-gray-600 text-sm">{service.maintenance}</p>
+                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">Maintenance & Support</h5>
+                      <p className="text-neutral-600 dark:text-neutral-400 text-sm">{service.maintenance}</p>
                     </div>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ const ServicesOverview = () => {
                   className={`w-full mt-8 py-4 px-6 rounded-lg font-semibold transition-all duration-200 ${
                     service.popular
                       ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                      : 'bg-cream-200 dark:bg-neutral-800 hover:bg-cream-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white'
                   }`}
                 >
                   Get Started
@@ -146,41 +146,41 @@ const ServicesOverview = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white rounded-2xl shadow-lg p-8"
+          className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg p-8"
         >
-          <h3 className="text-2xl font-display font-bold text-gray-900 mb-6 text-center">
+          <h3 className="text-2xl font-display font-bold text-neutral-900 dark:text-white mb-6 text-center">
             What Happens After Purchase?
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-500/15 rounded-full mb-4">
                 <Clock className="w-8 h-8 text-primary-600" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Setup & Launch</h4>
-              <p className="text-gray-600">
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">Setup & Launch</h4>
+              <p className="text-neutral-600 dark:text-neutral-400">
                 We'll set up your website, integrate your menu, and launch your AI-powered 
                 restaurant platform within 2-3 weeks.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-500/15 rounded-full mb-4">
                 <Zap className="w-8 h-8 text-primary-600" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Training & Support</h4>
-              <p className="text-gray-600">
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">Training & Support</h4>
+              <p className="text-neutral-600 dark:text-neutral-400">
                 Get comprehensive training on using your admin dashboard and 24/7 support 
                 to ensure smooth operations.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-500/15 rounded-full mb-4">
                 <Shield className="w-8 h-8 text-primary-600" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-3">Ongoing Success</h4>
-              <p className="text-gray-600">
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">Ongoing Success</h4>
+              <p className="text-neutral-600 dark:text-neutral-400">
                 We monitor your performance, provide insights, and continuously improve 
                 your platform to maximize your success.
               </p>

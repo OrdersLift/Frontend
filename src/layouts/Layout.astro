@@ -32,6 +32,11 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 // /demo/* render their own brand-specific chat widgets.
 import AIChat from '../components/AIChat';
 const showAssistant = !Astro.url.pathname.startsWith('/demo');
+
+// Individual demo sites carry their own fixed brand palettes, so the
+// orange/yellow light-dark theme is locked to light there. The demo index
+// (/demo) is part of the marketing site and follows the theme normally.
+const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
 ---
 
 <!DOCTYPE html>
@@ -49,7 +54,31 @@ const showAssistant = !Astro.url.pathname.startsWith('/demo');
     <link rel="canonical" href={canonical} />
     <meta name="keywords" content={keywords} />
     <meta name="author" content={author} />
-    <meta name="theme-color" content="#6366f1" />
+    <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+
+    <!-- Applies the saved / system colour scheme before first paint so the
+         page never flashes the wrong theme. -->
+    <script is:inline define:vars={{ demoBrandPath }}>
+      (() => {
+        const root = document.documentElement;
+        if (demoBrandPath) {
+          root.classList.remove('dark');
+          root.dataset.theme = 'light';
+          return;
+        }
+        let saved = null;
+        try { saved = localStorage.getItem('theme'); } catch {}
+        const theme =
+          saved === 'dark' || saved === 'light'
+            ? saved
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        root.classList.toggle('dark', theme === 'dark');
+        root.dataset.theme = theme;
+      })();
+    </script>
     
     <!-- Language and Region -->
     <meta name="language" content="English" />
@@ -175,7 +204,7 @@ const showAssistant = !Astro.url.pathname.startsWith('/demo');
       "openingHours": "Mo-Su 00:00-23:59"
     })} />
   </head>
-  <body class="font-sans antialiased bg-dark-900 text-slate-100">
+  <body class="font-sans antialiased bg-white text-neutral-900 dark:bg-black dark:text-slate-100 transition-colors duration-300">
     <slot />
     {showAssistant && <AIChat client:load />}
   </body>

@@ -1,38 +1,76 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
   safelist: ['rotate-[-1.5deg]', 'rotate-[1.5deg]'],
   theme: {
     extend: {
       colors: {
+        // Brand orange — the primary voice of the site.
         primary: {
-          50:  '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
+          50:  '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
         },
+        // Yellow — the secondary voice. `secondary` is an alias kept for
+        // markup that already referenced it.
         accent: {
-          300: '#67e8f9',
-          400: '#22d3ee',
-          500: '#06b6d4',
-          600: '#0891b2',
+          50:  '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15',
+          500: '#eab308',
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
+          900: '#713f12',
         },
+        secondary: {
+          50:  '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15',
+          500: '#eab308',
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
+          900: '#713f12',
+        },
+        // Amber — the warm mid-tone that bridges orange and yellow.
         glow: {
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
+          50:  '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
         },
+        // Warm off-whites used for alternating light-mode sections.
+        cream: {
+          50:  '#fffdfa',
+          100: '#fff8f0',
+          200: '#fff1e2',
+          300: '#ffe7cd',
+        },
+        // Dark mode surfaces — true blacks, not navy.
         dark: {
-          800: '#0f0f23',
-          850: '#0a0a1a',
-          900: '#050510',
-          950: '#020208',
+          800: '#141414',
+          850: '#0a0a0a',
+          900: '#000000',
+          950: '#000000',
         },
       },
 

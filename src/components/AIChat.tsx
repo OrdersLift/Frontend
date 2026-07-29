@@ -44,7 +44,7 @@ export default function AIChat() {
         transition={{ delay: 0.8, type: 'spring' }}
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-50 grid place-items-center w-14 h-14 rounded-full
-                   bg-gradient-to-br from-primary-600 to-glow-600 text-white shadow-xl shadow-primary-900/40
+                   bg-gradient-to-br from-primary-600 to-glow-500 text-white shadow-xl shadow-primary-600/40
                    hover:brightness-110"
         aria-label="Open OrdersLift assistant"
       >
@@ -68,10 +68,11 @@ export default function AIChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.95 }}
             className="fixed bottom-24 right-5 z-50 w-[calc(100vw-2.5rem)] max-w-sm rounded-2xl overflow-hidden
-                       bg-dark-850 border border-primary-500/30 shadow-2xl shadow-black/50 flex flex-col"
+                       bg-white dark:bg-neutral-950 border border-primary-300 dark:border-primary-500/30
+                       shadow-2xl shadow-primary-900/25 dark:shadow-black/50 flex flex-col"
             style={{ height: 'min(70vh, 540px)' }}
           >
-            <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-600 to-glow-600 text-white">
+            <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-600 to-glow-500 text-white">
               <span className="grid place-items-center w-9 h-9 rounded-full bg-white/20">
                 <Sparkles className="w-5 h-5" />
               </span>
@@ -88,7 +89,7 @@ export default function AIChat() {
                     className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                       m.role === 'user'
                         ? 'bg-primary-600 text-white rounded-br-sm'
-                        : 'bg-white/05 text-slate-200 rounded-bl-sm border border-white/08'
+                        : 'bg-cream-100 text-neutral-800 border border-primary-200 rounded-bl-sm dark:bg-white/[0.05] dark:text-slate-200 dark:border-white/[0.08]'
                     }`}
                   >
                     {m.text}
@@ -97,12 +98,13 @@ export default function AIChat() {
               ))}
               {typing && (
                 <div className="flex justify-start">
-                  <div className="bg-white/05 border border-white/08 rounded-2xl rounded-bl-sm px-4 py-3">
+                  <div className="bg-cream-100 border border-primary-200 dark:bg-white/[0.05] dark:border-white/[0.08]
+                                  rounded-2xl rounded-bl-sm px-4 py-3">
                     <div className="flex gap-1">
                       {[0, 1, 2].map((d) => (
                         <motion.span
                           key={d}
-                          className="w-1.5 h-1.5 rounded-full bg-primary-400"
+                          className="w-1.5 h-1.5 rounded-full bg-primary-500 dark:bg-primary-400"
                           animate={{ opacity: [0.3, 1, 0.3] }}
                           transition={{ duration: 1, repeat: Infinity, delay: d * 0.2 }}
                         />
@@ -120,8 +122,9 @@ export default function AIChat() {
                   <button
                     key={q}
                     onClick={() => send(q)}
-                    className="text-[11px] px-2.5 py-1 rounded-full border border-primary-400/40 text-primary-200
-                               hover:bg-primary-400/10 transition"
+                    className="text-[11px] px-2.5 py-1 rounded-full border border-primary-400 text-primary-700
+                               hover:bg-primary-50 dark:border-primary-400/40 dark:text-primary-200
+                               dark:hover:bg-primary-400/10 transition"
                   >
                     {q}
                   </button>
@@ -131,16 +134,18 @@ export default function AIChat() {
 
             <form
               onSubmit={(e) => { e.preventDefault(); send(input); }}
-              className="flex items-center gap-2 p-3 border-t border-white/08"
+              className="flex items-center gap-2 p-3 border-t border-primary-200 dark:border-white/[0.08]"
             >
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about OrdersLift..."
-                className="flex-1 bg-dark-900 border border-white/10 text-white placeholder-slate-500 rounded-full px-4 py-2 text-sm
-                           outline-none focus:ring-2 focus:ring-primary-400/50"
+                className="flex-1 bg-cream-100 border border-primary-200 text-neutral-900 placeholder-neutral-400
+                           dark:bg-black dark:border-white/10 dark:text-white dark:placeholder-slate-500
+                           rounded-full px-4 py-2 text-sm
+                           outline-none focus:ring-2 focus:ring-primary-400/60"
               />
-              <button type="submit" className="grid place-items-center w-9 h-9 rounded-full bg-gradient-to-br from-primary-600 to-glow-600 text-white shrink-0" aria-label="Send">
+              <button type="submit" className="grid place-items-center w-9 h-9 rounded-full bg-gradient-to-br from-primary-600 to-glow-500 text-white shrink-0" aria-label="Send">
                 <Send className="w-4 h-4" />
               </button>
             </form>

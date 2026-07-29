@@ -1,10 +1,10 @@
 import { Mic, Phone, Calendar, MessageSquare, CheckCircle, Clock } from 'lucide-react';
 
 const capabilities = [
-  { icon: Phone,        title: 'Answers incoming calls',   desc: 'AI picks up every call, greets the caller, and handles common requests — no missed calls ever.', color: 'text-primary-400', bg: 'bg-primary-500/10' },
-  { icon: Calendar,     title: 'Books appointments',       desc: 'Checks real-time availability and books directly into your calendar system.', color: 'text-glow-400', bg: 'bg-glow-500/10' },
-  { icon: MessageSquare,'title': 'Answers FAQs verbally',  desc: 'Prices, hours, directions, policies — handled naturally by voice.', color: 'text-accent-400', bg: 'bg-accent-500/10' },
-  { icon: Clock,        title: 'Routes complex calls',     desc: 'When a query needs a human, it transfers gracefully with a summary of what was discussed.', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  { icon: Phone,        title: 'Answers incoming calls',   desc: 'AI picks up every call, greets the caller, and handles common requests — no missed calls ever.', color: 'text-primary-600 dark:text-primary-400', bg: 'bg-primary-500/10' },
+  { icon: Calendar,     title: 'Books appointments',       desc: 'Checks real-time availability and books directly into your calendar system.', color: 'text-glow-600 dark:text-glow-400', bg: 'bg-glow-500/10' },
+  { icon: MessageSquare,'title': 'Answers FAQs verbally',  desc: 'Prices, hours, directions, policies — handled naturally by voice.', color: 'text-accent-700 dark:text-accent-300', bg: 'bg-accent-500/10' },
+  { icon: Clock,        title: 'Routes complex calls',     desc: 'When a query needs a human, it transfers gracefully with a summary of what was discussed.', color: 'text-primary-600 dark:text-primary-400', bg: 'bg-primary-500/10' },
 ];
 
 const callExamples = [
@@ -14,15 +14,15 @@ const callExamples = [
 ];
 
 const RestaurantAnalyticsModal = () => (
-  <div className="space-y-8 text-slate-300">
+  <div className="space-y-8 text-neutral-700 dark:text-slate-300">
     {/* Intro */}
     <div className="flex items-start gap-5">
       <div className="w-14 h-14 rounded-2xl bg-accent-500/15 border border-accent-500/20
                       flex items-center justify-center flex-shrink-0">
-        <Mic className="w-7 h-7 text-accent-400" />
+        <Mic className="w-7 h-7 text-accent-700 dark:text-accent-300" />
       </div>
       <div>
-        <p className="text-slate-300 leading-relaxed">
+        <p className="text-neutral-700 dark:text-slate-300 leading-relaxed">
           Every missed call is a missed customer. Our Voice AI answers your phone 24/7,
           handles bookings, answers questions, and routes complex calls to your team —
           all in a natural, conversational voice that represents your brand.
@@ -32,16 +32,16 @@ const RestaurantAnalyticsModal = () => (
 
     {/* What it does */}
     <div>
-      <h4 className="text-white font-semibold mb-4">What the Voice AI handles</h4>
+      <h4 className="text-neutral-900 dark:text-white font-semibold mb-4">What the Voice AI handles</h4>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {capabilities.map((c) => (
-          <div key={c.title} className="flex items-start gap-4 p-4 rounded-xl bg-white/03 border border-white/06">
+          <div key={c.title} className="flex items-start gap-4 p-4 rounded-xl bg-cream-100 dark:bg-white/[0.03] border border-primary-200/70 dark:border-white/[0.06]">
             <div className={`w-9 h-9 rounded-lg ${c.bg} flex items-center justify-center flex-shrink-0`}>
               <c.icon className={`w-4 h-4 ${c.color}`} />
             </div>
             <div>
-              <div className="text-white text-sm font-semibold mb-0.5">{c.title}</div>
-              <div className="text-slate-500 text-xs leading-relaxed">{c.desc}</div>
+              <div className="text-neutral-900 dark:text-white text-sm font-semibold mb-0.5">{c.title}</div>
+              <div className="text-neutral-500 dark:text-slate-500 text-xs leading-relaxed">{c.desc}</div>
             </div>
           </div>
         ))}
@@ -50,15 +50,15 @@ const RestaurantAnalyticsModal = () => (
 
     {/* Example calls */}
     <div>
-      <h4 className="text-white font-semibold mb-4">Real call examples</h4>
+      <h4 className="text-neutral-900 dark:text-white font-semibold mb-4">Real call examples</h4>
       <div className="space-y-3">
         {callExamples.map((e) => (
-          <div key={e.caller} className="p-4 rounded-xl bg-white/03 border border-white/06">
-            <div className="text-xs text-slate-500 font-medium mb-2">{e.caller}</div>
-            <div className="text-sm text-slate-200 leading-relaxed">{e.transcript}</div>
+          <div key={e.caller} className="p-4 rounded-xl bg-cream-100 dark:bg-white/[0.03] border border-primary-200/70 dark:border-white/[0.06]">
+            <div className="text-xs text-neutral-500 dark:text-slate-500 font-medium mb-2">{e.caller}</div>
+            <div className="text-sm text-neutral-800 dark:text-slate-200 leading-relaxed">{e.transcript}</div>
             <div className="flex items-center gap-1.5 mt-2">
-              <CheckCircle className="w-3.5 h-3.5 text-accent-400" />
-              <span className="text-xs text-accent-400">Handled without human involvement</span>
+              <CheckCircle className="w-3.5 h-3.5 text-accent-700 dark:text-accent-300" />
+              <span className="text-xs text-accent-700 dark:text-accent-300">Handled without human involvement</span>
             </div>
           </div>
         ))}
@@ -66,17 +66,18 @@ const RestaurantAnalyticsModal = () => (
     </div>
 
     {/* Call transcription */}
-    <div className="p-5 rounded-xl bg-accent-500/05 border border-accent-500/15">
-      <h4 className="text-white font-semibold mb-3">Every call is transcribed & logged</h4>
-      <p className="text-slate-400 text-sm leading-relaxed mb-4">
+    <div className="p-5 rounded-xl bg-accent-50 dark:bg-accent-500/[0.05]
+                    border border-accent-300 dark:border-accent-500/15">
+      <h4 className="text-neutral-900 dark:text-white font-semibold mb-3">Every call is transcribed & logged</h4>
+      <p className="text-neutral-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
         Full transcripts of every call appear in your admin panel. Review what customers are asking,
         spot recurring issues, and use the data to improve your service.
       </p>
       <div className="flex flex-wrap gap-2">
         {['Full transcripts', 'Caller intent summary', 'Booking confirmations', 'Missed call alerts', 'Call volume analytics'].map((f) => (
           <span key={f} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
-                                    bg-white/05 border border-white/08 text-xs text-slate-300">
-            <CheckCircle className="w-3 h-3 text-accent-400" />
+                                    bg-cream-100 dark:bg-white/[0.05] border border-primary-200/70 dark:border-white/[0.08] text-xs text-neutral-700 dark:text-slate-300">
+            <CheckCircle className="w-3 h-3 text-accent-700 dark:text-accent-300" />
             {f}
           </span>
         ))}
@@ -84,25 +85,25 @@ const RestaurantAnalyticsModal = () => (
     </div>
 
     {/* Stats */}
-    <div className="grid grid-cols-3 gap-4 p-5 rounded-xl bg-gradient-to-r from-accent-500/08 to-primary-500/08 border border-white/06">
+    <div className="grid grid-cols-3 gap-4 p-5 rounded-xl bg-gradient-to-r from-accent-500/[0.08] to-primary-500/[0.08] border border-primary-200/70 dark:border-white/[0.06]">
       {[
         { v: '100%', l: 'Calls answered' },
         { v: '24/7', l: 'No holidays, no sick days' },
         { v: '70%', l: 'Calls resolved without human' },
       ].map((s) => (
         <div key={s.l} className="text-center">
-          <div className="text-2xl font-bold text-accent-400 mb-1">{s.v}</div>
-          <div className="text-slate-500 text-xs">{s.l}</div>
+          <div className="text-2xl font-bold text-accent-700 dark:text-accent-300 mb-1">{s.v}</div>
+          <div className="text-neutral-500 dark:text-slate-500 text-xs">{s.l}</div>
         </div>
       ))}
     </div>
 
     {/* Works for */}
     <div>
-      <h4 className="text-white font-semibold mb-3">Best suited for</h4>
+      <h4 className="text-neutral-900 dark:text-white font-semibold mb-3">Best suited for</h4>
       <div className="flex flex-wrap gap-2">
         {['Dental & medical clinics', 'Salons & spas', 'Gyms & fitness studios', 'Restaurants (reservations)', 'Law firms', 'Auto garages'].map((t) => (
-          <span key={t} className="px-3 py-1.5 rounded-full bg-white/05 border border-white/08 text-xs text-slate-300">
+          <span key={t} className="px-3 py-1.5 rounded-full bg-cream-100 dark:bg-white/[0.05] border border-primary-200/70 dark:border-white/[0.08] text-xs text-neutral-700 dark:text-slate-300">
             {t}
           </span>
         ))}

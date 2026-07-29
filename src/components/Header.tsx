@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, ChevronDown } from 'lucide-react';
+import { Menu, X, Zap, ChevronDown, Sun, Moon } from 'lucide-react';
 
 const demoItems = [
   { name: 'Restaurants',     href: '/demo/restaurants' },
@@ -15,17 +15,37 @@ const demoItems = [
   { name: 'Clinics & Physio', href: '/demo/clinics-physio' },
 ];
 
+const navLink =
+  'text-neutral-600 hover:text-primary-700 hover:bg-primary-50 ' +
+  'dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5';
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
   const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  // Individual demo sites keep their own fixed brand palette, so no toggle there.
+  const [themeToggleVisible, setThemeToggleVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    setThemeToggleVisible(!/^\/demo\/.+/.test(window.location.pathname));
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
+    setTheme(next);
+  };
 
   const navItems = [
     { name: 'Home',       href: '/#home' },
@@ -35,11 +55,25 @@ const Header = () => {
     { name: 'Pricing',    href: '/#pricing' },
   ];
 
+  const themeToggle = (
+    <button
+      onClick={toggleTheme}
+      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="grid place-items-center w-9 h-9 rounded-lg border border-primary-500/30
+                 text-primary-600 hover:bg-primary-50 hover:border-primary-500/60
+                 dark:border-white/15 dark:text-accent-300 dark:hover:bg-white/5
+                 transition-all duration-200"
+    >
+      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+    </button>
+  );
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'glass shadow-lg shadow-black/20'
+          ? 'glass shadow-lg shadow-primary-900/10 dark:shadow-black/40'
           : 'bg-transparent'
       }`}
     >
@@ -56,26 +90,26 @@ const Header = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-slate-400 hover:text-white px-4 py-2 rounded-lg text-sm font-medium
-                           transition-all duration-200 hover:bg-white/5 relative group"
+                className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
+                           transition-all duration-200 relative group`}
               >
                 {item.name}
                 <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                                 bg-primary-400 rounded-full transition-all duration-300
+                                 bg-primary-500 rounded-full transition-all duration-300
                                  group-hover:w-4" />
               </a>
             ))}
 
             {/* Demo dropdown */}
-            <div
+            {/* <div
               className="relative"
               onMouseEnter={() => setDemoOpen(true)}
               onMouseLeave={() => setDemoOpen(false)}
             >
               <a
                 href="/demo"
-                className="flex items-center gap-1 text-slate-400 hover:text-white px-4 py-2 rounded-lg
-                           text-sm font-medium transition-all duration-200 hover:bg-white/5"
+                className={`flex items-center gap-1 ${navLink} px-4 py-2 rounded-lg
+                           text-sm font-medium transition-all duration-200`}
               >
                 Demo
                 <ChevronDown
@@ -92,12 +126,14 @@ const Header = () => {
                     transition={{ duration: 0.18 }}
                     className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56"
                   >
-                    <div className="glass rounded-xl border border-white/10 shadow-xl shadow-black/30 p-2">
+                    <div className="glass rounded-xl border border-primary-200/70 dark:border-white/10
+                                    shadow-xl shadow-primary-900/10 dark:shadow-black/40 p-2">
                       {demoItems.map((item) => (
                         <a
                           key={item.name}
                           href={item.href}
-                          className="block text-slate-300 hover:text-white hover:bg-white/5
+                          className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
+                                     dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
                                      text-sm font-medium py-2 px-3 rounded-lg transition-all duration-200"
                         >
                           {item.name}
@@ -107,22 +143,23 @@ const Header = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </div> */}
 
             <a
               href="/#faq"
-              className="text-slate-400 hover:text-white px-4 py-2 rounded-lg text-sm font-medium
-                         transition-all duration-200 hover:bg-white/5 relative group"
+              className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
+                         transition-all duration-200 relative group`}
             >
               FAQ
               <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                               bg-primary-400 rounded-full transition-all duration-300
+                               bg-primary-500 rounded-full transition-all duration-300
                                group-hover:w-4" />
             </a>
           </nav>
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
+            {themeToggleVisible && themeToggle}
             <a
               href="/#contact"
               className="btn-primary text-sm py-2 px-5"
@@ -133,12 +170,17 @@ const Header = () => {
           </div>
 
           {/* Mobile burger */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-slate-300 hover:text-white p-2 transition-colors"
-          >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="lg:hidden flex items-center gap-2">
+            {themeToggleVisible && themeToggle}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-neutral-700 hover:text-primary-700 dark:text-slate-300
+                         dark:hover:text-white p-2 transition-colors"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -150,7 +192,7 @@ const Header = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden glass border-t border-white/08 overflow-hidden"
+            className="lg:hidden glass border-t border-primary-200/70 dark:border-white/10 overflow-hidden"
           >
             <div className="px-4 py-6 space-y-1">
               {navItems.map((item) => (
@@ -158,7 +200,8 @@ const Header = () => {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="block text-slate-300 hover:text-white hover:bg-white/5
+                  className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
+                             dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
                              font-medium py-3 px-4 rounded-lg transition-all duration-200"
                 >
                   {item.name}
@@ -168,8 +211,9 @@ const Header = () => {
               {/* Mobile Demo accordion */}
               <button
                 onClick={() => setMobileDemoOpen((v) => !v)}
-                className="w-full flex items-center justify-between text-slate-300 hover:text-white
-                           hover:bg-white/5 font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                className="w-full flex items-center justify-between text-neutral-700 hover:text-primary-700
+                           hover:bg-primary-50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
+                           font-medium py-3 px-4 rounded-lg transition-all duration-200"
               >
                 Demo
                 <ChevronDown
@@ -190,7 +234,8 @@ const Header = () => {
                         key={item.name}
                         href={item.href}
                         onClick={() => setIsOpen(false)}
-                        className="block text-slate-400 hover:text-white hover:bg-white/5
+                        className="block text-neutral-600 hover:text-primary-700 hover:bg-primary-50
+                                   dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5
                                    text-sm font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
                       >
                         {item.name}
@@ -203,7 +248,8 @@ const Header = () => {
               <a
                 href="/#faq"
                 onClick={() => setIsOpen(false)}
-                className="block text-slate-300 hover:text-white hover:bg-white/5
+                className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
+                           dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
                            font-medium py-3 px-4 rounded-lg transition-all duration-200"
               >
                 FAQ

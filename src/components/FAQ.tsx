@@ -39,7 +39,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section id="faq" ref={ref} className="py-24 bg-dark-850 relative overflow-hidden">
+    <section id="faq" ref={ref} className="py-24 bg-cream-100 dark:bg-black relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,16 +51,18 @@ const FAQ = () => {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                           border border-primary-500/30 text-primary-300 text-sm font-medium mb-6">
+                           border border-primary-500/30 text-primary-700 dark:text-primary-300
+                           text-sm font-medium mb-6">
             <HelpCircle className="w-4 h-4" />
             FAQ
           </span>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-5">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
             Got <span className="gradient-text">Questions?</span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-neutral-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Everything you need to know about our platform and process. Can't find your answer?{' '}
-            <a href="/#contact" className="text-primary-400 hover:text-primary-300 underline underline-offset-2">
+            <a href="/#contact" className="text-primary-600 hover:text-primary-700 dark:text-primary-400
+                                          dark:hover:text-primary-300 underline underline-offset-2">
               Just ask us.
             </a>
           </p>
@@ -81,8 +83,8 @@ const FAQ = () => {
               transition={{ duration: 0.5, delay: 0.3 + i * 0.07 }}
               className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                 openIndex === i
-                  ? 'border-primary-500/40 bg-primary-500/05'
-                  : 'border-white/07 bg-white/02 hover:border-white/12'
+                  ? 'border-primary-500/60 bg-primary-50 dark:border-primary-500/40 dark:bg-primary-500/[0.05]'
+                  : 'border-primary-200/80 bg-white hover:border-primary-400/70 dark:border-white/[0.07] dark:bg-white/[0.02] dark:hover:border-white/12'
               }`}
             >
               <button
@@ -90,20 +92,24 @@ const FAQ = () => {
                 className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
               >
                 <span className={`font-medium text-sm sm:text-base transition-colors ${
-                  openIndex === i ? 'text-white' : 'text-slate-300'
+                  openIndex === i
+                    ? 'text-neutral-900 dark:text-white'
+                    : 'text-neutral-700 dark:text-slate-300'
                 }`}>
                   {faq.q}
                 </span>
                 <ChevronDown
                   className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
-                    openIndex === i ? 'rotate-180 text-primary-400' : 'text-slate-600'
+                    openIndex === i
+                      ? 'rotate-180 text-primary-600 dark:text-primary-400'
+                      : 'text-neutral-400 dark:text-slate-600'
                   }`}
                 />
               </button>
               <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
                 openIndex === i ? 'max-h-96' : 'max-h-0'
               }`}>
-                <p className="px-6 pb-5 text-slate-400 text-sm leading-relaxed">{faq.a}</p>
+                <p className="px-6 pb-5 text-neutral-600 dark:text-slate-400 text-sm leading-relaxed">{faq.a}</p>
               </div>
             </motion.div>
           ))}

@@ -20,8 +20,8 @@ const plans = [
     ],
     cta: 'Get a Quote',
     highlight: false,
-    border: 'border-white/10',
-    bg: 'bg-white/02',
+    border: 'border-primary-200 dark:border-white/10',
+    bg: 'bg-white dark:bg-white/[0.02]',
   },
   {
     name: 'Growth',
@@ -42,8 +42,8 @@ const plans = [
     ],
     cta: 'Get a Quote',
     highlight: true,
-    border: 'border-primary-500/40',
-    bg: 'bg-primary-500/05',
+    border: 'border-primary-500/60 dark:border-primary-500/40',
+    bg: 'bg-primary-50 dark:bg-primary-500/[0.05]',
   },
   {
     name: 'Enterprise',
@@ -63,8 +63,8 @@ const plans = [
     ],
     cta: 'Talk to Us',
     highlight: false,
-    border: 'border-white/10',
-    bg: 'bg-white/02',
+    border: 'border-primary-200 dark:border-white/10',
+    bg: 'bg-white dark:bg-white/[0.02]',
   },
 ];
 
@@ -73,9 +73,9 @@ const Pricing = () => {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="pricing" ref={ref} className="py-24 bg-dark-850 relative overflow-hidden">
+    <section id="pricing" ref={ref} className="py-24 bg-cream-100 dark:bg-black relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px]
-                      bg-primary-600/08 rounded-full blur-3xl pointer-events-none" />
+                      bg-primary-300/30 dark:bg-primary-600/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -86,15 +86,16 @@ const Pricing = () => {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                           border border-accent-500/30 text-accent-300 text-sm font-medium mb-6">
+                           border border-accent-500/40 text-accent-700 dark:text-accent-300
+                           text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Transparent Pricing
           </span>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-5">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
             One-Time or Monthly —{' '}
             <span className="gradient-text">You Choose</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-neutral-600 dark:text-slate-400 max-w-2xl mx-auto">
             No hidden fees. No surprise invoices. Pricing is always discussed and agreed upfront.
           </p>
         </motion.div>
@@ -113,7 +114,7 @@ const Pricing = () => {
             >
               {plan.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-primary-600 to-glow-600 text-white
+                  <span className="bg-gradient-to-r from-primary-600 to-glow-500 text-white
                                    text-xs font-bold px-5 py-1.5 rounded-full shadow-lg">
                     Most Popular
                   </span>
@@ -122,22 +123,23 @@ const Pricing = () => {
 
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/08
-                                   text-slate-400 border border-white/10">
+                  <h3 className="text-xl font-bold text-neutral-900 dark:text-white">{plan.name}</h3>
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-primary-100
+                                   text-primary-700 border border-primary-200
+                                   dark:bg-white/[0.08] dark:text-slate-400 dark:border-white/10">
                     {plan.tag}
                   </span>
                 </div>
                 <div className="text-3xl font-bold gradient-text-blue mb-1">{plan.price}</div>
-                <div className="text-xs text-slate-500">{plan.priceNote}</div>
+                <div className="text-xs text-neutral-500 dark:text-slate-500">{plan.priceNote}</div>
               </div>
 
-              <p className="text-slate-400 text-sm leading-relaxed mb-7">{plan.description}</p>
+              <p className="text-neutral-600 dark:text-slate-400 text-sm leading-relaxed mb-7">{plan.description}</p>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-slate-300">
-                    <Check className="w-4 h-4 text-primary-400 flex-shrink-0 mt-0.5" />
+                  <li key={f} className="flex items-start gap-3 text-sm text-neutral-700 dark:text-slate-300">
+                    <Check className="w-4 h-4 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" />
                     {f}
                   </li>
                 ))}
@@ -148,8 +150,8 @@ const Pricing = () => {
                 className={`w-full text-center py-3.5 px-6 rounded-xl font-semibold text-sm
                            transition-all duration-200 flex items-center justify-center gap-2
                            ${plan.highlight
-                             ? 'bg-primary-600 hover:bg-primary-500 text-white hover:shadow-lg hover:shadow-primary-500/30'
-                             : 'border border-white/15 text-white/80 hover:border-primary-400 hover:text-white hover:bg-white/05'
+                             ? 'bg-gradient-to-r from-primary-600 to-glow-500 hover:from-primary-500 hover:to-accent-400 text-white hover:shadow-lg hover:shadow-primary-500/40'
+                             : 'border border-primary-300 text-neutral-700 hover:border-primary-500 hover:text-primary-700 hover:bg-primary-50 dark:border-white/15 dark:text-white/80 dark:hover:border-primary-400 dark:hover:text-white dark:hover:bg-white/[0.05]'
                            }`}
               >
                 {plan.cta}
@@ -164,10 +166,11 @@ const Pricing = () => {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-center text-slate-500 text-sm mt-10"
+          className="text-center text-neutral-500 dark:text-slate-500 text-sm mt-10"
         >
           All plans include a free discovery call. Final pricing depends on your business size and requirements.{' '}
-          <a href="/#contact" className="text-primary-400 hover:text-primary-300 underline underline-offset-2">
+          <a href="/#contact" className="text-primary-600 hover:text-primary-700 dark:text-primary-400
+                                        dark:hover:text-primary-300 underline underline-offset-2">
             Contact us for a custom quote.
           </a>
         </motion.p>

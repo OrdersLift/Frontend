@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            className="absolute inset-0 bg-neutral-900/40 dark:bg-black/70 backdrop-blur-md"
           />
 
           {/* Modal panel */}
@@ -42,16 +42,18 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             exit={{ opacity: 0, scale: 0.96, y: 24 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
             className="relative w-full max-w-3xl max-h-[88vh] flex flex-col
-                       rounded-2xl border border-white/10 overflow-hidden
-                       shadow-2xl shadow-black/60"
-            style={{ background: 'rgba(10, 10, 26, 0.97)' }}
+                       rounded-2xl border border-primary-200 dark:border-white/10 overflow-hidden
+                       bg-white dark:bg-neutral-950
+                       shadow-2xl shadow-primary-900/20 dark:shadow-black/60"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-7 py-5 border-b border-white/08 flex-shrink-0">
-              <h2 className="text-xl font-display font-bold text-white">{title}</h2>
+            <div className="flex items-center justify-between px-7 py-5 border-b border-primary-200
+                            dark:border-white/[0.08] flex-shrink-0">
+              <h2 className="text-xl font-display font-bold text-neutral-900 dark:text-white">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-slate-500 hover:text-white hover:bg-white/08
+                className="p-2 rounded-lg text-neutral-500 hover:text-primary-700 hover:bg-primary-50
+                           dark:text-slate-500 dark:hover:text-white dark:hover:bg-white/[0.08]
                            transition-all duration-200"
               >
                 <X className="w-5 h-5" />
@@ -64,9 +66,9 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             </div>
 
             {/* Footer CTA */}
-            <div className="flex-shrink-0 px-7 py-4 border-t border-white/08
+            <div className="flex-shrink-0 px-7 py-4 border-t border-primary-200 dark:border-white/[0.08]
                             flex items-center justify-between gap-4">
-              <p className="text-slate-500 text-sm">Ready to add this to your platform?</p>
+              <p className="text-neutral-500 dark:text-slate-500 text-sm">Ready to add this to your platform?</p>
               <a
                 href="/#contact"
                 onClick={onClose}

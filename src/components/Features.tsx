@@ -49,7 +49,7 @@ const features = [
       'Connect directly with delivery partners, booking systems, POS tools, and payment gateways. ' +
       'Orders flow automatically from your website. No manual juggling across apps.',
     bullets: ['DoorDash, UberDirect, GrubHub & more', 'POS system sync', 'Automatic order routing', 'Real-time tracking'],
-    color: 'from-orange-500 to-amber-400',
+    color: 'from-primary-500 to-glow-500',
     glow: 'primary',
     modalKey: 'delivery-integration',
   },
@@ -62,7 +62,7 @@ const features = [
       'Automatically notify customers about offers, new services, and reminders via WhatsApp or SMS. ' +
       'AI generates personalised messages based on customer history to boost repeat business.',
     bullets: ['WhatsApp & SMS automation', 'Personalised messaging', 'Loyalty & rewards', 'Seasonal campaigns'],
-    color: 'from-purple-600 to-pink-500',
+    color: 'from-primary-700 to-accent-600',
     glow: 'purple',
     modalKey: 'customer-engagement',
   },
@@ -75,7 +75,7 @@ const features = [
       'Understand your business like never before. Track revenue, customer lifetime value, ' +
       'peak hours, and top services. AI-powered predictions help you optimise pricing and operations.',
     bullets: ['Real-time dashboards', 'Customer lifetime value', 'Predictive analytics', 'Exportable reports'],
-    color: 'from-green-500 to-teal-400',
+    color: 'from-glow-600 to-accent-500',
     glow: 'accent',
     modalKey: 'restaurant-analytics',
   },
@@ -88,16 +88,16 @@ const features = [
       'An AI phone agent that answers calls, books appointments, answers FAQs, and routes ' +
       'complex queries to your team. Available 24/7 — no missed calls, no lost leads.',
     bullets: ['AI-powered call handling', 'Appointment booking via phone', 'FAQ automation', 'Call transcription'],
-    color: 'from-accent-500 to-blue-500',
+    color: 'from-accent-600 to-primary-500',
     glow: 'accent',
     modalKey: 'voice-ai',
   },
 ];
 
 const glowMap: Record<string, string> = {
-  primary: 'hover:shadow-primary-500/15',
-  purple:  'hover:shadow-glow-500/15',
-  accent:  'hover:shadow-accent-500/15',
+  primary: 'hover:shadow-primary-500/25',
+  purple:  'hover:shadow-glow-500/25',
+  accent:  'hover:shadow-accent-500/25',
 };
 
 const Features = () => {
@@ -123,7 +123,7 @@ const Features = () => {
   };
 
   return (
-    <section id="features" ref={ref} className="py-24 bg-dark-900 relative overflow-hidden">
+    <section id="features" ref={ref} className="py-24 bg-white dark:bg-black relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,15 +135,16 @@ const Features = () => {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                           border border-primary-500/30 text-primary-300 text-sm font-medium mb-6">
+                           border border-primary-500/30 text-primary-700 dark:text-primary-300
+                           text-sm font-medium mb-6">
             <Star className="w-4 h-4" />
             AI Features
           </span>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-5">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
             Everything Your Business Needs —{' '}
             <span className="gradient-text">Powered by AI</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-neutral-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
             We don't just build websites — we create intelligent platforms that work around the clock
             to grow your revenue, reduce costs, and delight your customers.
           </p>
@@ -166,14 +167,14 @@ const Features = () => {
                 <f.icon className="w-6 h-6 text-white" />
               </div>
 
-              <h3 className="text-lg font-bold text-white mb-1">{f.title}</h3>
-              <p className="text-sm text-primary-400 font-medium mb-3">{f.subtitle}</p>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5">{f.description}</p>
+              <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-1">{f.title}</h3>
+              <p className="text-sm text-primary-600 dark:text-primary-400 font-medium mb-3">{f.subtitle}</p>
+              <p className="text-neutral-600 dark:text-slate-400 text-sm leading-relaxed mb-5">{f.description}</p>
 
               <ul className="space-y-1.5 mb-6 mt-auto">
                 {f.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-2 text-xs text-slate-300">
-                    <span className="w-1 h-1 rounded-full bg-primary-400 flex-shrink-0" />
+                  <li key={b} className="flex items-center gap-2 text-xs text-neutral-700 dark:text-slate-300">
+                    <span className="w-1 h-1 rounded-full bg-primary-500 dark:bg-primary-400 flex-shrink-0" />
                     {b}
                   </li>
                 ))}
@@ -181,7 +182,8 @@ const Features = () => {
 
               <button
                 onClick={() => setOpenModal(f.modalKey)}
-                className="inline-flex items-center text-sm text-primary-400 hover:text-primary-300
+                className="inline-flex items-center text-sm text-primary-600 hover:text-primary-700
+                           dark:text-primary-400 dark:hover:text-primary-300
                            font-medium transition-colors duration-200 mt-auto group"
               >
                 Learn More

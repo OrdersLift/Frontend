@@ -106,7 +106,7 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" ref={ref} className="py-20 bg-gray-50">
+    <section id="portfolio" ref={ref} className="py-20 bg-cream-100 dark:bg-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -119,17 +119,17 @@ const Portfolio = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-6"
           >
             <Eye className="w-4 h-4 mr-2" />
             Our Work
           </motion.div>
           
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
             Featured Projects
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed">
             Explore our latest work and see how we've helped businesses achieve their digital goals.
           </p>
         </motion.div>
@@ -150,7 +150,7 @@ const Portfolio = () => {
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                 activeFilter === filter.id
                   ? 'bg-primary-600 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  : 'bg-white text-neutral-600 dark:text-neutral-400 hover:bg-cream-200 dark:hover:bg-neutral-800 border border-primary-200 dark:border-white/10'
               }`}
             >
               {filter.name}
@@ -173,7 +173,7 @@ const Portfolio = () => {
                 y: -10,
                 transition: { duration: 0.3 }
               }}
-              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+              className="group bg-white dark:bg-neutral-950 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               {/* Project Image */}
               <div className="relative overflow-hidden">
@@ -188,7 +188,7 @@ const Portfolio = () => {
                       href={project.liveUrl}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors duration-200"
+                      className="w-12 h-12 bg-white dark:bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors duration-200"
                     >
                       <ExternalLink className="w-5 h-5" />
                     </motion.a>
@@ -196,7 +196,7 @@ const Portfolio = () => {
                       href={project.githubUrl}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors duration-200"
+                      className="w-12 h-12 bg-white dark:bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors duration-200"
                     >
                       <Github className="w-5 h-5" />
                     </motion.a>
@@ -206,11 +206,11 @@ const Portfolio = () => {
 
               {/* Project Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 transition-colors duration-300">
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-600 mb-4 leading-relaxed">
+                <p className="text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">
                   {project.description}
                 </p>
 
@@ -219,7 +219,7 @@ const Portfolio = () => {
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full"
+                      className="px-3 py-1 bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-xs font-medium rounded-full"
                     >
                       {tech}
                     </span>
@@ -228,7 +228,7 @@ const Portfolio = () => {
 
                 {/* Category Badge */}
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500 capitalize">
+                  <span className="text-sm text-neutral-500 dark:text-neutral-500 capitalize">
                     {project.category}
                   </span>
                 </div>

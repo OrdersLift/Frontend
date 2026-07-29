@@ -50,9 +50,13 @@ const Contact = () => {
     }
   };
 
-  const inputClass = `w-full px-4 py-3 rounded-xl bg-white/05 border border-white/10 text-white
-                      placeholder:text-slate-600 focus:outline-none focus:border-primary-500/60
-                      focus:bg-primary-500/05 transition-all duration-200 text-sm`;
+  const inputClass = `w-full px-4 py-3 rounded-xl bg-white border border-primary-200 text-neutral-900
+                      placeholder:text-neutral-400 focus:outline-none focus:border-primary-500
+                      focus:bg-primary-50/60
+                      dark:bg-white/[0.05] dark:border-white/10 dark:text-white
+                      dark:placeholder:text-slate-600 dark:focus:border-primary-500/60
+                      dark:focus:bg-primary-500/[0.05]
+                      transition-all duration-200 text-sm`;
 
   const industries = [
     'Restaurant', 'Dental Clinic', 'Gym & Fitness', 'Auto Garage',
@@ -61,9 +65,10 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" ref={ref} className="py-24 bg-dark-900 relative overflow-hidden">
+    <section id="contact" ref={ref} className="py-24 bg-white dark:bg-black relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                      w-[800px] h-[400px] bg-primary-600/05 rounded-full blur-3xl pointer-events-none" />
+                      w-[800px] h-[400px] bg-primary-200/40 dark:bg-primary-600/10
+                      rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -74,15 +79,16 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                           border border-primary-500/30 text-primary-300 text-sm font-medium mb-6">
+                           border border-primary-500/30 text-primary-700 dark:text-primary-300
+                           text-sm font-medium mb-6">
             <MessageSquare className="w-4 h-4" />
             Get In Touch
           </span>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-5">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
             Let's Build Something{' '}
             <span className="gradient-text">Great Together</span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-neutral-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Tell us about your business. We'll come back within 24 hours with a plan.
           </p>
         </motion.div>
@@ -93,9 +99,9 @@ const Contact = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="lg:col-span-3 glass rounded-2xl p-8 border border-white/07"
+            className="lg:col-span-3 glass rounded-2xl p-8 border border-primary-200/70 dark:border-white/10"
           >
-            <h3 className="text-xl font-bold text-white mb-6">Send us a message</h3>
+            <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-6">Send us a message</h3>
 
             {isSubmitted ? (
               <motion.div
@@ -103,20 +109,20 @@ const Contact = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-16"
               >
-                <CheckCircle className="w-14 h-14 text-green-400 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-white mb-2">Message Sent!</h4>
-                <p className="text-slate-400">We'll get back to you within 24 hours.</p>
+                <CheckCircle className="w-14 h-14 text-primary-500 dark:text-glow-400 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Message Sent!</h4>
+                <p className="text-neutral-600 dark:text-slate-400">We'll get back to you within 24 hours.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-2">Full Name *</label>
+                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Full Name *</label>
                     <input type="text" name="name" value={formData.name} onChange={handleChange}
                       required className={inputClass} placeholder="Your name" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-2">Email *</label>
+                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Email *</label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange}
                       required className={inputClass} placeholder="your@email.com" />
                   </div>
@@ -124,24 +130,24 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-2">Business Name</label>
+                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Business Name</label>
                     <input type="text" name="business" value={formData.business} onChange={handleChange}
                       className={inputClass} placeholder="Your business name" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-2">Industry</label>
+                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Industry</label>
                     <select name="industry" value={formData.industry} onChange={handleChange}
                       className={`${inputClass} cursor-pointer`}>
-                      <option value="" className="bg-dark-800">Select your industry</option>
+                      <option value="" className="bg-white dark:bg-neutral-900">Select your industry</option>
                       {industries.map((ind) => (
-                        <option key={ind} value={ind} className="bg-dark-800">{ind}</option>
+                        <option key={ind} value={ind} className="bg-white dark:bg-neutral-900">{ind}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-2">Message *</label>
+                  <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Message *</label>
                   <textarea name="message" value={formData.message} onChange={handleChange}
                     required rows={5} className={`${inputClass} resize-none`}
                     placeholder="Tell us about your business and what you need..." />
@@ -169,8 +175,8 @@ const Contact = () => {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="lg:col-span-2 flex flex-col gap-6"
           >
-            <div className="glass rounded-2xl p-6 border border-white/07">
-              <h3 className="text-lg font-bold text-white mb-5">Contact Information</h3>
+            <div className="glass rounded-2xl p-6 border border-primary-200/70 dark:border-white/10">
+              <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-5">Contact Information</h3>
               <div className="space-y-5">
                 {[
                   { icon: Mail,  label: 'Email',  value: 'restaurantorderlift@gmail.com', sub: 'Reply within 24 hours' },
@@ -178,39 +184,40 @@ const Contact = () => {
                 ].map((c) => (
                   <div key={c.label} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-primary-500/15 flex items-center justify-center flex-shrink-0">
-                      <c.icon className="w-5 h-5 text-primary-400" />
+                      <c.icon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-white mb-0.5">{c.label}</div>
-                      <div className="text-primary-400 text-sm font-medium">{c.value}</div>
-                      <div className="text-slate-500 text-xs">{c.sub}</div>
+                      <div className="text-sm font-semibold text-neutral-900 dark:text-white mb-0.5">{c.label}</div>
+                      <div className="text-primary-600 dark:text-primary-400 text-sm font-medium">{c.value}</div>
+                      <div className="text-neutral-500 dark:text-slate-500 text-xs">{c.sub}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="glass rounded-2xl p-6 border border-white/07">
+            <div className="glass rounded-2xl p-6 border border-primary-200/70 dark:border-white/10">
               <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-5 h-5 text-accent-400" />
-                <h4 className="text-white font-semibold">Availability</h4>
+                <Clock className="w-5 h-5 text-accent-600 dark:text-accent-400" />
+                <h4 className="text-neutral-900 dark:text-white font-semibold">Availability</h4>
               </div>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-slate-300">
-                  <span>Support</span><span className="text-accent-400">24/7 Online</span>
+                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
+                  <span>Support</span><span className="text-accent-700 dark:text-accent-400">24/7 Online</span>
                 </div>
-                <div className="flex justify-between text-slate-300">
+                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
                   <span>Discovery calls</span><span>Mon – Sat</span>
                 </div>
-                <div className="flex justify-between text-slate-300">
+                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
                   <span>Time zones</span><span>Worldwide</span>
                 </div>
               </div>
             </div>
 
-            <div className="glass rounded-2xl p-6 border border-primary-500/20 bg-primary-500/05">
-              <p className="text-sm text-slate-300 leading-relaxed">
-                <span className="text-white font-semibold block mb-1">Free Discovery Call</span>
+            <div className="glass rounded-2xl p-6 border border-primary-400/40 bg-primary-50
+                            dark:border-primary-500/20 dark:bg-primary-500/[0.05]">
+              <p className="text-sm text-neutral-700 dark:text-slate-300 leading-relaxed">
+                <span className="text-neutral-900 dark:text-white font-semibold block mb-1">Free Discovery Call</span>
                 Every project starts with a free 30-minute call. No commitment. We'll map out exactly
                 what you need and give you a clear plan.
               </p>

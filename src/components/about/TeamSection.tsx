@@ -65,7 +65,7 @@ const TeamSection = () => {
   ];
 
   return (
-    <section id="team" ref={ref} className="py-20 bg-white">
+    <section id="team" ref={ref} className="py-20 bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -78,17 +78,17 @@ const TeamSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-6"
           >
             <Users className="w-4 h-4 mr-2" />
             Meet Our Team
           </motion.div>
           
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
             The Minds Behind OrdersLift
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-4xl mx-auto leading-relaxed">
             Our team combines deep restaurant industry expertise with cutting-edge technology 
             to create solutions that truly understand and serve the needs of restaurant owners.
           </p>
@@ -104,7 +104,7 @@ const TeamSection = () => {
               transition={{ duration: 0.8, delay: index * 0.1 }}
               className="group"
             >
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-lg border border-primary-200 dark:border-white/10 p-6 hover:shadow-xl transition-shadow duration-300">
                 {/* Member Image */}
                 <div className="relative mb-6">
                   <img
@@ -117,11 +117,11 @@ const TeamSection = () => {
 
                 {/* Member Info */}
                 <div className="text-center mb-4">
-                  <h3 className="text-xl font-display font-bold text-gray-900 mb-1">
+                  <h3 className="text-xl font-display font-bold text-neutral-900 dark:text-white mb-1">
                     {member.name}
                   </h3>
                   <p className="text-primary-600 font-medium mb-3">{member.role}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed">{member.bio}</p>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">{member.bio}</p>
                 </div>
 
                 {/* Social Links */}
@@ -130,7 +130,7 @@ const TeamSection = () => {
                     href={member.linkedin}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="p-2 bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 rounded-lg transition-colors duration-200"
+                    className="p-2 bg-cream-200 dark:bg-neutral-800 hover:bg-primary-100 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 rounded-lg transition-colors duration-200"
                   >
                     <Linkedin className="w-4 h-4" />
                   </motion.a>
@@ -138,7 +138,7 @@ const TeamSection = () => {
                     href={member.twitter}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="p-2 bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 rounded-lg transition-colors duration-200"
+                    className="p-2 bg-cream-200 dark:bg-neutral-800 hover:bg-primary-100 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 rounded-lg transition-colors duration-200"
                   >
                     <Twitter className="w-4 h-4" />
                   </motion.a>
@@ -146,7 +146,7 @@ const TeamSection = () => {
                     href={`mailto:${member.email}`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="p-2 bg-gray-100 hover:bg-primary-100 text-gray-600 hover:text-primary-600 rounded-lg transition-colors duration-200"
+                    className="p-2 bg-cream-200 dark:bg-neutral-800 hover:bg-primary-100 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 rounded-lg transition-colors duration-200"
                   >
                     <Mail className="w-4 h-4" />
                   </motion.a>
@@ -163,26 +163,26 @@ const TeamSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 text-center"
         >
-          <h3 className="text-2xl font-display font-bold text-gray-900 mb-8">
+          <h3 className="text-2xl font-display font-bold text-neutral-900 dark:text-white mb-8">
             Our Team's Expertise
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="text-3xl font-bold text-primary-600 mb-2">15+</div>
-              <div className="text-gray-600">Years Restaurant Experience</div>
+              <div className="text-neutral-600 dark:text-neutral-400">Years Restaurant Experience</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-primary-600 mb-2">50+</div>
-              <div className="text-gray-600">AI Projects Delivered</div>
+              <div className="text-neutral-600 dark:text-neutral-400">AI Projects Delivered</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-primary-600 mb-2">100%</div>
-              <div className="text-gray-600">Client Satisfaction</div>
+              <div className="text-neutral-600 dark:text-neutral-400">Client Satisfaction</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-primary-600 mb-2">24/7</div>
-              <div className="text-gray-600">Support Available</div>
+              <div className="text-neutral-600 dark:text-neutral-400">Support Available</div>
             </div>
           </div>
         </motion.div>

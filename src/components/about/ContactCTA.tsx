@@ -8,7 +8,7 @@ const ContactCTA = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-20 bg-gradient-to-br from-primary-600 to-primary-800 relative overflow-hidden">
+    <section ref={ref} className="py-20 bg-gradient-to-br from-primary-500 via-primary-600 to-glow-600 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-black/10"></div>
@@ -62,7 +62,7 @@ const ContactCTA = () => {
               href="/#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group bg-white hover:bg-gray-100 text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:shadow-xl flex items-center"
+              className="group bg-white hover:bg-cream-200 text-primary-700 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 hover:shadow-xl flex items-center"
             >
               <MessageSquare className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               Start Your Project

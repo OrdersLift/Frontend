@@ -16,7 +16,7 @@ const Banner = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="absolute top-40 right-10 w-72 h-72 bg-secondary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+          className="absolute top-40 right-10 w-72 h-72 bg-accent-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -33,7 +33,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-8 md:mb-12 mx-auto relative z-20"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-8 md:mb-12 mx-auto relative z-20"
           >
             <Star className="w-4 h-4 mr-2 fill-current" />
             <span className="whitespace-nowrap">Trusted by 500+ restaurants worldwide</span>
@@ -44,7 +44,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-gray-900 leading-tight mb-6 md:mb-8"
+            className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-neutral-900 dark:text-white leading-tight mb-6 md:mb-8"
           >
             We Build
             <span className="block bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
@@ -58,7 +58,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl sm:text-2xl text-gray-600 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-400 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed"
           >
             Transform your restaurant with cutting-edge AI technology. Boost direct sales, 
             reduce delivery app dependency, and make data-driven decisions that drive real results.
@@ -84,7 +84,7 @@ const Banner = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center px-8 py-4 rounded-lg font-semibold text-lg text-gray-700 hover:text-primary-600 transition-colors duration-200"
+              className="group flex items-center px-8 py-4 rounded-lg font-semibold text-lg text-neutral-700 dark:text-neutral-300 hover:text-primary-600 transition-colors duration-200"
             >
               <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               See How It Works
@@ -135,7 +135,7 @@ const Banner = () => {
                   <stat.icon className="w-6 h-6 mr-2" />
                   {stat.number}
                 </div>
-                <div className="text-sm text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-200">
+                <div className="text-sm text-neutral-600 dark:text-neutral-400 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition-colors duration-200">
                   {stat.label}
                 </div>
               </motion.div>
@@ -154,12 +154,12 @@ const Banner = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center"
+          className="w-6 h-10 border-2 border-primary-300 dark:border-white/20 rounded-full flex justify-center"
         >
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+            className="w-1 h-3 bg-primary-300 rounded-full mt-2"
           />
         </motion.div>
       </motion.div>

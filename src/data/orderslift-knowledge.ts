@@ -24,6 +24,11 @@ export const ordersliftKnowledge = {
       detail:
         'A private knowledge engine for your team. Connect your databases, documents, Google Drive, Notion or POS and ask questions in plain English ("How much did we make last week?"). Your data stays yours.',
     },
+    {
+      name: 'AI Agent for Business',
+      detail:
+        'A private knowledge engine for your team. Connect your databases, documents, Google Drive, Notion or POS and ask questions in plain English ("How much did we make last week?"). Your data stays yours.',
+    },
   ],
   also_included: ['Analytics dashboard', 'Managed hosting', '2 years free maintenance'],
   pricing: {

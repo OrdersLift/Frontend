@@ -33,7 +33,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-900"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black"
     >
       {/* Grid background */}
       <div className="absolute inset-0 grid-bg opacity-60" />
@@ -42,17 +42,20 @@ const Hero = () => {
       <motion.div
         animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-400/30 dark:bg-primary-600/25
+                   rounded-full blur-3xl pointer-events-none"
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-glow-600/20 rounded-full blur-3xl pointer-events-none"
+        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-300/40 dark:bg-glow-600/25
+                   rounded-full blur-3xl pointer-events-none"
       />
       <motion.div
         animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.4, 0.15] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute top-1/2 right-1/3 w-64 h-64 bg-accent-500/15 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/2 right-1/3 w-64 h-64 bg-glow-300/35 dark:bg-accent-500/15
+                   rounded-full blur-3xl pointer-events-none"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-32">
@@ -62,7 +65,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-500/30
-                     text-primary-300 text-sm font-medium mb-8"
+                     text-primary-700 dark:text-primary-300 text-sm font-medium mb-8"
         >
           <Sparkles className="w-4 h-4" />
           AI-Powered Business Platform — Global
@@ -74,10 +77,11 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-tight mb-4"
+          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-neutral-900
+                     dark:text-white leading-tight mb-4"
         >
           The Complete AI Platform
-          <span className="block text-slate-400 text-4xl sm:text-5xl lg:text-6xl mt-2 font-semibold">
+          <span className="block text-neutral-500 dark:text-slate-400 text-4xl sm:text-5xl lg:text-6xl mt-2 font-semibold">
             Built for
           </span>
         </motion.h1>
@@ -103,7 +107,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg sm:text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed"
+          className="text-lg sm:text-xl text-neutral-600 dark:text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed"
         >
           We build your complete digital presence — custom website, admin panel, AI customer chatbot,
           internal RAG bot, hosting — and maintain it all for 2 years free. You focus on your business.
@@ -153,7 +157,7 @@ const Hero = () => {
               <div className="text-2xl md:text-3xl font-bold gradient-text-blue mb-1">
                 {stat.number}
               </div>
-              <div className="text-xs text-slate-500 font-medium">{stat.label}</div>
+              <div className="text-xs text-neutral-500 dark:text-slate-500 font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -169,12 +173,12 @@ const Hero = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-5 h-9 border-2 border-white/20 rounded-full flex justify-center pt-1.5"
+          className="w-5 h-9 border-2 border-primary-500/40 dark:border-white/20 rounded-full flex justify-center pt-1.5"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-2.5 bg-primary-400 rounded-full"
+            className="w-1 h-2.5 bg-primary-500 dark:bg-primary-400 rounded-full"
           />
         </motion.div>
       </motion.div>

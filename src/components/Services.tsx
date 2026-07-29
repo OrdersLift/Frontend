@@ -78,7 +78,7 @@ const Services = () => {
   };
 
   return (
-    <section id="services" ref={ref} className="py-20 bg-white">
+    <section id="services" ref={ref} className="py-20 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -91,17 +91,17 @@ const Services = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300 text-sm font-medium mb-6"
           >
             <Zap className="w-4 h-4 mr-2" />
             Our Services
           </motion.div>
           
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
             What We Do
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed">
             We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.
           </p>
         </motion.div>
@@ -121,22 +121,22 @@ const Services = () => {
                 y: -10,
                 transition: { duration: 0.3 }
               }}
-              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+              className="group relative bg-white dark:bg-neutral-950 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-primary-100 dark:border-white/10"
             >
               {/* Icon */}
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mb-6 group-hover:shadow-lg transition-all duration-300"
               >
-                <service.icon className="w-8 h-8 text-white" />
+                <service.icon className="w-8 h-8 text-neutral-900 dark:text-white" />
               </motion.div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">
+              <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4 group-hover:text-primary-600 transition-colors duration-300">
                 {service.title}
               </h3>
               
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-neutral-600 dark:text-neutral-400 mb-6 leading-relaxed">
                 {service.description}
               </p>
 
@@ -148,7 +148,7 @@ const Services = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.5 + index * 0.1 + featureIndex * 0.05 }}
-                    className="flex items-center text-sm text-gray-600"
+                    className="flex items-center text-sm text-neutral-600 dark:text-neutral-400"
                   >
                     <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-3" />
                     {feature}
