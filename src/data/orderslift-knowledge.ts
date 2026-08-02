@@ -1,99 +1,84 @@
-// Knowledge base for the main OrdersLift marketing-site assistant.
-// (The demo sites auto-extract their knowledge from each demo's data.ts;
-//  OrdersLift's own content lives in JSX components, so it's summarised here.
-//  Keep this in sync if the marketing copy changes substantially.)
+// Knowledge base for the OrdersLift site assistant.
+//
+// The demo restaurant under /demo/restaurants auto-extracts its knowledge from
+// its own data.ts. OrdersLift's own positioning lives in JSX, so it is
+// summarised here — derived from src/data/site.ts. Keep the two in step.
+
+import { faqs, plans, process, services } from './site';
 
 export const ordersliftKnowledge = {
   brand: 'OrdersLift',
-  tagline: 'The Complete AI Platform — Built for Every Business, Worldwide.',
+  tagline: 'Growth marketing for restaurants. Nothing else.',
   what_we_do:
-    'OrdersLift is an AI web agency that builds a complete digital presence for local businesses and maintains it for 2 years free. Each client gets a full platform — not just a website.',
-  three_pillars: [
-    {
-      name: 'Full Custom Website',
-      detail:
-        'A bespoke website tailored to your brand and industry, with an admin panel so you control menus, services, bookings and content without touching code. Mobile-first, SEO-optimised, fast-loading and accessible.',
-    },
-    {
-      name: 'AI Customer Chatbot',
-      detail:
-        'A 24/7 chatbot trained on your specific business — services, prices, hours, FAQs. Voice and text capable, with WhatsApp & SMS integration and handoff to a human when needed.',
-    },
-    {
-      name: 'Internal RAG Bot',
-      detail:
-        'A private knowledge engine for your team. Connect your databases, documents, Google Drive, Notion or POS and ask questions in plain English ("How much did we make last week?"). Your data stays yours.',
-    },
-    {
-      name: 'AI Agent for Business',
-      detail:
-        'A private knowledge engine for your team. Connect your databases, documents, Google Drive, Notion or POS and ask questions in plain English ("How much did we make last week?"). Your data stays yours.',
-    },
-  ],
-  also_included: ['Analytics dashboard', 'Managed hosting', '2 years free maintenance'],
+    'OrdersLift is a marketing agency that works only with restaurants, cafés, bars, takeaways ' +
+    'and food trucks. We rebuild the Google Business Profile, run a review engine that brings in ' +
+    'real reviews from real guests, send branded review-request emails and texts, run Facebook ' +
+    'and Instagram ads built around a redeemable offer, and build the website and direct ordering ' +
+    'flow so the restaurant stops paying commission to delivery apps.',
+
+  services: services.map((s) => ({
+    name: s.marker,
+    headline: s.title,
+    detail: s.lede,
+    includes: s.points,
+  })),
+
+  order_of_work:
+    'The channels run in a deliberate order. The profile and the reviews come first because ' +
+    'advertising a low rating wastes money; ads come fourth, once the rating holds.',
+
+  process: process.map((p) => ({ step: p.step, name: p.title, detail: p.body })),
+
   pricing: {
-    note: 'No hidden fees. Pricing is always discussed and agreed upfront. Every plan includes a free discovery call; final pricing depends on business size and requirements.',
-    plans: [
-      {
-        name: 'Starter',
-        type: 'One-time payment',
-        price: 'Custom',
-        includes: [
-          'Custom website design & build',
-          'Admin panel',
-          'AI customer chatbot (basic)',
-          'Standard delivery/service integrations',
-          'Analytics dashboard',
-          'Managed hosting (1st year)',
-          '12 months free maintenance',
-        ],
-      },
-      {
-        name: 'Growth',
-        type: 'Monthly subscription',
-        price: 'Custom',
-        popular: true,
-        includes: [
-          'Everything in Starter',
-          'Advanced AI chatbot (voice + text)',
-          'Internal RAG bot',
-          'WhatsApp & SMS automation',
-          'Predictive analytics',
-          'Managed hosting included',
-          '24 months free maintenance',
-          'Monthly AI model updates',
-          'Priority support',
-        ],
-      },
-      {
-        name: 'Enterprise',
-        type: 'Bespoke / fully custom pricing',
-        price: 'Bespoke',
-        includes: [
-          'Everything in Growth',
-          'Multi-location support',
-          'Custom RAG data sources',
-          'Voice AI phone agent',
-          'CRM & POS deep integration',
-          'Dedicated account manager',
-          'SLA with guaranteed uptime',
-          'Custom reporting & BI',
-        ],
-      },
-    ],
+    note:
+      'Three plans, month to month after the first ninety days. Ad spend is billed by Meta ' +
+      'directly to the client and is never marked up. Exact prices are quoted after the free ' +
+      'teardown, once we have seen the state of the listing.',
+    plans: plans.map((p) => ({
+      name: p.name,
+      for: p.tag,
+      price: p.price,
+      terms: p.note,
+      suits: p.blurb,
+      includes: p.includes,
+    })),
   },
-  industries: [
-    'Restaurants', 'Dental Clinics', 'Gyms & Fitness', 'Auto Garages', 'Salons & Spas',
-    'Law Firms', 'Hotels & B&Bs', 'Retail Shops', 'Real Estate', 'Clinics & Physio',
+
+  teardown:
+    'Every engagement starts with a free 20-minute teardown call. We read the listing back to ' +
+    'the owner, compare the four nearest restaurants, explain where the reviews stalled, and say ' +
+    'what we would do first. The findings are theirs whether or not they hire us.',
+
+  what_we_refuse: [
+    'Buying, writing or incentivising reviews — Google strips them and can suspend the profile',
+    'Marking up ad spend',
+    'Holding a client Google profile, ad account or domain',
+    'Twelve-month lock-in contracts',
+    'Reporting on impressions instead of guests through the door',
+    'Taking on a second restaurant on the same street',
   ],
-  stats: {
-    businesses_powered: '100+',
-    countries_served: '3',
-    free_maintenance: '2 years',
-    support: '24/7 AI',
-  },
-  demos:
-    'Live, interactive demo websites are available under the "Demo" menu — one per industry (restaurants, dental clinics, gyms, auto garages, salons, law firms, hotels, retail, real estate, physio clinics).',
+
+  ownership:
+    'Clients own their Google profile, ad account, website, domain and guest list from day one. ' +
+    'OrdersLift works inside the client accounts, never its own.',
+
+  reporting:
+    'One page every Monday: rating, review count, calls, direction requests, direct orders, and ' +
+    'cost per redeemed voucher on the ads.',
+
+  industries: 'Restaurants, cafés, bars and pubs, takeaways and QSR, food trucks, and small groups of two or more sites. No other industries.',
+
+  demo:
+    'A complete working demo restaurant — Saffron & Ember — is at /demo/restaurants. It has a ' +
+    'menu, direct ordering, table booking and an on-site assistant.',
+
+  faqs: faqs.map((f) => ({ question: f.q, answer: f.a })),
+
   contact:
-    'To start a project or get a custom quote, use the "Get Started" / "Start Your Project" button or the contact section on the site. Every project begins with a free discovery call.',
+    'Email restaurantorderlift@gmail.com or call (+91) 63939 74340, or use the form in the ' +
+    'contact section to request the free teardown. Replies come within one working day.',
+
+  examples_disclaimer:
+    'The before-and-after listings, review-request emails and ad creative shown on the site are ' +
+    'worked examples built from real campaign structures, not client records. Say so if asked.',
 };

@@ -2,32 +2,48 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import Industries from '../components/Industries';
-import Products from '../components/Products';
-import HowItWorks from '../components/HowItWorks';
-import Features from '../components/Features';
+import Services from '../components/Services';
+import Work from '../components/Work';
+import Emails from '../components/Emails';
+import Ads from '../components/Ads';
+import Process from '../components/Process';
 import Pricing from '../components/Pricing';
-import Reviews from '../components/Reviews';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+
+import { faqs } from '../data/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
-  title="OrdersLift - AI Platform for Every Business | Worldwide"
-  description="OrdersLift builds complete AI-powered platforms for local businesses — custom website, admin panel, AI chatbot, internal RAG bot, and 2 years free maintenance. Serving restaurants, dental clinics, gyms, salons, garages and more worldwide."
-  keywords="AI platform for business, AI chatbot for small business, internal RAG bot, business website AI agency, AI website agency, restaurant AI platform, dental clinic website, gym management system, salon booking AI, auto garage website"
+  title="Restaurant Marketing Agency — Reviews, Google Profile & Meta Ads"
+  description="OrdersLift is a growth marketing agency for restaurants and nothing else. We rebuild your Google Business Profile, run a review engine that brings in real reviews, send branded review-request emails, and run Facebook and Instagram ads that fill quiet nights."
+  keywords="restaurant marketing agency, restaurant Google Business Profile optimisation, get more Google reviews for restaurant, restaurant review management, restaurant reputation management, review request emails for restaurants, restaurant Facebook ads, restaurant Instagram ads, Meta ads for restaurants, local SEO for restaurants, restaurant map pack ranking, direct online ordering for restaurants"
   canonical="https://orderslift.com/"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+
   <Header client:load />
-  <Hero client:load />
-  <Industries client:load />
-  <Products client:load />
-  <HowItWorks client:load />
-  <Features client:load />
-  <Pricing client:load />
-  <Reviews client:load />
-  <FAQ client:load />
-  <Contact client:load />
-  <Footer client:load />
+  <main>
+    <Hero client:load />
+    <Services client:visible />
+    <Work client:visible />
+    <Emails client:visible />
+    <Ads client:visible />
+    <Process client:visible />
+    <Pricing client:visible />
+    <FAQ client:visible />
+    <Contact client:visible />
+  </main>
+  <Footer client:visible />
 </Layout>

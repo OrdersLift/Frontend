@@ -1,232 +1,196 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Mail, Phone, Send, MessageSquare, Clock, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Check, Mail, Phone } from 'lucide-react';
+import { contact } from '../data/site';
+import { SectionHead } from './Section';
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgvlkaar';
+const field =
+  'w-full rounded-[3px] border border-rule bg-raise px-3.5 py-3 text-sm text-ink ' +
+  'placeholder:text-muted focus:border-ink focus:outline-none transition-colors';
 
-const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
-  const [formData, setFormData] = useState({
-    name: '', email: '', business: '', industry: '', message: '',
+export default function Contact() {
+  const [form, setForm] = useState({
+    name: '', email: '', venue: '', type: '', listing: '', message: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const change = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setSending(true);
+    setError(null);
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(contact.formspree, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          _subject: `New contact from OrdersLift — ${formData.name} (${formData.industry})`,
-          _replyto: formData.email,
+          ...form,
+          _subject: `Teardown request — ${form.venue || form.name}`,
+          _replyto: form.email,
         }),
       });
       if (!res.ok) {
-        let msg = 'Something went wrong. Please try again.';
-        try { const d = await res.json(); if (d?.errors?.[0]?.message) msg = d.errors[0].message; } catch {}
-        alert(msg);
-        setIsSubmitting(false);
+        let msg = 'That did not send. Try again, or email us directly.';
+        try {
+          const d = await res.json();
+          if (d?.errors?.[0]?.message) msg = d.errors[0].message;
+        } catch { /* keep the default message */ }
+        setError(msg);
         return;
       }
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ name: '', email: '', business: '', industry: '', message: '' });
-      }, 4000);
+      setSent(true);
     } catch {
-      alert('Network error. Please check your connection.');
-      setIsSubmitting(false);
+      setError('No connection. Check your network, or email us directly.');
+    } finally {
+      setSending(false);
     }
   };
 
-  const inputClass = `w-full px-4 py-3 rounded-xl bg-white border border-primary-200 text-neutral-900
-                      placeholder:text-neutral-400 focus:outline-none focus:border-primary-500
-                      focus:bg-primary-50/60
-                      dark:bg-white/[0.05] dark:border-white/10 dark:text-white
-                      dark:placeholder:text-slate-600 dark:focus:border-primary-500/60
-                      dark:focus:bg-primary-500/[0.05]
-                      transition-all duration-200 text-sm`;
-
-  const industries = [
-    'Restaurant', 'Dental Clinic', 'Gym & Fitness', 'Auto Garage',
-    'Salon & Spa', 'Law Firm', 'Hotel / B&B', 'Retail Shop',
-    'Real Estate', 'Clinic / Physio', 'Other',
-  ];
-
   return (
-    <section id="contact" ref={ref} className="py-24 bg-white dark:bg-black relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                      w-[800px] h-[400px] bg-primary-200/40 dark:bg-primary-600/10
-                      rounded-full blur-3xl pointer-events-none" />
+    <section id="contact" className="section section-band">
+      <div className="shell">
+        <SectionHead
+          marker="Get the teardown"
+          aside="Reply within one working day"
+          title="Tell us where you are. We will look you up before we call."
+          lede="Twenty minutes on the phone. We read your listing back to you, show you the four
+                restaurants nearest you, and tell you which of you is winning the search and why."
+        />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                           border border-primary-500/30 text-primary-700 dark:text-primary-300
-                           text-sm font-medium mb-6">
-            <MessageSquare className="w-4 h-4" />
-            Get In Touch
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
-            Let's Build Something{' '}
-            <span className="gradient-text">Great Together</span>
-          </h2>
-          <p className="text-neutral-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-            Tell us about your business. We'll come back within 24 hours with a plan.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-          {/* Form — takes 3 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="lg:col-span-3 glass rounded-2xl p-8 border border-primary-200/70 dark:border-white/10"
-          >
-            <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-6">Send us a message</h3>
-
-            {isSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-16"
-              >
-                <CheckCircle className="w-14 h-14 text-primary-500 dark:text-glow-400 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Message Sent!</h4>
-                <p className="text-neutral-600 dark:text-slate-400">We'll get back to you within 24 hours.</p>
-              </motion.div>
+        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-16">
+          {/* form */}
+          <div>
+            {sent ? (
+              <div className="panel flex flex-col items-start p-8">
+                <Check className="h-8 w-8 text-gain" strokeWidth={2} />
+                <h3 className="display mt-5 text-2xl">That is with us.</h3>
+                <p className="mt-3 max-w-md text-body">
+                  We will look up your listing and come back within one working day with what we
+                  found — whether or not you end up hiring us.
+                </p>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Full Name *</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleChange}
-                      required className={inputClass} placeholder="Your name" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Email *</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange}
-                      required className={inputClass} placeholder="your@email.com" />
-                  </div>
+              <form onSubmit={submit} className="grid gap-5">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <label className="grid gap-2">
+                    <span className="label">Your name *</span>
+                    <input
+                      required name="name" value={form.name} onChange={change}
+                      className={field} placeholder="Ana Ferreira" autoComplete="name"
+                    />
+                  </label>
+                  <label className="grid gap-2">
+                    <span className="label">Email *</span>
+                    <input
+                      required type="email" name="email" value={form.email} onChange={change}
+                      className={field} placeholder="you@restaurant.com" autoComplete="email"
+                    />
+                  </label>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Business Name</label>
-                    <input type="text" name="business" value={formData.business} onChange={handleChange}
-                      className={inputClass} placeholder="Your business name" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Industry</label>
-                    <select name="industry" value={formData.industry} onChange={handleChange}
-                      className={`${inputClass} cursor-pointer`}>
-                      <option value="" className="bg-white dark:bg-neutral-900">Select your industry</option>
-                      {industries.map((ind) => (
-                        <option key={ind} value={ind} className="bg-white dark:bg-neutral-900">{ind}</option>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <label className="grid gap-2">
+                    <span className="label">Restaurant name *</span>
+                    <input
+                      required name="venue" value={form.venue} onChange={change}
+                      className={field} placeholder="Bella Napoli"
+                    />
+                  </label>
+                  <label className="grid gap-2">
+                    <span className="label">Type of place</span>
+                    <select
+                      name="type" value={form.type} onChange={change}
+                      className={`${field} cursor-pointer`}
+                    >
+                      <option value="">Select one</option>
+                      {contact.venueTypes.map((t) => (
+                        <option key={t} value={t}>{t}</option>
                       ))}
                     </select>
-                  </div>
+                  </label>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-neutral-600 dark:text-slate-400 mb-2">Message *</label>
-                  <textarea name="message" value={formData.message} onChange={handleChange}
-                    required rows={5} className={`${inputClass} resize-none`}
-                    placeholder="Tell us about your business and what you need..." />
-                </div>
+                <label className="grid gap-2">
+                  <span className="label">Google listing or website</span>
+                  <input
+                    name="listing" value={form.listing} onChange={change}
+                    className={field} placeholder="A link, or just the town — we will find you"
+                  />
+                </label>
 
-                <motion.button
-                  type="submit" disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                  className="w-full btn-primary justify-center py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />Sending...</>
-                  ) : (
-                    <><Send className="w-5 h-5 mr-2" />Send Message</>
-                  )}
-                </motion.button>
+                <label className="grid gap-2">
+                  <span className="label">What is going on? *</span>
+                  <textarea
+                    required rows={5} name="message" value={form.message} onChange={change}
+                    className={`${field} resize-none`}
+                    placeholder="Quiet weeknights, a rating that will not move, too much going to the delivery apps — whatever it is."
+                  />
+                </label>
+
+                {error && (
+                  <p role="alert" className="text-sm font-medium text-loss">{error}</p>
+                )}
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <button type="submit" disabled={sending} className="btn btn-solid disabled:opacity-60">
+                    {sending ? 'Sending…' : 'Request the teardown'}
+                    {!sending && <ArrowRight className="h-4 w-4" />}
+                  </button>
+                  <span className="text-xs text-muted">No newsletter, no sequence, no call centre.</span>
+                </div>
               </form>
             )}
-          </motion.div>
+          </div>
 
-          {/* Info — takes 2 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="lg:col-span-2 flex flex-col gap-6"
-          >
-            <div className="glass rounded-2xl p-6 border border-primary-200/70 dark:border-white/10">
-              <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-5">Contact Information</h3>
-              <div className="space-y-5">
+          {/* direct lines */}
+          <div className="grid content-start gap-8">
+            <div className="border-t border-rule pt-6">
+              <p className="label">Or skip the form</p>
+              <div className="mt-5 grid gap-4">
+                <a href={`mailto:${contact.email}`} className="flex items-start gap-3 group">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                  <span>
+                    <span className="block text-sm font-semibold text-ink group-hover:text-gold transition-colors">
+                      {contact.email}
+                    </span>
+                    <span className="block text-xs text-muted">Answered within a working day</span>
+                  </span>
+                </a>
+                <a href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`} className="flex items-start gap-3 group">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                  <span>
+                    <span className="figure block text-sm font-semibold text-ink group-hover:text-gold transition-colors">
+                      {contact.phone}
+                    </span>
+                    <span className="block text-xs text-muted">A person, not a menu tree</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            <div className="border-t border-rule pt-6">
+              <p className="label">What the teardown covers</p>
+              <ul className="mt-5 grid gap-3">
                 {[
-                  { icon: Mail,  label: 'Email',  value: 'restaurantorderlift@gmail.com', sub: 'Reply within 24 hours' },
-                  { icon: Phone, label: 'Phone',  value: '(+91) 63939 74340',             sub: 'Available 24/7' },
-                ].map((c) => (
-                  <div key={c.label} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary-500/15 flex items-center justify-center flex-shrink-0">
-                      <c.icon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-neutral-900 dark:text-white mb-0.5">{c.label}</div>
-                      <div className="text-primary-600 dark:text-primary-400 text-sm font-medium">{c.value}</div>
-                      <div className="text-neutral-500 dark:text-slate-500 text-xs">{c.sub}</div>
-                    </div>
-                  </div>
+                  'Your listing, read back to you line by line',
+                  'The four restaurants nearest you, side by side',
+                  'Where your reviews stalled, and why',
+                  'What we would do first, and what we would leave alone',
+                ].map((t) => (
+                  <li key={t} className="flex gap-3 text-sm leading-snug text-body">
+                    <span aria-hidden="true" className="mt-[0.45rem] h-px w-3 shrink-0 bg-gold" />
+                    {t}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-
-            <div className="glass rounded-2xl p-6 border border-primary-200/70 dark:border-white/10">
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-5 h-5 text-accent-600 dark:text-accent-400" />
-                <h4 className="text-neutral-900 dark:text-white font-semibold">Availability</h4>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
-                  <span>Support</span><span className="text-accent-700 dark:text-accent-400">24/7 Online</span>
-                </div>
-                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
-                  <span>Discovery calls</span><span>Mon – Sat</span>
-                </div>
-                <div className="flex justify-between text-neutral-700 dark:text-slate-300">
-                  <span>Time zones</span><span>Worldwide</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="glass rounded-2xl p-6 border border-primary-400/40 bg-primary-50
-                            dark:border-primary-500/20 dark:bg-primary-500/[0.05]">
-              <p className="text-sm text-neutral-700 dark:text-slate-300 leading-relaxed">
-                <span className="text-neutral-900 dark:text-white font-semibold block mb-1">Free Discovery Call</span>
-                Every project starts with a free 30-minute call. No commitment. We'll map out exactly
-                what you need and give you a clear plan.
-              </p>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Contact;
+}

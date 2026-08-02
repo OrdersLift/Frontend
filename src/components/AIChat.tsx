@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { MessageCircle, X, ArrowUp } from 'lucide-react';
 import { askBot, type ChatTurn } from '../lib/askBot';
 
 const GREETING =
-  "Hi! I'm OrdersLift's assistant 👋 Ask me about what we build, pricing, the industries we serve, or our live demos.";
+  'Ask me anything about how we work — the review engine, the ads, what it costs, or what we ' +
+  'refuse to do.';
 
 const SUGGESTIONS = [
-  'What do you build?',
-  'How much does it cost?',
-  'Show me a demo',
-  'What is the RAG bot?',
+  'How fast does a rating move?',
+  'Can you get me reviews?',
+  'What does it cost?',
+  'Why restaurants only?',
 ];
 
 export default function AIChat() {
@@ -38,120 +38,102 @@ export default function AIChat() {
 
   return (
     <>
-      <motion.button
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.8, type: 'spring' }}
+      <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-5 right-5 z-50 grid place-items-center w-14 h-14 rounded-full
-                   bg-gradient-to-br from-primary-600 to-glow-500 text-white shadow-xl shadow-primary-600/40
-                   hover:brightness-110"
-        aria-label="Open OrdersLift assistant"
+        aria-expanded={open}
+        aria-label={open ? 'Close the assistant' : 'Ask a question'}
+        className="fixed bottom-5 right-5 z-50 grid h-12 w-12 place-items-center rounded-full border border-rule bg-ink text-paper transition-colors hover:bg-gold hover:text-[#14110d]"
       >
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-              <X className="w-6 h-6" />
-            </motion.span>
-          ) : (
-            <motion.span key="c" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
-              <MessageCircle className="w-6 h-6" />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </motion.button>
+        {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
+      </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.95 }}
-            className="fixed bottom-24 right-5 z-50 w-[calc(100vw-2.5rem)] max-w-sm rounded-2xl overflow-hidden
-                       bg-white dark:bg-neutral-950 border border-primary-300 dark:border-primary-500/30
-                       shadow-2xl shadow-primary-900/25 dark:shadow-black/50 flex flex-col"
-            style={{ height: 'min(70vh, 540px)' }}
-          >
-            <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-600 to-glow-500 text-white">
-              <span className="grid place-items-center w-9 h-9 rounded-full bg-white/20">
-                <Sparkles className="w-5 h-5" />
-              </span>
-              <div>
-                <p className="font-semibold text-sm">OrdersLift Assistant</p>
-                <p className="text-[11px] text-white/80">Ask about our AI platform</p>
+      {open && (
+        <div
+          className="fixed bottom-20 right-5 z-50 flex w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded border border-rule bg-paper shadow-2xl"
+          style={{ height: 'min(70vh, 540px)' }}
+        >
+          <div className="flex items-center justify-between gap-3 border-b border-rule px-4 py-3">
+            <div>
+              <p className="display text-base">Ask OrdersLift</p>
+              <p className="label mt-0.5 text-[9px]">Answers from this site only</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close the assistant"
+              className="text-muted transition-colors hover:text-ink"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            {msgs.map((m, i) => (
+              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[85%] rounded-[3px] px-3.5 py-2.5 text-sm leading-relaxed ${
+                    m.role === 'user'
+                      ? 'bg-ink text-paper'
+                      : 'border border-rule bg-raise text-body'
+                  }`}
+                >
+                  {m.text}
+                </div>
               </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
-              {msgs.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                      m.role === 'user'
-                        ? 'bg-primary-600 text-white rounded-br-sm'
-                        : 'bg-cream-100 text-neutral-800 border border-primary-200 rounded-bl-sm dark:bg-white/[0.05] dark:text-slate-200 dark:border-white/[0.08]'
-                    }`}
-                  >
-                    {m.text}
-                  </div>
+            ))}
+            {typing && (
+              <div className="flex justify-start">
+                <div className="flex gap-1 rounded-[3px] border border-rule bg-raise px-4 py-3">
+                  {[0, 1, 2].map((d) => (
+                    <span
+                      key={d}
+                      className="h-1.5 w-1.5 rounded-full bg-muted"
+                      style={{ animation: `fadeIn 1s ease-in-out ${d * 0.2}s infinite alternate` }}
+                    />
+                  ))}
                 </div>
-              ))}
-              {typing && (
-                <div className="flex justify-start">
-                  <div className="bg-cream-100 border border-primary-200 dark:bg-white/[0.05] dark:border-white/[0.08]
-                                  rounded-2xl rounded-bl-sm px-4 py-3">
-                    <div className="flex gap-1">
-                      {[0, 1, 2].map((d) => (
-                        <motion.span
-                          key={d}
-                          className="w-1.5 h-1.5 rounded-full bg-primary-500 dark:bg-primary-400"
-                          animate={{ opacity: [0.3, 1, 0.3] }}
-                          transition={{ duration: 1, repeat: Infinity, delay: d * 0.2 }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={endRef} />
-            </div>
-
-            {msgs.length <= 1 && (
-              <div className="px-3 pb-2 flex flex-wrap gap-1.5">
-                {SUGGESTIONS.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => send(q)}
-                    className="text-[11px] px-2.5 py-1 rounded-full border border-primary-400 text-primary-700
-                               hover:bg-primary-50 dark:border-primary-400/40 dark:text-primary-200
-                               dark:hover:bg-primary-400/10 transition"
-                  >
-                    {q}
-                  </button>
-                ))}
               </div>
             )}
+            <div ref={endRef} />
+          </div>
 
-            <form
-              onSubmit={(e) => { e.preventDefault(); send(input); }}
-              className="flex items-center gap-2 p-3 border-t border-primary-200 dark:border-white/[0.08]"
+          {msgs.length <= 1 && (
+            <div className="flex flex-wrap gap-1.5 px-4 pb-3">
+              {SUGGESTIONS.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => send(q)}
+                  className="rounded-[3px] border border-rule px-2.5 py-1 text-[11px] text-body transition-colors hover:border-ink hover:text-ink"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <form
+            onSubmit={(e) => { e.preventDefault(); send(input); }}
+            className="flex items-center gap-2 border-t border-rule p-3"
+          >
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type a question"
+              aria-label="Your question"
+              className="flex-1 rounded-[3px] border border-rule bg-raise px-3 py-2 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-ink"
+            />
+            <button
+              type="submit"
+              aria-label="Send"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-[3px] bg-ink text-paper transition-colors hover:bg-gold hover:text-[#14110d]"
             >
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about OrdersLift..."
-                className="flex-1 bg-cream-100 border border-primary-200 text-neutral-900 placeholder-neutral-400
-                           dark:bg-black dark:border-white/10 dark:text-white dark:placeholder-slate-500
-                           rounded-full px-4 py-2 text-sm
-                           outline-none focus:ring-2 focus:ring-primary-400/60"
-              />
-              <button type="submit" className="grid place-items-center w-9 h-9 rounded-full bg-gradient-to-br from-primary-600 to-glow-500 text-white shrink-0" aria-label="Send">
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <ArrowUp className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
+      )}
     </>
   );
 }
