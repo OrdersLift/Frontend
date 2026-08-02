@@ -1,45 +1,34 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, ChevronDown, Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 
-const demoItems = [
-  { name: 'Restaurants',     href: '/demo/restaurants' },
-  { name: 'Dental Clinics',  href: '/demo/dental-clinics' },
-  { name: 'Gyms & Fitness',  href: '/demo/gyms-fitness' },
-  { name: 'Auto Garages',    href: '/demo/auto-garages' },
-  { name: 'Salons & Spas',   href: '/demo/salons-spas' },
-  { name: 'Law Firms',       href: '/demo/law-firms' },
-  { name: 'Hotels & B&Bs',   href: '/demo/hotels' },
-  { name: 'Retail Shops',    href: '/demo/retail-shops' },
-  { name: 'Real Estate',     href: '/demo/real-estate' },
-  { name: 'Clinics & Physio', href: '/demo/clinics-physio' },
+const nav = [
+  { name: 'What we do', href: '/#services' },
+  { name: 'The work',   href: '/#work' },
+  { name: 'How it runs', href: '/#process' },
+  { name: 'Pricing',    href: '/#pricing' },
+  { name: 'Questions',  href: '/#faq' },
 ];
 
-const navLink =
-  'text-neutral-600 hover:text-primary-700 hover:bg-primary-50 ' +
-  'dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5';
-
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
-  const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
+export default function Header() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  // Individual demo sites keep their own fixed brand palette, so no toggle there.
-  const [themeToggleVisible, setThemeToggleVisible] = useState(false);
+  // Demo sites carry their own fixed brand palette, so the toggle is hidden there.
+  const [canToggle, setCanToggle] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    setThemeToggleVisible(!/^\/demo\/.+/.test(window.location.pathname));
+    setCanToggle(!/^\/demo\/.+/.test(window.location.pathname));
   }, []);
 
-  const toggleTheme = () => {
+  const flipTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     document.documentElement.classList.toggle('dark', next === 'dark');
     document.documentElement.dataset.theme = next;
@@ -47,226 +36,90 @@ const Header = () => {
     setTheme(next);
   };
 
-  const navItems = [
-    { name: 'Home',       href: '/#home' },
-    { name: 'Industries', href: '/#industries' },
-    { name: 'Services',   href: '/#products' },
-    { name: 'Features',   href: '/#features' },
-    { name: 'Pricing',    href: '/#pricing' },
-  ];
-
-  const themeToggle = (
+  const themeButton = (
     <button
-      onClick={toggleTheme}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="grid place-items-center w-9 h-9 rounded-lg border border-primary-500/30
-                 text-primary-600 hover:bg-primary-50 hover:border-primary-500/60
-                 dark:border-white/15 dark:text-accent-300 dark:hover:bg-white/5
-                 transition-all duration-200"
+      type="button"
+      onClick={flipTheme}
+      aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+      className="grid h-9 w-9 place-items-center rounded-[3px] border border-rule text-body transition-colors hover:border-ink hover:text-ink"
     >
-      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
   );
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'glass shadow-lg shadow-primary-900/10 dark:shadow-black/40'
-          : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
+        scrolled || open ? 'border-b border-rule bg-paper/95 backdrop-blur-sm' : 'border-b border-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-3 flex-shrink-0">
-            <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
+      <div className="shell">
+        <div className="flex h-16 items-center justify-between gap-6 lg:h-20">
+          <a href="/" className="flex shrink-0 items-center gap-2.5" aria-label="OrdersLift — home">
+            <img src="/logo.png" alt="" className="h-8 w-auto lg:h-9" />
+            <span className="hidden sm:block">
+              <span className="display block text-lg leading-none">OrdersLift</span>
+              <span className="label block text-[9px] leading-tight">Restaurant growth</span>
+            </span>
           </a>
 
-          {/* Desktop Nav — centered */}
-          <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-            {navItems.map((item) => (
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            {nav.map((n) => (
               <a
-                key={item.name}
-                href={item.href}
-                className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
-                           transition-all duration-200 relative group`}
+                key={n.name}
+                href={n.href}
+                className="rounded-[3px] px-3 py-2 text-sm font-medium text-body transition-colors hover:text-ink"
               >
-                {item.name}
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                                 bg-primary-500 rounded-full transition-all duration-300
-                                 group-hover:w-4" />
+                {n.name}
               </a>
             ))}
-
-            {/* Demo dropdown */}
-            {/* <div
-              className="relative"
-              onMouseEnter={() => setDemoOpen(true)}
-              onMouseLeave={() => setDemoOpen(false)}
-            >
-              <a
-                href="/demo"
-                className={`flex items-center gap-1 ${navLink} px-4 py-2 rounded-lg
-                           text-sm font-medium transition-all duration-200`}
-              >
-                Demo
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${demoOpen ? 'rotate-180' : ''}`}
-                />
-              </a>
-
-              <AnimatePresence>
-                {demoOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.18 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56"
-                  >
-                    <div className="glass rounded-xl border border-primary-200/70 dark:border-white/10
-                                    shadow-xl shadow-primary-900/10 dark:shadow-black/40 p-2">
-                      {demoItems.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                                     dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                                     text-sm font-medium py-2 px-3 rounded-lg transition-all duration-200"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div> */}
-
-            <a
-              href="/#faq"
-              className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
-                         transition-all duration-200 relative group`}
-            >
-              FAQ
-              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                               bg-primary-500 rounded-full transition-all duration-300
-                               group-hover:w-4" />
-            </a>
           </nav>
 
-          {/* CTA */}
-          <div className="hidden lg:flex items-center gap-3">
-            {themeToggleVisible && themeToggle}
-            <a
-              href="/#contact"
-              className="btn-primary text-sm py-2 px-5"
-            >
-              <Zap className="w-4 h-4 mr-1.5" />
-              Get Started
+          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+            {canToggle && themeButton}
+            <a href="/#contact" className="btn btn-solid px-5 py-2.5 text-sm">
+              Book a teardown
             </a>
           </div>
 
-          {/* Mobile burger */}
-          <div className="lg:hidden flex items-center gap-2">
-            {themeToggleVisible && themeToggle}
+          <div className="flex items-center gap-2 lg:hidden">
+            {canToggle && themeButton}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-neutral-700 hover:text-primary-700 dark:text-slate-300
-                         dark:hover:text-white p-2 transition-colors"
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              type="button"
+              onClick={() => setOpen(!open)}
+              aria-expanded={open}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              className="grid h-9 w-9 place-items-center rounded-[3px] border border-rule text-ink"
             >
-              {isOpen ? <X size={22} /> : <Menu size={22} />}
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden glass border-t border-primary-200/70 dark:border-white/10 overflow-hidden"
-          >
-            <div className="px-4 py-6 space-y-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                             dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                             font-medium py-3 px-4 rounded-lg transition-all duration-200"
-                >
-                  {item.name}
-                </a>
-              ))}
-
-              {/* Mobile Demo accordion */}
-              <button
-                onClick={() => setMobileDemoOpen((v) => !v)}
-                className="w-full flex items-center justify-between text-neutral-700 hover:text-primary-700
-                           hover:bg-primary-50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                           font-medium py-3 px-4 rounded-lg transition-all duration-200"
-              >
-                Demo
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${mobileDemoOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
-              <AnimatePresence>
-                {mobileDemoOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden pl-3"
-                  >
-                    {demoItems.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className="block text-neutral-600 hover:text-primary-700 hover:bg-primary-50
-                                   dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5
-                                   text-sm font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
+      {open && (
+        <div className="border-t border-rule bg-paper lg:hidden">
+          <nav className="shell grid py-3" aria-label="Primary, mobile">
+            {nav.map((n) => (
               <a
-                href="/#faq"
-                onClick={() => setIsOpen(false)}
-                className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                           dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                           font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                key={n.name}
+                href={n.href}
+                onClick={() => setOpen(false)}
+                className="border-b border-rule py-3.5 text-base font-medium text-ink"
               >
-                FAQ
+                {n.name}
               </a>
-
-              <div className="pt-4">
-                <a href="/#contact" className="btn-primary w-full justify-center text-sm">
-                  <Zap className="w-4 h-4 mr-1.5" />
-                  Get Started
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+            <a
+              href="/#contact"
+              onClick={() => setOpen(false)}
+              className="btn btn-solid mt-5 mb-2 w-full"
+            >
+              Book a teardown
+            </a>
+          </nav>
+        </div>
+      )}
     </header>
   );
-};
-
-export default Header;
+}

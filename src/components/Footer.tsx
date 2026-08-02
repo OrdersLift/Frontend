@@ -1,146 +1,91 @@
-import { motion } from 'framer-motion';
-import { ArrowUp, Zap } from 'lucide-react';
+import { contact } from '../data/site';
 
-const Footer = () => {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  const links = {
-    services: [
-      { name: 'Custom Website',      href: '/#products' },
-      { name: 'AI Customer Chatbot', href: '/#features' },
-      { name: 'Internal RAG Bot',    href: '/#features' },
-      { name: 'Admin Panel',         href: '/#products' },
-      { name: 'Managed Hosting',     href: '/#products' },
+const columns = [
+  {
+    head: 'What we do',
+    links: [
+      { name: 'Reviews',         href: '/#s-reviews' },
+      { name: 'Google profile',  href: '/#s-profile' },
+      { name: 'Email & SMS',     href: '/#emails' },
+      { name: 'Meta ads',        href: '/#ads' },
+      { name: 'Site & ordering', href: '/#s-website' },
     ],
-    industries: [
-      { name: 'Restaurants',     href: '/#industries' },
-      { name: 'Dental Clinics',  href: '/#industries' },
-      { name: 'Gyms & Fitness',  href: '/#industries' },
-      { name: 'Salons & Spas',   href: '/#industries' },
-      { name: 'Auto Garages',    href: '/#industries' },
-    ],
-    company: [
-      { name: 'How It Works',  href: '/#how-it-works' },
+  },
+  {
+    head: 'Look around',
+    links: [
+      { name: 'The work',      href: '/#work' },
+      { name: 'How it runs',   href: '/#process' },
       { name: 'Pricing',       href: '/#pricing' },
-      { name: 'Reviews',       href: '/#reviews' },
-      { name: 'FAQ',           href: '/#faq' },
-      { name: 'Contact Us',    href: '/#contact' },
+      { name: 'Questions',     href: '/#faq' },
+      { name: 'Demo restaurant', href: '/demo/restaurants/' },
     ],
-    legal: [
-      { name: 'Privacy Policy',   href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy',    href: '/cookies' },
+  },
+  {
+    head: 'Company',
+    links: [
+      { name: 'About us',        href: '/about' },
+      { name: 'Book a teardown', href: '/#contact' },
+      { name: 'Privacy policy',  href: '/privacy' },
+      { name: 'Terms of service', href: '/terms' },
+      { name: 'Cookie policy',   href: '/cookies' },
     ],
-  };
+  },
+];
 
+export default function Footer() {
   return (
-    <footer className="bg-cream-200 dark:bg-black border-t border-primary-200 dark:border-white/10
-                       text-neutral-900 dark:text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
-          {/* Brand — 2 cols */}
-          <div className="lg:col-span-2">
-            <a href="/" className="flex items-center gap-3 mb-5">
-              <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
-              <span className="text-xl font-display font-bold gradient-text">OrdersLift</span>
+    <footer className="border-t border-rule bg-paper">
+      <div className="shell">
+        <div className="grid gap-10 py-14 lg:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))] lg:gap-12 lg:py-16">
+          <div>
+            <a href="/" className="flex items-center gap-2.5">
+              <img src="/logo.png" alt="" className="h-9 w-auto" />
+              <span className="display text-xl">OrdersLift</span>
             </a>
-            <p className="text-neutral-600 dark:text-slate-500 text-sm leading-relaxed max-w-xs">
-              The complete AI platform for local and SMB businesses — custom website, AI chatbot,
-              internal knowledge bot, and 2 years free maintenance. Serving businesses worldwide.
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-body">
+              A growth agency for restaurants and nothing else. We fix the listing, build the
+              reviews, write to your guests and run the ads — then send you one page every Monday
+              showing what it did.
             </p>
-            <div className="mt-6 flex items-center gap-2">
-              <span className="w-2 h-2 bg-primary-500 dark:bg-glow-400 rounded-full animate-pulse" />
-              <span className="text-xs text-neutral-600 dark:text-slate-500">Actively onboarding new clients</span>
+            <div className="mt-6 grid gap-1.5">
+              <a href={`mailto:${contact.email}`} className="text-sm text-body transition-colors hover:text-ink">
+                {contact.email}
+              </a>
+              <a
+                href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}
+                className="figure text-sm text-body transition-colors hover:text-ink"
+              >
+                {contact.phone}
+              </a>
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Services</h4>
-            <ul className="space-y-2.5">
-              {links.services.map((l) => (
-                <li key={l.name}>
-                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
-                                      dark:hover:text-white text-sm transition-colors duration-200">
-                    {l.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Industries */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Industries</h4>
-            <ul className="space-y-2.5">
-              {links.industries.map((l) => (
-                <li key={l.name}>
-                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
-                                      dark:hover:text-white text-sm transition-colors duration-200">
-                    {l.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Company</h4>
-            <ul className="space-y-2.5">
-              {links.company.map((l) => (
-                <li key={l.name}>
-                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
-                                      dark:hover:text-white text-sm transition-colors duration-200">
-                    {l.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal + CTA */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Legal</h4>
-            <ul className="space-y-2.5 mb-8">
-              {links.legal.map((l) => (
-                <li key={l.name}>
-                  <a href={l.href} className="text-neutral-600 hover:text-primary-700 dark:text-slate-500
-                                      dark:hover:text-white text-sm transition-colors duration-200">
-                    {l.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <a href="/#contact" className="btn-primary text-sm py-2.5 px-5">
-              <Zap className="w-4 h-4 mr-1.5" />
-              Get Started
-            </a>
-          </div>
+          {columns.map((col) => (
+            <nav key={col.head} aria-label={col.head}>
+              <h3 className="label">{col.head}</h3>
+              <ul className="mt-5 grid gap-2.5">
+                {col.links.map((l) => (
+                  <li key={l.name}>
+                    <a href={l.href} className="text-sm text-body transition-colors hover:text-ink">
+                      {l.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-primary-200 dark:border-white/10 py-6 flex flex-col
-                        sm:flex-row items-center justify-between gap-4">
-          <p className="text-neutral-500 dark:text-slate-600 text-xs">
-            © {new Date().getFullYear()} OrdersLift. All rights reserved.
+        <div className="flex flex-col gap-3 border-t border-rule py-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-muted">
+            © {new Date().getFullYear()} OrdersLift. Restaurants only.
           </p>
-          <motion.button
-            onClick={scrollToTop}
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.9 }}
-            className="w-9 h-9 bg-white border border-primary-200 text-neutral-700
-                       hover:bg-primary-600 hover:text-white hover:border-primary-600
-                       dark:bg-white/[0.08] dark:border-transparent dark:text-white dark:hover:bg-primary-600
-                       rounded-lg flex items-center justify-center transition-all duration-200"
-          >
-            <ArrowUp className="w-4 h-4" />
-          </motion.button>
+          <p className="text-xs text-muted">
+            Listings, emails and ad creative shown on this site are worked examples.
+          </p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

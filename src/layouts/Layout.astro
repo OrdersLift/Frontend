@@ -14,14 +14,14 @@ export interface Props {
 
 const { 
   title, 
-  description = "OrdersLift - Global AI-Powered Restaurant Website Agency. Transform restaurants worldwide with cutting-edge AI technology. Boost direct sales, reduce delivery app dependency, and create exceptional customer experiences globally. Get your AI-powered restaurant website today.",
+  description = "OrdersLift is a growth marketing agency for restaurants and nothing else — Google Business Profile rebuilds, a review engine that brings in real reviews, branded review-request emails, and Meta ads that fill quiet nights.",
   image = "https://orderslift.com/og-image.jpg",
   canonical = Astro.url.href,
-  keywords = "global restaurant website agency, international restaurant technology, AI restaurant website worldwide, restaurant website development global, AI chatbot for restaurants international, restaurant delivery integration worldwide, restaurant analytics global, restaurant marketing international, restaurant technology worldwide, AI-powered ordering system global, restaurant website design international, restaurant SEO worldwide, restaurant online ordering global, restaurant management system international, restaurant website agency worldwide, restaurant digital transformation global",
+  keywords = "restaurant marketing agency, restaurant Google Business Profile, get more Google reviews for restaurants, restaurant review management, restaurant reputation management, review request emails, restaurant Facebook ads, restaurant Instagram ads, Meta ads for restaurants, local SEO for restaurants, restaurant map pack, direct online ordering",
   author = "OrdersLift",
   publishedTime,
   modifiedTime,
-  section = "Global Restaurant Technology",
+  section = "Restaurant Marketing",
   type = "website"
 } = Astro.props;
 
@@ -54,8 +54,8 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <link rel="canonical" href={canonical} />
     <meta name="keywords" content={keywords} />
     <meta name="author" content={author} />
-    <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#100e0b" media="(prefers-color-scheme: dark)" />
 
     <!-- Applies the saved / system colour scheme before first paint so the
          page never flashes the wrong theme. -->
@@ -95,7 +95,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <meta property="og:image" content={new URL(image, Astro.url)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
+    <meta property="og:image:alt" content="OrdersLift — growth marketing for restaurants" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="en_GB" />
@@ -119,7 +119,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
-    <meta property="twitter:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
+    <meta property="twitter:image:alt" content="OrdersLift — growth marketing for restaurants" />
     <meta property="twitter:creator" content="@orderslift" />
     <meta property="twitter:site" content="@orderslift" />
     
@@ -127,8 +127,14 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Google Fonts
+         Archivo carries a width axis — the display face is set narrow and
+         heavy, which is how menu boards and restaurant signage are lettered.
+         Plex Sans for reading, Plex Mono for every figure on the page. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -139,48 +145,61 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       "logo": "https://orderslift.com/logo.png",
       "description": description,
       "foundingDate": "2023",
-      "industry": "Global Restaurant Technology",
-      "numberOfEmployees": "10-50",
-      "globalServiceArea": true,
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "Global"
-      },
+      "industry": "Restaurant Marketing",
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-555-123-4567",
-        "contactType": "customer service",
-        "email": "hello@orderslift.com",
-        "availableLanguage": "English, Spanish, French, German, Hindi, Chinese"
+        "telephone": "+91-63939-74340",
+        "contactType": "sales",
+        "email": "restaurantorderlift@gmail.com",
+        "availableLanguage": "English"
       },
       "sameAs": [
         "https://twitter.com/orderslift",
         "https://linkedin.com/company/orderslift",
         "https://facebook.com/orderslift"
       ],
-      "serviceArea": {
-        "@type": "Place",
-        "name": "Worldwide",
-        "description": "Global restaurant technology services"
-      },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Restaurant Website Services",
+        "name": "Restaurant growth marketing services",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "AI-Powered Restaurant Website",
-              "description": "Complete AI-powered website solution for restaurants"
+              "name": "Google Business Profile management",
+              "description": "Rebuilding and maintaining a restaurant's Google Business Profile — categories, attributes, hours, menu, ordering links and photography."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Restaurant Analytics Dashboard",
-              "description": "Comprehensive analytics and insights for restaurant owners"
+              "name": "Review generation and reputation management",
+              "description": "A review engine that asks every guest once, timed to their visit, plus same-day replies to every review."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Review-request email and SMS campaigns",
+              "description": "Branded review-request messages sent from the restaurant's own address a few hours after the meal."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Facebook and Instagram advertising",
+              "description": "Local Meta ad campaigns built around a redeemable offer, reported on cost per redeemed voucher."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Restaurant website and direct online ordering",
+              "description": "Menu, ordering and table booking on the restaurant's own domain, commission free."
             }
           }
         ]
@@ -190,21 +209,23 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <!-- Local Business Schema -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "ProfessionalService",
       "name": "OrdersLift",
-      "description": "AI-Powered Restaurant Website Agency",
+      "description": "Growth marketing agency for restaurants — Google Business Profile, reviews, email and Meta ads.",
       "url": "https://orderslift.com",
-      "telephone": "+1-555-123-4567",
-      "email": "hello@orderslift.com",
+      "telephone": "+91-63939-74340",
+      "email": "restaurantorderlift@gmail.com",
       "priceRange": "$$",
-      "currenciesAccepted": "USD, EUR, GBP, CAD, AUD, INR",
-      "paymentAccepted": "Credit Card, PayPal, Bank Transfer, Stripe, Apple Pay, Google Pay",
       "areaServed": "Worldwide",
-      "serviceType": "Restaurant Website Development",
-      "openingHours": "Mo-Su 00:00-23:59"
+      "serviceType": "Restaurant marketing",
+      "audience": {
+        "@type": "BusinessAudience",
+        "name": "Restaurants, cafés, bars and takeaways"
+      }
     })} />
+    <slot name="head" />
   </head>
-  <body class="font-sans antialiased bg-white text-neutral-900 dark:bg-black dark:text-slate-100 transition-colors duration-300">
+  <body class="font-sans antialiased bg-paper text-body">
     <slot />
     {showAssistant && <AIChat client:load />}
   </body>

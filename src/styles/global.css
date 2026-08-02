@@ -2,57 +2,224 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===========================
-   Theme tokens
-   Light = white surfaces with orange/yellow accents.
-   Dark  = black surfaces with the same accents.
-=========================== */
+/* =============================================================
+   OrdersLift — design tokens
+
+   Ink on warm paper. One accent: burnished gold, the colour of the
+   review star, which is the thing this agency actually sells. Google's
+   own listing colours (star amber, action blue, open green, closed red)
+   appear only inside the profile mockups, where they have to be exact
+   or the mockup stops reading as real.
+
+   No glassmorphism, no blur orbs, no gradient text. Structure comes
+   from hairline rules and typographic scale instead.
+============================================================= */
 :root {
-  --surface:        255 255 255;   /* page background          */
-  --surface-muted:  255 248 240;   /* alternating section band */
-  --glass-bg:       255 255 255;
-  --glass-alpha:    0.72;
-  --glass-border:   249 115 22;    /* orange-500               */
-  --glass-border-a: 0.18;
-  --card-bg:        255 255 255;
-  --card-alpha:     0.85;
-  --grid-line:      234 88 12;     /* orange-600               */
-  --grid-alpha:     0.09;
+  --paper:  250 248 244;   /* warm off-white page                       */
+  --band:   243 239 231;   /* alternating section band                  */
+  --raise:  255 255 255;   /* cards / mockups lifted off the paper      */
+  --ink:     20  17  13;   /* headings — warm near-black, not navy      */
+  --body:    74  68  59;   /* paragraphs                                */
+  --muted:  122 114 103;   /* captions, labels, meta                    */
+  --rule:   226 220 209;   /* hairlines                                 */
+  --gold:   200 135  27;   /* brand accent                              */
+  --gain:    19 115  51;   /* semantic: after / up / open               */
+  --loss:   197  34  31;   /* semantic: before / down / closed          */
 }
 
 .dark {
-  --surface:        0 0 0;
-  --surface-muted:  10 10 10;
-  --glass-bg:       10 10 10;
-  --glass-alpha:    0.72;
-  --glass-border:   251 146 60;    /* orange-400               */
-  --glass-border-a: 0.22;
-  --card-bg:        255 255 255;
-  --card-alpha:     0.035;
-  --grid-line:      249 115 22;
-  --grid-alpha:     0.08;
+  --paper:   16  14  11;
+  --band:    22  19  15;
+  --raise:   26  22  18;
+  --ink:    250 248 244;
+  --body:   198 190 178;
+  --muted:  147 138 126;
+  --rule:    45  39  32;
+  --gold:   245 185  63;   /* lifted so it holds contrast on dark paper */
+  --gain:    73 181 114;
+  --loss:   240 110 106;
 }
 
-/* ===========================
+/* =============================================================
    Base
-=========================== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #fff4e6; }
-::-webkit-scrollbar-thumb { background: #f97316; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #ea580c; }
+============================================================= */
+html {
+  scroll-behavior: smooth;
+  /* The fixed header is 64/80px tall — keep anchor targets clear of it. */
+  scroll-padding-top: 5.5rem;
+}
 
-.dark ::-webkit-scrollbar-track { background: #000000; }
-.dark ::-webkit-scrollbar-thumb { background: #ea580c; }
-.dark ::-webkit-scrollbar-thumb:hover { background: #fb923c; }
+body {
+  background: rgb(var(--paper));
+  color: rgb(var(--body));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-html { scroll-behavior: smooth; }
+::selection { background: rgb(var(--gold) / 0.28); color: rgb(var(--ink)); }
 
-::selection { background: #f97316; color: #ffffff; }
-.dark ::selection { background: #fbbf24; color: #000000; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgb(var(--band)); }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--rule));
+  border: 3px solid rgb(var(--band));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--muted)); }
 
-/* ===========================
-   Gradient text
-=========================== */
+/* Keyboard focus stays visible everywhere. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--gold));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* =============================================================
+   Type
+
+   Archivo is loaded with its width axis. Display is set narrow and
+   heavy with negative tracking — the proportions of a menu board.
+   Body is IBM Plex Sans. Numbers are IBM Plex Mono, because every
+   figure on this site came off a dashboard and should look like it.
+============================================================= */
+.display {
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-stretch: 82%;
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 0.96;
+  color: rgb(var(--ink));
+  text-wrap: balance;
+}
+
+/* Small-caps mono label. Marks what a block IS — a section marker, a
+   data label, a state. Never used decoratively. */
+.label {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+.figure {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* =============================================================
+   Section rhythm
+
+   Every section opens with a hairline rule carrying its marker in the
+   left margin — the same device a spec sheet or a kitchen ticket uses.
+============================================================= */
+.section {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+}
+
+.section-band { background: rgb(var(--band)); }
+
+.rule-top { border-top: 1px solid rgb(var(--rule)); }
+
+.shell {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 640px)  { .shell { padding-inline: 2rem; } }
+@media (min-width: 1024px) { .shell { padding-inline: 2.5rem; } }
+
+/* =============================================================
+   Surfaces — flat, ruled, honest. No blur.
+============================================================= */
+.panel {
+  background: rgb(var(--raise));
+  border: 1px solid rgb(var(--rule));
+  border-radius: 4px;
+}
+
+/* The one exception to the flat rule: mockups of real product UI get
+   real product shadows and radii, or they stop being convincing. */
+.mock {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgb(60 64 67 / 0.28),
+    0 2px 10px 2px rgb(60 64 67 / 0.12);
+  color: #202124;
+  overflow: hidden;
+}
+.dark .mock {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.6),
+    0 2px 14px 2px rgb(0 0 0 / 0.4);
+}
+
+/* =============================================================
+   Controls
+============================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  padding: 0.9375rem 1.5rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: background-color 0.16s, color 0.16s, border-color 0.16s;
+}
+
+.btn-solid {
+  background: rgb(var(--ink));
+  color: rgb(var(--paper));
+}
+.btn-solid:hover { background: rgb(var(--gold)); color: #14110d; }
+
+.btn-line {
+  border-color: rgb(var(--rule));
+  color: rgb(var(--ink));
+  background: transparent;
+}
+.btn-line:hover { border-color: rgb(var(--ink)); }
+
+/* =============================================================
+   Inline links
+============================================================= */
+.link {
+  color: rgb(var(--ink));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--gold));
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 0.16s;
+}
+.link:hover { text-decoration-color: rgb(var(--ink)); }
+
+/* =============================================================
+   Reduced motion
+============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================
+   Legacy utilities
+
+   Still used by the Saffron & Ember demo site under /demo/restaurants
+   and by the legal pages, which keep the original orange palette.
+   Left in place deliberately; the marketing site no longer uses them.
+============================================================= */
 .gradient-text {
   background: linear-gradient(135deg, #ea580c 0%, #f59e0b 55%, #eab308 100%);
   -webkit-background-clip: text;
@@ -60,140 +227,40 @@ html { scroll-behavior: smooth; }
   -webkit-text-fill-color: transparent;
 }
 
-.dark .gradient-text {
-  background: linear-gradient(135deg, #fb923c 0%, #fbbf24 55%, #fde047 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradient-text-blue {
-  background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dark .gradient-text-blue {
-  background: linear-gradient(135deg, #fb923c 0%, #fcd34d 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ===========================
-   Glass morphism
-=========================== */
 .glass {
-  background: rgb(var(--glass-bg) / var(--glass-alpha));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgb(var(--glass-border) / var(--glass-border-a));
+  background: rgb(var(--raise) / 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--rule));
 }
 
 .glass-card {
-  background: rgb(var(--card-bg) / var(--card-alpha));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgb(var(--glass-border) / var(--glass-border-a));
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(124, 45, 18, 0.06);
+  background: rgb(var(--raise));
+  border: 1px solid rgb(var(--rule));
+  border-radius: 4px;
 }
 
-.dark .glass-card { box-shadow: none; }
-
-.glass-card:hover {
-  border-color: rgba(249, 115, 22, 0.45);
-  background: rgba(249, 115, 22, 0.06);
-}
-
-.dark .glass-card:hover {
-  border-color: rgba(251, 146, 60, 0.45);
-  background: rgba(249, 115, 22, 0.09);
-}
-
-/* ===========================
-   Glow
-=========================== */
-.glow-primary {
-  box-shadow: 0 0 30px rgba(249, 115, 22, 0.35), 0 0 80px rgba(249, 115, 22, 0.12);
-}
-.glow-accent {
-  box-shadow: 0 0 30px rgba(234, 179, 8, 0.3), 0 0 60px rgba(234, 179, 8, 0.12);
-}
-.glow-purple {
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.12);
-}
-
-/* ===========================
-   Grid background
-=========================== */
-.grid-bg {
-  background-image:
-    linear-gradient(rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--grid-line) / var(--grid-alpha)) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
-/* ===========================
-   Marquee
-=========================== */
-.mask-edges {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-          mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-}
-.marquee-paused:hover .marquee-track { animation-play-state: paused; }
-
-/* ===========================
-   Animations
-=========================== */
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-8px); }
-}
-.animate-float { animation: float 6s ease-in-out infinite; }
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%      { opacity: 0.7; transform: scale(1.06); }
-}
-
-/* ===========================
-   Buttons
-=========================== */
 .btn-primary {
-  @apply bg-gradient-to-r from-primary-600 to-glow-500 hover:from-primary-500 hover:to-accent-400
-         text-white font-semibold py-3 px-6 rounded-xl
-         transition-all duration-200 hover:shadow-lg hover:shadow-primary-500/40
-         focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-         focus:ring-offset-white dark:focus:ring-offset-black
-         hover:-translate-y-0.5 inline-flex items-center;
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg
+         transition-colors duration-200 inline-flex items-center;
 }
 
 .btn-outline {
-  @apply bg-transparent border border-primary-500/40 hover:border-primary-500 text-neutral-700
-         hover:text-primary-700 font-semibold py-3 px-6 rounded-xl transition-all duration-200
-         hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500/40
-         dark:border-white/20 dark:text-white/80 dark:hover:border-primary-400
-         dark:hover:text-white dark:hover:bg-white/5
-         inline-flex items-center;
+  @apply border border-primary-500/40 hover:border-primary-500 text-primary-700
+         font-semibold py-3 px-6 rounded-lg transition-colors duration-200 inline-flex items-center;
 }
 
-/* ===========================
-   Cards
-=========================== */
-.card-hover {
-  @apply transition-all duration-300 hover:-translate-y-1;
+.card-hover { @apply transition-transform duration-300 hover:-translate-y-1; }
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgb(var(--rule) / 0.6) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--rule) / 0.6) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
-/* ===========================
-   Reduced motion
-=========================== */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+.mask-edges {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
+.marquee-paused:hover .marquee-track { animation-play-state: paused; }

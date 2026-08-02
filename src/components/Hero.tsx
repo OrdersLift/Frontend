@@ -1,189 +1,181 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, Globe } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { cases } from '../data/site';
+import { ProfileCard, ReviewCard } from './mockups';
 
-const industries = [
-  'Restaurants',
-  'Dental Clinics',
-  'Gyms & Fitness',
-  'Auto Garages',
-  'Salons & Spas',
-  'Law Firms',
-  'Hotels',
-  'Retail Stores',
-];
+const subject = cases[0];
 
-const stats = [
-  { number: '100+',  label: 'Businesses Powered' },
-  { number: '3',     label: 'Countries Served' },
-  { number: '2 Yrs', label: 'Free Maintenance' },
-  { number: '24/7',  label: 'AI Support' },
-];
-
-const Hero = () => {
-  const [industryIndex, setIndustryIndex] = useState(0);
+/** Eases a number toward a target over `ms`, honouring reduced motion. */
+function useTween(target: number, ms: number, still: boolean) {
+  const [value, setValue] = useState(target);
+  const from = useRef(target);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setIndustryIndex((i) => (i + 1) % industries.length);
-    }, 2000);
-    return () => clearInterval(id);
+    if (still) { setValue(target); return; }
+    const start = performance.now();
+    const origin = from.current;
+    let frame = 0;
+
+    // Elapsed time is read from performance.now() rather than the frame
+    // timestamp: the two do not always share an origin, and a frame stamped
+    // behind `start` would otherwise pin the counter at its opening value.
+    const tick = () => {
+      const t = Math.max(0, Math.min(1, (performance.now() - start) / ms));
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(origin + (target - origin) * eased);
+      if (t < 1) frame = requestAnimationFrame(tick);
+      else { from.current = target; setValue(target); }
+    };
+
+    frame = requestAnimationFrame(tick);
+
+    // Backstop. If frames stop arriving — background tab, throttled clock —
+    // the counter still has to land on the real rating rather than freeze
+    // partway and quietly show a number that is not true.
+    const settle = setTimeout(() => {
+      cancelAnimationFrame(frame);
+      from.current = target;
+      setValue(target);
+    }, ms + 120);
+
+    return () => { cancelAnimationFrame(frame); clearTimeout(settle); };
+  }, [target, ms, still]);
+
+  useEffect(() => { if (still) from.current = target; }, [target, still]);
+  return value;
+}
+
+const facts = [
+  ['Restaurants', 'and nothing else'],
+  ['4 channels', 'profile · reviews · email · ads'],
+  ['Monday', 'is when the report lands'],
+  ['Month to month', 'after the first 90 days'],
+];
+
+export default function Hero() {
+  const [state, setState] = useState<'before' | 'after'>('before');
+  const [still, setStill] = useState(true);
+
+  // Play the flip once on load — the pitch, told without a sentence.
+  useEffect(() => {
+    const quiet = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (quiet) { setState('after'); return; }
+    setStill(false);
+    const id = setTimeout(() => setState('after'), 1100);
+    return () => clearTimeout(id);
   }, []);
 
+  const target = state === 'after' ? subject.after : subject.before;
+  const rating = useTween(target.rating, 900, still);
+  const count = useTween(target.count, 900, still);
+
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black"
-    >
-      {/* Grid background */}
-      <div className="absolute inset-0 grid-bg opacity-60" />
+    <section id="home" className="relative overflow-hidden pb-16 pt-28 sm:pt-32 lg:pb-24 lg:pt-40">
+      <div className="shell">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+          {/* ── Argument ── */}
+          <div>
+            <p className="label">Growth marketing · restaurants only</p>
 
-      {/* Animated glow orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-400/30 dark:bg-primary-600/25
-                   rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-300/40 dark:bg-glow-600/25
-                   rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.4, 0.15] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute top-1/2 right-1/3 w-64 h-64 bg-glow-300/35 dark:bg-accent-500/15
-                   rounded-full blur-3xl pointer-events-none"
-      />
+            <h1 className="display mt-5 text-[clamp(2.6rem,7.2vw,4.4rem)]">
+              Your front door is a search&nbsp;result.
+            </h1>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-32">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-500/30
-                     text-primary-700 dark:text-primary-300 text-sm font-medium mb-8"
-        >
-          <Sparkles className="w-4 h-4" />
-          AI-Powered Business Platform — Global
-          <Globe className="w-4 h-4 ml-1" />
-        </motion.div>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-body">
+              Before anyone tastes your food they see a rating, three photographs and a
+              review count. That screen decides whether they walk in. We rebuild it, fill it
+              with real reviews, and then go and find people to sit at the tables.
+            </p>
 
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-neutral-900
-                     dark:text-white leading-tight mb-4"
-        >
-          The Complete AI Platform
-          <span className="block text-neutral-500 dark:text-slate-400 text-4xl sm:text-5xl lg:text-6xl mt-2 font-semibold">
-            Built for
-          </span>
-        </motion.h1>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <a href="/#contact" className="btn btn-solid">
+                Book a 20-minute teardown
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a href="/#work" className="btn btn-line">See the work</a>
+            </div>
 
-        {/* Cycling industry text */}
-        <div className="h-20 sm:h-24 flex items-center justify-center mb-6 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={industryIndex}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -40 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold gradient-text"
-            >
-              {industries[industryIndex]}
-            </motion.span>
-          </AnimatePresence>
-        </div>
+            <p className="mt-5 text-sm text-muted">
+              Free, no deck. We look up your listing on the call and read it back to you.
+            </p>
+          </div>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg sm:text-xl text-neutral-600 dark:text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed"
-        >
-          We build your complete digital presence — custom website, admin panel, AI customer chatbot,
-          internal RAG bot, hosting — and maintain it all for 2 years free. You focus on your business.
-        </motion.p>
+          {/* ── Artifact ── */}
+          <div>
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <p className="label">The same restaurant, {subject.span} apart</p>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.55 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
-        >
-          <motion.a
-            href="/#contact"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="btn-primary text-base px-8 py-4 glow-primary"
-          >
-            Start Your Project
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </motion.a>
-          <motion.a
-            href="/#products"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="btn-outline text-base px-8 py-4"
-          >
-            See What We Build
-          </motion.a>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
-        >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
-              className="glass-card p-4 text-center card-hover"
-            >
-              <div className="text-2xl md:text-3xl font-bold gradient-text-blue mb-1">
-                {stat.number}
+              <div
+                className="inline-flex shrink-0 rounded border border-rule p-0.5"
+                role="group"
+                aria-label="Listing state"
+              >
+                {(['before', 'after'] as const).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => { setStill(false); setState(s); }}
+                    aria-pressed={state === s}
+                    className={`figure rounded px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                      state === s
+                        ? 'bg-ink text-paper'
+                        : 'text-muted hover:text-ink'
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
-              <div className="text-xs text-neutral-500 dark:text-slate-500 font-medium">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_11rem]">
+              <ProfileCard
+                c={subject}
+                state={state}
+                rating={Math.round(rating * 10) / 10}
+                count={Math.round(count)}
+              />
+
+              {/* The reviews only exist on the far side of the work. */}
+              <div
+                aria-hidden={state === 'before'}
+                className={`grid gap-3 transition-all duration-500 sm:content-start ${
+                  state === 'after'
+                    ? 'translate-y-0 opacity-100'
+                    : 'pointer-events-none translate-y-2 opacity-0'
+                }`}
+              >
+                {subject.reviews.map((r) => (
+                  <ReviewCard key={r.name} r={r} />
+                ))}
+              </div>
+            </div>
+
+            <p className="mt-3 text-xs leading-relaxed text-muted">
+              Worked example. {subject.headline}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-5 h-9 border-2 border-primary-500/40 dark:border-white/20 rounded-full flex justify-center pt-1.5"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-2.5 bg-primary-500 dark:bg-primary-400 rounded-full"
-          />
-        </motion.div>
-      </motion.div>
+      {/* ── How the shop runs ── */}
+      <div className="shell mt-16 lg:mt-24">
+        <dl className="grid border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map(([head, tail], i) => (
+            <div
+              key={head}
+              className={`py-5 sm:px-6 lg:py-6 ${i > 0 ? 'border-t border-rule sm:border-t-0' : ''} ${
+                i % 2 === 1 ? 'sm:border-l sm:border-rule' : ''
+              } ${i >= 2 ? 'sm:border-t sm:border-rule lg:border-t-0' : ''} ${
+                i > 0 ? 'lg:border-l lg:border-rule' : ''
+              } ${i === 0 ? 'sm:pl-0' : ''}`}
+            >
+              <dt className="display text-2xl">{head}</dt>
+              <dd className="mt-1 text-sm text-muted">{tail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
-};
-
-export default Hero;
+}
