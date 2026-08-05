@@ -1,57 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://orderslift.com/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://orderslift.com/" />
-    <xhtml:link rel="alternate" hreflang="en-us" href="https://orderslift.com/" />
-    <xhtml:link rel="alternate" hreflang="en-gb" href="https://orderslift.com/" />
-    <xhtml:link rel="alternate" hreflang="en-ca" href="https://orderslift.com/" />
-    <xhtml:link rel="alternate" hreflang="en-au" href="https://orderslift.com/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://orderslift.com/" />
   </url>
   <url>
     <loc>https://orderslift.com/about</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://orderslift.com/#features</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://orderslift.com/#faq</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://orderslift.com/demo/</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://orderslift.com/#contact</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://orderslift.com/demo/restaurants/</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://orderslift.com/demo/restaurants/menu</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://orderslift.com/demo/restaurants/order</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://orderslift.com/demo/restaurants/reservations</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://orderslift.com/demo/restaurants/about</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://orderslift.com/privacy</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://orderslift.com/terms</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://orderslift.com/cookies</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-</urlset> 
+</urlset>

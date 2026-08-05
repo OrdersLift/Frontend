@@ -2,197 +2,48 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+const elsewhere = [
+  { name: 'What we do',       href: '/#services',            note: 'Reviews, profile, email, ads, site' },
+  { name: 'The work',         href: '/#work',                note: 'Before and after, side by side' },
+  { name: 'Pricing',          href: '/#pricing',             note: 'Three shapes, month to month' },
+  { name: 'Demo restaurant',  href: '/demo/restaurants/',    note: 'A working site you can click through' },
+  { name: 'Book a teardown',  href: '/#contact',             note: 'Twenty minutes, free, no deck' },
+];
 ---
 
-<Layout title="404 - Page Not Found | OrdersLift">
+<Layout
+  title="Page not found"
+  description="That page is not here. The listing, the work, the pricing and the demo restaurant all are."
+  canonical="https://orderslift.com/404"
+>
   <Header client:load />
-  
-  <main class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-black dark:via-neutral-950 dark:to-black flex items-center justify-center px-4 pt-20">
-    <div class="max-w-4xl mx-auto text-center">
-      <!-- Animated 404 Number -->
-      <div class="relative mb-8">
-        <div class="text-9xl md:text-[12rem] font-display font-bold text-primary-600 opacity-20 select-none">
-          404
-        </div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="text-6xl md:text-8xl font-display font-bold text-primary-700 animate-bounce">
-            404
-          </div>
-        </div>
-      </div>
 
-      <!-- Main Content -->
-      <div class="relative z-10">
-        <!-- Animated Icon -->
-        <div class="mb-8">
-          <div class="inline-flex items-center justify-center w-24 h-24 bg-primary-100 dark:bg-primary-500/15 rounded-full mb-6 animate-pulse">
-            <svg class="w-12 h-12 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
-            </svg>
-          </div>
-        </div>
+  <main class="flex min-h-[70vh] items-center pt-28">
+    <div class="shell">
+      <p class="label">404</p>
+      <h1 class="display mt-5 max-w-2xl text-[clamp(2.4rem,6vw,3.8rem)]">
+        Nothing on the menu at this address.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-body">
+        The page moved or never existed. Everything worth reading is one of these.
+      </p>
 
-        <!-- Error Message -->
-        <h1 class="text-4xl md:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6 animate-fade-in">
-          Oops! Page Not Found
-        </h1>
-        
-        <p class="text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-delay">
-          Looks like this page got lost in the kitchen! 🍽️<br>
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-
-        <!-- Restaurant-themed illustration -->
-        <div class="mb-12 flex justify-center">
-          <div class="relative">
-            <!-- Plate -->
-            <div class="w-32 h-32 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full border-4 border-primary-300 dark:border-white/20 animate-spin-slow"></div>
-            <!-- Fork and Knife -->
-            <div class="absolute -top-4 -left-4 w-8 h-16 bg-primary-600 rounded-full transform rotate-45 animate-bounce-delay"></div>
-            <div class="absolute -top-4 -right-4 w-8 h-16 bg-primary-600 rounded-full transform -rotate-45 animate-bounce-delay-2"></div>
-            <!-- Question mark -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-4xl font-bold text-primary-600 animate-pulse">?</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in-delay-2">
-          <a 
-            href="/" 
-            class="group inline-flex items-center px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-primary-600/25"
-          >
-            <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-            </svg>
-            Back to Home
-          </a>
-          
-          <a 
-            href="/#contact" 
-            class="group inline-flex items-center px-8 py-4 border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-          >
-            <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-            </svg>
-            Contact Support
-          </a>
-        </div>
-
-        <!-- Helpful Links -->
-        <div class="bg-white/70 dark:bg-white/[0.04] backdrop-blur-sm rounded-2xl p-8 border border-primary-200 dark:border-white/10 animate-fade-in-delay-3">
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Looking for something specific?</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a href="/#features" class="group p-4 bg-primary-50 hover:bg-primary-100 dark:bg-primary-500/10 dark:hover:bg-primary-500/20 rounded-lg transition-all duration-300 transform hover:scale-105">
-              <div class="text-primary-600 font-semibold group-hover:animate-pulse">AI Features</div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400">Explore our AI-powered tools</div>
+      <ul class="mt-12 max-w-2xl border-t border-rule">
+        {elsewhere.map((l) => (
+          <li class="border-b border-rule">
+            <a
+              href={l.href}
+              class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-4 transition-colors hover:text-ink"
+            >
+              <span class="display text-lg">{l.name}</span>
+              <span class="text-sm text-muted">{l.note}</span>
             </a>
-            <a href="/#faq" class="group p-4 bg-secondary-50 hover:bg-secondary-100 dark:bg-secondary-500/10 dark:hover:bg-secondary-500/20 rounded-lg transition-all duration-300 transform hover:scale-105">
-              <div class="text-secondary-600 font-semibold group-hover:animate-pulse">FAQ</div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400">Find answers to common questions</div>
-            </a>
-            <a href="/#about" class="group p-4 bg-accent-50 hover:bg-accent-100 dark:bg-accent-500/10 dark:hover:bg-accent-500/15 rounded-lg transition-all duration-300 transform hover:scale-105">
-              <div class="text-accent-600 font-semibold group-hover:animate-pulse">About Us</div>
-              <div class="text-sm text-neutral-600 dark:text-neutral-400">Learn more about OrdersLift</div>
-            </a>
-          </div>
-        </div>
-
-        <!-- Fun Restaurant Quote -->
-        <div class="mt-12 p-6 bg-gradient-to-r from-primary-100 to-accent-100 dark:from-primary-500/15 dark:to-accent-500/10 rounded-2xl border-l-4 border-primary-600 animate-fade-in-delay-4">
-          <blockquote class="text-lg text-neutral-700 dark:text-neutral-300 italic">
-            "The best websites, like the best restaurants, are built with passion, 
-            attention to detail, and a commitment to serving customers perfectly."
-          </blockquote>
-          <div class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">— OrdersLift Team</div>
-        </div>
-      </div>
+          </li>
+        ))}
+      </ul>
     </div>
   </main>
 
-  <Footer client:load />
-
-  <style>
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    
-    @keyframes bounce-delay {
-      0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0) rotate(45deg); }
-      40%, 43% { transform: translate3d(0,-30px,0) rotate(45deg); }
-      70% { transform: translate3d(0,-15px,0) rotate(45deg); }
-      90% { transform: translate3d(0,-4px,0) rotate(45deg); }
-    }
-    
-    @keyframes bounce-delay-2 {
-      0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0) rotate(-45deg); }
-      40%, 43% { transform: translate3d(0,-30px,0) rotate(-45deg); }
-      70% { transform: translate3d(0,-15px,0) rotate(-45deg); }
-      90% { transform: translate3d(0,-4px,0) rotate(-45deg); }
-    }
-    
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes fade-in-delay {
-      0% { opacity: 0; transform: translateY(20px); }
-      50% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes fade-in-delay-2 {
-      0% { opacity: 0; transform: translateY(20px); }
-      70% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes fade-in-delay-3 {
-      0% { opacity: 0; transform: translateY(20px); }
-      85% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes fade-in-delay-4 {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    .animate-spin-slow {
-      animation: spin-slow 3s linear infinite;
-    }
-    
-    .animate-bounce-delay {
-      animation: bounce-delay 2s infinite;
-      animation-delay: 0.5s;
-    }
-    
-    .animate-bounce-delay-2 {
-      animation: bounce-delay-2 2s infinite;
-      animation-delay: 1s;
-    }
-    
-    .animate-fade-in {
-      animation: fade-in 1s ease-out;
-    }
-    
-    .animate-fade-in-delay {
-      animation: fade-in-delay 1.5s ease-out;
-    }
-    
-    .animate-fade-in-delay-2 {
-      animation: fade-in-delay-2 2s ease-out;
-    }
-    
-    .animate-fade-in-delay-3 {
-      animation: fade-in-delay-3 2.5s ease-out;
-    }
-    
-    .animate-fade-in-delay-4 {
-      animation: fade-in-delay-4 3s ease-out;
-    }
-  </style>
-</main> 
+  <Footer client:visible />
+</Layout>

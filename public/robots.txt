@@ -1,23 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://orderslift.com/sitemap.xml
 
-# Disallow admin areas (if any)
-Disallow: /admin/
-Disallow: /private/
 Disallow: /api/
 Disallow: /_astro/
 
-# Allow important pages
-Allow: /about/
-Allow: /features/
-Allow: /faq/
-Allow: /contact/
-Allow: /privacy/
-Allow: /terms/
-Allow: /cookies/
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 1 
+Crawl-delay: 1

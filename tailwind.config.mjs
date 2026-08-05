@@ -5,6 +5,25 @@ export default {
   theme: {
     extend: {
       colors: {
+        // ── OrdersLift 2.0 semantic tokens ─────────────────────────────
+        // Ink on warm paper, with burnished gold as the one accent — the
+        // colour of the review star, which is what this agency sells.
+        // Values live as CSS vars in global.css so dark mode is one flip.
+        paper: 'rgb(var(--paper) / <alpha-value>)',   // page background
+        band:  'rgb(var(--band) / <alpha-value>)',    // alternating section
+        raise: 'rgb(var(--raise) / <alpha-value>)',   // cards sitting on paper
+        ink:   'rgb(var(--ink) / <alpha-value>)',     // headings
+        body:  'rgb(var(--body) / <alpha-value>)',    // paragraphs
+        muted: 'rgb(var(--muted) / <alpha-value>)',   // captions, labels
+        rule:  'rgb(var(--rule) / <alpha-value>)',    // hairlines
+        gold:  'rgb(var(--gold) / <alpha-value>)',    // brand accent
+        // Semantic only — never decorative. Borrowed from Google's own
+        // listing UI so the profile mockups read as authentic.
+        gain:  'rgb(var(--gain) / <alpha-value>)',    // "Open", after, up
+        loss:  'rgb(var(--loss) / <alpha-value>)',    // "Closed", before, down
+        star:  '#fbbc04',                             // Google review star
+        gblue: '#1a73e8',                             // Google action blue
+
         // Brand orange — the primary voice of the site.
         primary: {
           50:  '#fff7ed',
@@ -74,8 +93,14 @@ export default {
       },
 
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'system-ui', 'sans-serif'],
+        // Archivo carries a width axis — `font-display` is set narrow and
+        // heavy in global.css, which is how restaurant signage and menu
+        // boards are actually lettered.
+        display: ['Archivo', 'system-ui', 'sans-serif'],
+        sans:    ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        // Mono is for data — ratings, counts, deltas, section markers.
+        // These are numbers off a dashboard, so they get typed like it.
+        mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
       },
 
       animation: {
@@ -87,6 +112,7 @@ export default {
         'marquee-rl':    'marquee-rl var(--speed,28s) linear infinite',
         'spin-slow':     'spin 20s linear infinite',
         'border-spin':   'borderSpin 4s linear infinite',
+        'rise':          'rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
 
       keyframes: {
@@ -117,6 +143,10 @@ export default {
         borderSpin: {
           '0%':   { '--angle': '0deg' },
           '100%': { '--angle': '360deg' },
+        },
+        rise: {
+          '0%':   { transform: 'translateY(14px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)',    opacity: '1' },
         },
       },
     },
