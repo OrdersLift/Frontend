@@ -18,6 +18,39 @@
   --card-alpha:     0.85;
   --grid-line:      234 88 12;     /* orange-600               */
   --grid-alpha:     0.09;
+
+  /* --- Card system -------------------------------------------------
+     Light mode carries depth the normal way: opaque white fills, a warm
+     hairline, and shadows tinted with primary-900 so they read as warm
+     shade rather than grey dirt. */
+  --surface-card:    255 255 255;  /* resting panel fill        */
+  --surface-card-a:  1;
+  --surface-raised:  255 255 255;  /* raised / featured panel   */
+  --surface-raised-a: 1;
+  --surface-inset:   255 247 237;  /* recessed block INSIDE a card (primary-50) */
+  --surface-inset-a: 1;
+  --surface-hover:   255 251 247;  /* interactive card hover fill */
+  --surface-hover-a: 1;
+
+  --card-line:       124 45 18;    /* primary-900, used at low alpha */
+  --card-line-a:     0.12;
+  --card-line-strong-a: 0.22;      /* hover / focus border           */
+  --hairline:        124 45 18;
+  --hairline-a:      0.10;
+
+  --radius-card:     1rem;
+  --radius-card-lg:  1.25rem;
+  --radius-inset:    0.75rem;
+
+  --elev-1: 0 1px 2px rgb(124 45 18 / 0.05), 0 1px 3px rgb(124 45 18 / 0.04);
+  --elev-2: 0 2px 4px rgb(124 45 18 / 0.05), 0 12px 24px -8px rgb(124 45 18 / 0.12);
+  --elev-3: 0 4px 8px rgb(124 45 18 / 0.06), 0 24px 48px -12px rgb(124 45 18 / 0.18);
+
+  /* The focus ring's 2px gap has to be painted in the colour of whatever
+     the control is sitting ON, or it draws a pale halo against cream.
+     The token inherits, so redefining it on a surface (below) silently
+     corrects every `.focus-ring` control nested inside it. */
+  --focus-offset:    255 255 255;
 }
 
 .dark {
@@ -31,7 +64,49 @@
   --card-alpha:     0.035;
   --grid-line:      249 115 22;
   --grid-alpha:     0.08;
+
+  /* --- Card system -------------------------------------------------
+     On true black a drop shadow is invisible, so elevation is expressed
+     as fill lightness + border brightness + a 1px inset top highlight
+     (the "light from above" edge). Higher elevation = lighter fill. */
+  --surface-card:    255 255 255;
+  --surface-card-a:  0.04;
+  --surface-raised:  255 255 255;
+  --surface-raised-a: 0.065;
+  --surface-inset:   255 255 255;
+  --surface-inset-a: 0.022;
+  --surface-hover:   255 255 255;
+  --surface-hover-a: 0.07;
+
+  --card-line:       255 255 255;
+  --card-line-a:     0.09;
+  --card-line-strong-a: 0.18;
+  --hairline:        255 255 255;
+  --hairline-a:      0.08;
+
+  --elev-1: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --elev-2: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --elev-3: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.8);
+
+  --focus-offset:    0 0 0;
 }
+
+/* Focus-offset overrides. Dark values are the *composited* result of the
+   surface's white-at-low-alpha fill over black, not the fill itself —
+   `var(--surface-inset)` is literally white in dark mode and would paint
+   the gap white. `.section-band` can reuse its token directly because
+   `--surface-muted` is already redefined per theme. */
+.section-band                          { --focus-offset: var(--surface-muted); }
+.surface-card,
+.surface-card-raised                   { --focus-offset: 255 255 255; }
+.dark .surface-card,
+.dark .surface-card-raised             { --focus-offset: 10 10 10; }
+.surface-inset,
+.surface-inset-brand,
+.stat-tile                             { --focus-offset: 255 247 237; }
+.dark .surface-inset,
+.dark .surface-inset-brand,
+.dark .stat-tile                       { --focus-offset: 6 6 6; }
 
 /* ===========================
    Base
@@ -187,7 +262,150 @@ html { scroll-behavior: smooth; }
 }
 
 /* ===========================
+   Surface / card system
+   `.glass` and `.glass-card` stay for chrome that sits OVER content
+   (header, badges, demo pages). Everything that HOUSES content uses the
+   surfaces below: opaque, structured, and readable in both themes.
+
+   These live outside @layer components on purpose — Tailwind
+   tree-shakes component-layer CSS against the content globs, which would
+   silently drop any surface a component has not adopted yet. The
+   trade-off is that they are declared after `@tailwind utilities`, so
+   THEY OWN background, border, border-radius and box-shadow. Do not try
+   to override those four with utilities; pick the right variant class.
+   Padding, typography, layout and colour of children are all yours.
+
+   Elevation ladder
+     .surface-inset          recessed block inside a card   (e0)
+     .surface-inset-brand    same, with a warm brand wash   (e0)
+     .surface-card           resting content panel          (e1)
+     .surface-card-raised    the one panel that matters     (e2)
+     .surface-featured       add-on: brand accent edge      (e2)
+     .elev-3                 modal / chat widget            (e3)
+=========================== */
+.surface-card {
+  position: relative;
+  background: rgb(var(--surface-card) / var(--surface-card-a));
+  border: 1px solid rgb(var(--card-line) / var(--card-line-a));
+  border-radius: var(--radius-card);
+  box-shadow: var(--elev-1);
+}
+
+.surface-card-raised {
+  position: relative;
+  background: rgb(var(--surface-raised) / var(--surface-raised-a));
+  border: 1px solid rgb(var(--card-line) / var(--card-line-strong-a));
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--elev-2);
+}
+
+/* Recessed sub-block: lists, field groups, stat rows, modal sections.
+   Never give this a shadow — a shadow inside a card reads as a bug. */
+.surface-inset {
+  background: rgb(var(--surface-inset) / var(--surface-inset-a));
+  border: 1px solid rgb(var(--card-line) / var(--card-line-a));
+  border-radius: var(--radius-inset);
+}
+
+/* Inset block carrying the brand wash — modal impact rows, highlight
+   callouts. Keeps the gradient inside the system instead of every modal
+   inventing its own `bg-gradient-to-r from-x/[0.08]` string. */
+.surface-inset-brand {
+  background:
+    linear-gradient(90deg, rgb(249 115 22 / 0.09) 0%, rgb(234 179 8 / 0.09) 100%),
+    rgb(var(--surface-inset) / var(--surface-inset-a));
+  border: 1px solid rgb(var(--card-line) / var(--card-line-a));
+  border-radius: var(--radius-inset);
+}
+
+.dark .surface-inset-brand {
+  background:
+    linear-gradient(90deg, rgb(249 115 22 / 0.10) 0%, rgb(234 179 8 / 0.08) 100%),
+    rgb(var(--surface-inset) / var(--surface-inset-a));
+}
+
+/* Compose with .surface-card / .surface-card-raised on anything the user
+   can click or that lifts on hover. The transition is limited to paint
+   properties — framer-motion owns transform. */
+.surface-interactive {
+  transition-property: background-color, background-image, border-color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.surface-interactive:hover {
+  background: rgb(var(--surface-hover) / var(--surface-hover-a));
+  border-color: rgb(var(--card-line) / var(--card-line-strong-a));
+  box-shadow: var(--elev-2);
+}
+
+/* Brand edge for the single featured card in a set (Growth plan, the
+   primary CTA panel). One per section — it stops meaning "important" the
+   moment there are two. Requires a positioned parent, which every
+   .surface-card* already is. */
+.surface-featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius-card-lg) var(--radius-card-lg) 0 0;
+  background: linear-gradient(90deg, #ea580c 0%, #f59e0b 55%, #eab308 100%);
+}
+
+.dark .surface-featured::before {
+  background: linear-gradient(90deg, #fb923c 0%, #fbbf24 55%, #fde047 100%);
+}
+
+/* Number + label tile. Used in the hero strip, the reviews strip and the
+   modal impact rows so a stat looks the same everywhere. */
+.stat-tile {
+  @apply flex flex-col items-center justify-center text-center px-4 py-5;
+  background: rgb(var(--surface-inset) / var(--surface-inset-a));
+  border: 1px solid rgb(var(--card-line) / var(--card-line-a));
+  border-radius: var(--radius-inset);
+}
+
+/* Alternating section band. Replaces `bg-cream-100 dark:bg-black`, and in
+   dark mode finally gives the band a value (#0a0a0a) instead of letting
+   it collapse into the page. */
+.section-band {
+  background: rgb(var(--surface-muted));
+  border-top: 1px solid rgb(var(--hairline) / var(--hairline-a));
+  border-bottom: 1px solid rgb(var(--hairline) / var(--hairline-a));
+}
+
+/* Dividers. `.hairline-y` rules between siblings — use it for the FAQ
+   list and any stat strip. */
+.hairline-t { border-top: 1px solid rgb(var(--hairline) / var(--hairline-a)); }
+.hairline-b { border-bottom: 1px solid rgb(var(--hairline) / var(--hairline-a)); }
+.hairline-y > * + * { border-top: 1px solid rgb(var(--hairline) / var(--hairline-a)); }
+
+/* Elevation on its own, for surfaces that already own their fill
+   (the scrolled header, the modal panel, the chat widget). */
+.elev-1 { box-shadow: var(--elev-1); }
+.elev-2 { box-shadow: var(--elev-2); }
+.elev-3 { box-shadow: var(--elev-3); }
+
+/* One focus treatment for every custom control. The offset colour comes
+   from the inherited `--focus-offset` rather than a hardcoded white/black,
+   so a control on a cream band or inside an inset no longer draws a pale
+   halo. Beats Tailwind's `*`-scoped default on specificity. */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/60
+         focus-visible:ring-offset-2;
+  --tw-ring-offset-color: rgb(var(--focus-offset));
+}
+
+/* ===========================
    Reduced motion
+
+   NOTE: this block only governs CSS. framer-motion animates in JS via
+   the Web Animations API and ignores it entirely — every React island
+   must wrap its root in <MotionConfig reducedMotion="user"> (imported
+   from framer-motion), which drops transform/layout animation and keeps
+   opacity so content still appears. See src/lib/motion.ts.
 =========================== */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -195,5 +413,18 @@ html { scroll-behavior: smooth; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Looping decoration must be switched OFF, not sped up: collapsing a
+     marquee or float to 0.001ms snaps it to its end keyframe, which
+     leaves the reviews track parked at translateX(-50%). */
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-spin-slow,
+  .animate-marquee-lr,
+  .animate-marquee-rl,
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
   }
 }

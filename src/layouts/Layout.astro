@@ -14,14 +14,14 @@ export interface Props {
 
 const { 
   title, 
-  description = "OrdersLift - Global AI-Powered Restaurant Website Agency. Transform restaurants worldwide with cutting-edge AI technology. Boost direct sales, reduce delivery app dependency, and create exceptional customer experiences globally. Get your AI-powered restaurant website today.",
+  description = "OrdersLift builds restaurant websites with commission-free table booking, a QR digital menu you update in seconds, and an AI assistant that answers guests around the clock. Hosted and maintained for 2 years free.",
   image = "https://orderslift.com/og-image.jpg",
   canonical = Astro.url.href,
-  keywords = "global restaurant website agency, international restaurant technology, AI restaurant website worldwide, restaurant website development global, AI chatbot for restaurants international, restaurant delivery integration worldwide, restaurant analytics global, restaurant marketing international, restaurant technology worldwide, AI-powered ordering system global, restaurant website design international, restaurant SEO worldwide, restaurant online ordering global, restaurant management system international, restaurant website agency worldwide, restaurant digital transformation global",
+  keywords = "restaurant website design, restaurant website agency, table booking system for restaurants, restaurant reservation system, QR menu, QR code menu for restaurants, digital menu, restaurant online ordering, commission free bookings, cafe website design, takeaway website design, pub and bar website, restaurant SEO, restaurant AI chatbot",
   author = "OrdersLift",
   publishedTime,
   modifiedTime,
-  section = "Global Restaurant Technology",
+  section = "Restaurant Technology",
   type = "website"
 } = Astro.props;
 
@@ -95,7 +95,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <meta property="og:image" content={new URL(image, Astro.url)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
+    <meta property="og:image:alt" content="OrdersLift — Restaurant Websites, Table Booking & QR Menus" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="en_GB" />
@@ -119,7 +119,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
-    <meta property="twitter:image:alt" content="OrdersLift - AI-Powered Restaurant Website Agency" />
+    <meta property="twitter:image:alt" content="OrdersLift — Restaurant Websites, Table Booking & QR Menus" />
     <meta property="twitter:creator" content="@orderslift" />
     <meta property="twitter:site" content="@orderslift" />
     
@@ -139,7 +139,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       "logo": "https://orderslift.com/logo.png",
       "description": description,
       "foundingDate": "2023",
-      "industry": "Global Restaurant Technology",
+      "industry": "Restaurant Technology",
       "numberOfEmployees": "10-50",
       "globalServiceArea": true,
       "address": {
@@ -165,22 +165,38 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Restaurant Website Services",
+        "name": "Restaurant Website, Booking & Menu Services",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "AI-Powered Restaurant Website",
-              "description": "Complete AI-powered website solution for restaurants"
+              "name": "Restaurant Website Design & Rebuild",
+              "description": "Custom restaurant websites, built new or rebuilt from an existing site, with a self-serve admin panel"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Restaurant Analytics Dashboard",
-              "description": "Comprehensive analytics and insights for restaurant owners"
+              "name": "Table Booking System",
+              "description": "Commission-free online table reservations with automatic confirmations and reminders"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "QR Digital Menu",
+              "description": "Scannable QR menu that restaurant owners can update instantly from a phone"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Menu & Booking Assistant",
+              "description": "24/7 chatbot trained on the restaurant's menu and hours that answers guests and takes bookings"
             }
           }
         ]
@@ -192,7 +208,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "OrdersLift",
-      "description": "AI-Powered Restaurant Website Agency",
+      "description": "Restaurant website, table booking and QR menu agency",
       "url": "https://orderslift.com",
       "telephone": "+1-555-123-4567",
       "email": "hello@orderslift.com",
@@ -200,7 +216,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       "currenciesAccepted": "USD, EUR, GBP, CAD, AUD, INR",
       "paymentAccepted": "Credit Card, PayPal, Bank Transfer, Stripe, Apple Pay, Google Pay",
       "areaServed": "Worldwide",
-      "serviceType": "Restaurant Website Development",
+      "serviceType": "Restaurant Website, Booking & QR Menu Services",
       "openingHours": "Mo-Su 00:00-23:59"
     })} />
   </head>

@@ -118,7 +118,7 @@ export default function OrderView() {
             </div>
 
             {/* summary + checkout */}
-            <form onSubmit={placeOrder} className="rounded-3xl bg-[#1a120b] border border-amber-500/20 p-6 lg:sticky lg:top-40">
+            <form onSubmit={placeOrder} className="rounded-3xl bg-[#1a120b] border border-amber-500/20 p-6 lg:sticky lg:top-20">
               <h2 className="font-serif text-xl font-bold text-amber-50">Checkout</h2>
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex justify-between text-amber-100/70"><span>Subtotal</span><span>€{subtotal.toFixed(2)}</span></div>

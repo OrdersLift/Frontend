@@ -1,6 +1,5 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import Header from '../../../components/Header';
 import BrandNav from '../../../components/demos/restaurants/BrandNav';
 import MenuView from '../../../components/demos/restaurants/MenuView';
 import Footer from '../../../components/demos/restaurants/Footer';
@@ -8,7 +7,6 @@ import ChatWidget from '../../../components/demos/restaurants/ChatWidget';
 ---
 
 <Layout title="Menu — Saffron & Ember">
-  <Header client:load />
   <BrandNav client:load />
   <main>
     <MenuView client:load />

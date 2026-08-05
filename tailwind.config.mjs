@@ -2,7 +2,6 @@
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
-  safelist: ['rotate-[-1.5deg]', 'rotate-[1.5deg]'],
   theme: {
     extend: {
       colors: {

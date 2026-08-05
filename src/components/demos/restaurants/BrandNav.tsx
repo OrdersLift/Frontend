@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Flame, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag } from 'lucide-react';
 import { useCart, cartCount } from './cartStore';
-import { brand } from './data';
 
 const links = [
   { name: 'Home', href: '/demo/restaurants/' },
@@ -18,17 +17,13 @@ export default function BrandNav() {
   const count = cartCount(cart);
 
   return (
-    <nav className="sticky top-16 lg:top-20 z-40 bg-[#1a120b]/95 backdrop-blur border-b border-amber-500/20">
+    <nav className="sticky top-0 z-40 bg-[#1a120b]/95 backdrop-blur border-b border-amber-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 lg:h-16">
-          {/* Logo */}
-          <a href="/demo/restaurants/" className="flex items-center gap-2 group">
-            <span className="grid place-items-center w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-rose-600 text-white shadow-lg shadow-amber-900/40">
-              <Flame className="w-5 h-5" />
-            </span>
-            <span className="font-serif text-lg lg:text-xl font-semibold tracking-tight text-amber-50">
-              Saffron <span className="text-amber-400">&amp;</span> Ember
-            </span>
+          {/* Demo pages no longer render the site header, so this logo is the
+              only route back to the marketing site. */}
+          <a href="/" className="shrink-0" aria-label="OrdersLift home">
+            <img src="/logo.png" alt="OrdersLift" className="h-7 lg:h-8 w-auto" />
           </a>
 
           {/* Desktop links */}

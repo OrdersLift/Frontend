@@ -1,22 +1,24 @@
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, MotionConfig } from 'framer-motion';
 import {
-  Globe, MessageSquare, Brain, Server, Clock, Shield, CheckCircle, ArrowRight,
+  Globe, CalendarCheck, QrCode, MessageSquare, Clock, Shield, CheckCircle, ArrowRight,
 } from 'lucide-react';
+import {
+  cardHover, cardTap, fadeUp, pressHover, pressTap, staggerContainer, staggerFor, viewportOnce,
+} from '../lib/motion';
 
 const pillars = [
   {
     icon: Globe,
-    title: 'Full Custom Website',
-    subtitle: 'Your complete digital presence',
+    title: 'Your Restaurant Website',
+    subtitle: 'Built new, or rebuilt properly',
     description:
-      'A fully custom website tailored to your brand and industry, with an admin panel so you ' +
-      'control menus, services, bookings and content — without touching code.',
+      'No website yet? We build you one. Got an old one that looks dated on a phone? We rebuild it. ' +
+      'Either way you get an admin panel to change photos, hours and content yourself.',
     features: [
-      'Bespoke design & branding',
-      'Admin panel with full control',
-      'Mobile-first responsive',
-      'SEO optimised from day one',
+      'New build or full redesign',
+      'Looks right on every phone',
+      'Found on Google from day one',
+      'Edit it yourself, no code',
     ],
     gradient: 'from-primary-100 to-white dark:from-primary-600/25 dark:to-primary-800/10',
     border: 'border-primary-300/70 dark:border-primary-500/20',
@@ -30,17 +32,17 @@ const pillars = [
     badge: 'Core',
   },
   {
-    icon: MessageSquare,
-    title: 'AI Customer Chatbot',
-    subtitle: 'Your 24/7 front-desk agent',
+    icon: CalendarCheck,
+    title: 'Table Booking System',
+    subtitle: 'Fill tables while you cook',
     description:
-      'An intelligent chatbot trained on your business — services, prices, hours, FAQs. ' +
-      'Customers get instant answers any time of day, by voice or text.',
+      'Guests book straight from your website — no commission, no third party. You see every ' +
+      'booking in one place, and guests get an automatic confirmation and reminder.',
     features: [
-      'Natural language understanding',
-      'Voice & text capable',
-      'Trained on your data',
-      'WhatsApp & SMS integration',
+      'Live table availability',
+      'Automatic SMS & email reminders',
+      'Fewer no-shows, fewer phone calls',
+      'Covers and guest notes in one view',
     ],
     gradient: 'from-glow-100 to-white dark:from-glow-600/25 dark:to-glow-800/10',
     border: 'border-glow-300/70 dark:border-glow-500/20',
@@ -51,20 +53,20 @@ const pillars = [
     iconRing: 'group-hover:ring-glow-500/40',
     spotlight: 'bg-glow-400/40 dark:bg-glow-500/25',
     underline: 'bg-glow-500',
-    badge: 'AI-Powered',
+    badge: 'Most Wanted',
   },
   {
-    icon: Brain,
-    title: 'Internal RAG Bot',
-    subtitle: 'Your team\'s knowledge engine',
+    icon: QrCode,
+    title: 'QR Digital Menu',
+    subtitle: 'Change a price in seconds',
     description:
-      'Connect your own data — databases, documents, Drive, Notion, your POS — and let your ' +
-      'staff ask questions in plain English. "How much did we make last week?" Instant answers.',
+      'One QR code on every table. Guests scan and see today\'s menu — no app to download. ' +
+      'Sold out of the special? Change it from your phone and every table sees it instantly.',
     features: [
-      'Connects to your databases',
-      'Reads PDFs, docs, spreadsheets',
-      'Multi-source RAG pipeline',
-      'Private & secure — your data stays yours',
+      'Update prices and dishes instantly',
+      'Mark items sold out in one tap',
+      'Photos, allergens and dietary tags',
+      'No reprinting menus, ever',
     ],
     gradient: 'from-accent-100 to-white dark:from-accent-600/25 dark:to-accent-800/10',
     border: 'border-accent-300/70 dark:border-accent-500/20',
@@ -75,20 +77,20 @@ const pillars = [
     iconRing: 'group-hover:ring-accent-500/40',
     spotlight: 'bg-accent-400/40 dark:bg-accent-500/25',
     underline: 'bg-accent-500',
-    badge: 'Exclusive',
+    badge: 'Guest Favourite',
   },
   {
-    icon: Server,
-    title: 'Hosting, Analytics & Care',
-    subtitle: 'We run it — you relax',
+    icon: MessageSquare,
+    title: 'AI Assistant & Ordering',
+    subtitle: 'Answers every question, 24/7',
     description:
-      'We deploy and manage the whole stack — servers, database, AI services — and keep it ' +
-      'healthy. Your dashboard shows revenue, bookings and trends at a glance.',
+      'A chatbot trained on your menu, hours and location. It answers "do you have gluten-free?" ' +
+      'and "can I book for six on Friday?" at 11pm, and takes online orders while you sleep.',
     features: [
-      'Managed hosting included',
-      'Analytics dashboard',
-      '24/7 monitoring',
-      '2 years free maintenance',
+      'Trained on your menu & hours',
+      'Takes bookings and orders',
+      'Online ordering, commission-free',
+      'Hands over to you when needed',
     ],
     gradient: 'from-primary-200 to-white dark:from-primary-700/30 dark:to-primary-900/10',
     border: 'border-primary-400/60 dark:border-primary-600/25',
@@ -99,23 +101,22 @@ const pillars = [
     iconRing: 'group-hover:ring-primary-600/40',
     spotlight: 'bg-primary-500/40 dark:bg-primary-600/25',
     underline: 'bg-primary-600',
-    badge: 'Included',
+    badge: 'Automated',
   },
 ];
 
 const promises = [
   { icon: CheckCircle, label: 'Free discovery call' },
   { icon: Clock,       label: '2–4 week delivery' },
-  { icon: Shield,      label: 'One partner for everything' },
+  { icon: Shield,      label: '2 years free maintenance' },
 ];
 
-const Products = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <section id="products" ref={ref} className="py-24 bg-white dark:bg-black relative overflow-hidden">
+const Products = () => (
+  <MotionConfig reducedMotion="user">
+    <section
+      id="products"
+      className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-black relative overflow-hidden scroll-mt-24"
+    >
       {/* Background orbs */}
       <div className="absolute top-0 left-1/3 w-96 h-96 bg-primary-300/25 dark:bg-primary-600/10
                       rounded-full blur-3xl pointer-events-none" />
@@ -125,9 +126,10 @@ const Products = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
           className="text-center mb-16"
         >
           <span className="inline-flex items-center px-4 py-1.5 rounded-full glass border border-glow-500/30
@@ -135,24 +137,31 @@ const Products = () => {
             What We Build For You
           </span>
           <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
-            Four Pillars of Your{' '}
-            <span className="gradient-text">AI Platform</span>
+            Everything Your Restaurant{' '}
+            <span className="gradient-text">Needs Online</span>
           </h2>
           <p className="text-lg text-neutral-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Every client gets a complete platform — not just a website. We handle the full stack
-            so you never have to think about tech again.
+            Four things, done properly — a website worth showing off, bookings that come straight to
+            you, a menu you control, and an assistant that never sleeps.
           </p>
         </motion.div>
 
-        {/* Pillar cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-          {pillars.map((p, i) => (
+        {/* Pillar cards — the deliberate exception to the surface system: the
+            per-pillar gradient, spotlight bloom and light sweep are this
+            section's signature. */}
+        <motion.div
+          variants={staggerContainer(staggerFor(pillars.length))}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 mb-12"
+        >
+          {pillars.map((p) => (
             <motion.div
               key={p.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              whileHover={reduceMotion ? undefined : { y: -10 }}
+              variants={fadeUp}
+              whileHover={cardHover}
+              whileTap={cardTap}
               className={`group relative overflow-hidden rounded-2xl border ${p.border} ${p.hoverBorder}
                          bg-gradient-to-b ${p.gradient} p-6 flex flex-col
                          transition-[box-shadow,border-color] duration-300 hover:shadow-2xl ${p.glow}`}
@@ -169,7 +178,7 @@ const Products = () => {
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-12
-                           bg-gradient-to-r from-transparent via-white/80 to-transparent
+                           bg-gradient-to-r from-transparent via-white/60 to-transparent
                            dark:via-white/[0.12] opacity-0 group-hover:opacity-100
                            group-hover:left-[140%] transition-all duration-700 ease-out"
               />
@@ -218,18 +227,18 @@ const Products = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Promise bar */}
+        {/* Promise bar — its own trigger, not a delayed tail on the cascade. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="glass rounded-2xl border border-primary-200/70 dark:border-white/10 p-6
-                     flex flex-col sm:flex-row items-center justify-between gap-6"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          className="surface-card p-6 flex flex-col sm:flex-row items-center justify-between gap-6"
         >
           <p className="text-neutral-600 dark:text-slate-400 text-sm font-medium">
-            All four pillars, every package:
+            All four, in every package:
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             {promises.map((e) => (
@@ -239,14 +248,20 @@ const Products = () => {
               </div>
             ))}
           </div>
-          <a href="/#contact" className="btn-primary text-sm py-2.5 px-6 flex-shrink-0">
-            Get Your Platform
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </a>
+          <motion.a
+            href="/#contact"
+            whileHover={pressHover}
+            whileTap={pressTap}
+            className="btn-primary text-sm py-2.5 px-6 flex-shrink-0
+                       w-full sm:w-auto justify-center text-center"
+          >
+            Get Your Restaurant Online
+            <ArrowRight className="ml-2 w-4 h-4 flex-shrink-0" />
+          </motion.a>
         </motion.div>
       </div>
     </section>
-  );
-};
+  </MotionConfig>
+);
 
 export default Products;

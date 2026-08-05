@@ -51,7 +51,8 @@ export default function MenuView() {
       </div>
 
       {/* diet filter */}
-      <div className="sticky top-[7.5rem] lg:top-[8.5rem] z-30 bg-[#140d07]/95 backdrop-blur border-b border-amber-500/10">
+      {/* Sits directly under BrandNav, so this must track its height (h-14 lg:h-16). */}
+      <div className="sticky top-14 lg:top-16 z-30 bg-[#140d07]/95 backdrop-blur border-b border-amber-500/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex gap-2 overflow-x-auto">
           {dietFilters.map((f) => (
             <button
