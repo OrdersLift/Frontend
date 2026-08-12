@@ -8,7 +8,8 @@ import { collapse, duration, panel, pressTap, tr } from '../lib/motion';
    but no label for the group that opens them. */
 const SERVICES = 'Services';
 
-const link = 'focus-ring relative rounded-md px-3 py-2 text-sm transition-colors';
+// 15px/500 holds its own beside the CTA; 14px/400 read as fine print next to it.
+const link = 'focus-ring relative rounded-md px-3 py-2 text-[15px] font-medium transition-colors';
 const idle = 'text-body hover:text-ink';
 const rowLink =
   'focus-ring block rounded-lg px-3 py-3 text-base transition-colors hover:bg-ink/5';
@@ -90,10 +91,10 @@ const Header = () => {
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       className="focus-ring grid h-11 w-11 shrink-0 place-items-center rounded-lg border
                  border-rule text-primary-500 transition-colors
-                 hover:border-primary-500/60 hover:bg-ink/5 lg:h-10 lg:w-10"
+                 hover:border-primary-500/60 hover:bg-ink/5 lg:h-[38px] lg:w-[38px]"
     >
-      <Sun className="hidden h-5 w-5 dark:block" />
-      <Moon className="block h-5 w-5 dark:hidden" />
+      <Sun className="hidden h-5 w-5 dark:block lg:h-[18px] lg:w-[18px]" />
+      <Moon className="block h-5 w-5 dark:hidden lg:h-[18px] lg:w-[18px]" />
     </motion.button>
   );
 
@@ -110,17 +111,19 @@ const Header = () => {
         }`}
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="relative flex h-16 items-center justify-between gap-4 lg:h-[72px]">
+          <div className="relative flex h-16 items-center justify-between gap-4 lg:h-[68px]">
             {/* Wordmark */}
             <a
               href="/"
               aria-label={brand.name}
               className="focus-ring -mx-1 shrink-0 rounded-md px-1 py-1 leading-none"
             >
-              <span className="block font-display text-xl font-bold tracking-tight text-ink">
+              <span className="block font-display text-[19px] font-bold leading-none tracking-tight text-ink">
                 Orders<span className="text-primary-500">Lift</span>
               </span>
-              <span className="mt-1 block text-[10px] uppercase tracking-[0.18em] text-muted">
+              {/* 9px/0.16em keeps the two-line lockup inside the bar's height
+                  instead of pushing it to the full 73px it was using. */}
+              <span className="mt-[3px] block text-[9px] uppercase leading-none tracking-[0.16em] text-muted">
                 {brand.tagline}
               </span>
             </a>
@@ -213,7 +216,7 @@ const Header = () => {
             {/* Right */}
             <div className="hidden shrink-0 items-center gap-3 lg:flex">
               {themeToggle}
-              <a href={cta.primary.href} className="btn-primary focus-ring">
+              <a href={cta.primary.href} className="btn-primary btn-sm focus-ring">
                 {cta.primary.label}
               </a>
             </div>
