@@ -166,38 +166,11 @@ html { scroll-behavior: smooth; }
   border: 1px solid rgb(var(--glass-border) / var(--glass-border-a));
 }
 
-.glass-card {
-  background: rgb(var(--card-bg) / var(--card-alpha));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgb(var(--glass-border) / var(--glass-border-a));
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(124, 45, 18, 0.06);
-}
-
-.dark .glass-card { box-shadow: none; }
-
-.glass-card:hover {
-  border-color: rgba(249, 115, 22, 0.45);
-  background: rgba(249, 115, 22, 0.06);
-}
-
-.dark .glass-card:hover {
-  border-color: rgba(251, 146, 60, 0.45);
-  background: rgba(249, 115, 22, 0.09);
-}
-
 /* ===========================
    Glow
 =========================== */
 .glow-primary {
   box-shadow: 0 0 30px rgba(249, 115, 22, 0.35), 0 0 80px rgba(249, 115, 22, 0.12);
-}
-.glow-accent {
-  box-shadow: 0 0 30px rgba(234, 179, 8, 0.3), 0 0 60px rgba(234, 179, 8, 0.12);
-}
-.glow-purple {
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.12);
 }
 
 /* ===========================
@@ -218,20 +191,6 @@ html { scroll-behavior: smooth; }
           mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
 }
 .marquee-paused:hover .marquee-track { animation-play-state: paused; }
-
-/* ===========================
-   Animations
-=========================== */
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-8px); }
-}
-.animate-float { animation: float 6s ease-in-out infinite; }
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%      { opacity: 0.7; transform: scale(1.06); }
-}
 
 /* ===========================
    Buttons
@@ -263,9 +222,9 @@ html { scroll-behavior: smooth; }
 
 /* ===========================
    Surface / card system
-   `.glass` and `.glass-card` stay for chrome that sits OVER content
-   (header, badges, demo pages). Everything that HOUSES content uses the
-   surfaces below: opaque, structured, and readable in both themes.
+   `.glass` stays for chrome that sits OVER content (header, badges,
+   demo pages). Everything that HOUSES content uses the surfaces below:
+   opaque, structured, and readable in both themes.
 
    These live outside @layer components on purpose — Tailwind
    tree-shakes component-layer CSS against the content globs, which would
@@ -416,11 +375,8 @@ html { scroll-behavior: smooth; }
   }
 
   /* Looping decoration must be switched OFF, not sped up: collapsing a
-     marquee or float to 0.001ms snaps it to its end keyframe, which
-     leaves the reviews track parked at translateX(-50%). */
-  .animate-float,
-  .animate-pulse-glow,
-  .animate-spin-slow,
+     marquee to 0.001ms snaps it to its end keyframe, which leaves the
+     reviews track parked at translateX(-50%). */
   .animate-marquee-lr,
   .animate-marquee-rl,
   .marquee-track {

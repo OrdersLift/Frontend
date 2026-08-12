@@ -4,16 +4,7 @@ import { Menu, X, Zap, ChevronDown, Sun, Moon } from 'lucide-react';
 import { collapse, duration, pressTap, tr } from '../lib/motion';
 
 const demoItems = [
-  { name: 'Restaurants',     href: '/demo/restaurants' },
-  // { name: 'Dental Clinics',  href: '/demo/dental-clinics' },
-  // { name: 'Gyms & Fitness',  href: '/demo/gyms-fitness' },
-  // { name: 'Auto Garages',    href: '/demo/auto-garages' },
-  // { name: 'Salons & Spas',   href: '/demo/salons-spas' },
-  // { name: 'Law Firms',       href: '/demo/law-firms' },
-  // { name: 'Hotels & B&Bs',   href: '/demo/hotels' },
-  // { name: 'Retail Shops',    href: '/demo/retail-shops' },
-  // { name: 'Real Estate',     href: '/demo/real-estate' },
-  // { name: 'Clinics & Physio', href: '/demo/clinics-physio' },
+  { name: 'Restaurants', href: '/demo/restaurants' },
 ];
 
 const navLink =
@@ -23,11 +14,8 @@ const navLink =
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
   const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  // Individual demo sites keep their own fixed brand palette, so no toggle there.
-  const [themeToggleVisible, setThemeToggleVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -37,7 +25,6 @@ const Header = () => {
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    setThemeToggleVisible(!/^\/demo\/.+/.test(window.location.pathname));
   }, []);
 
   const toggleTheme = () => {
@@ -57,26 +44,30 @@ const Header = () => {
   ];
 
   // 44px touch target below lg, back to the compact chip once there is a cursor.
+  // The icon swap is CSS, not state: `theme` is only known after hydration, so
+  // rendering it from state flashed a Moon at dark-mode users on every load.
   const themeToggle = (
     <motion.button
       onClick={toggleTheme}
       whileTap={pressTap}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="focus-ring grid place-items-center w-11 h-11 lg:w-9 lg:h-9 rounded-lg
+      className="focus-ring grid place-items-center w-11 h-11 lg:w-10 lg:h-10 rounded-lg
                  border border-primary-500/30
                  text-primary-600 hover:bg-primary-50 hover:border-primary-500/60
                  dark:border-white/15 dark:text-accent-300 dark:hover:bg-white/5
                  transition-all duration-200"
     >
-      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      <Sun className="w-5 h-5 hidden dark:block" />
+      <Moon className="w-5 h-5 block dark:hidden" />
     </motion.button>
   );
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* Height stays fixed at h-16 / lg:h-20 — a shrinking header is layout
-          shift, and every section's scroll-mt-24 assumes a constant offset. */}
+      {/* Height stays fixed at h-20 / lg:h-24 — a shrinking header is layout
+          shift, and every section's scroll-mt-28 assumes a constant offset.
+          Change one and you must change the other, or anchors land under it. */}
       <motion.header
         initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -88,10 +79,10 @@ const Header = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 lg:h-20">
+          <div className="flex justify-between items-center h-20 lg:h-24">
             {/* Logo */}
             <a href="/" className="flex items-center gap-3 flex-shrink-0">
-              <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
+              <img src="/logo.png" alt="OrdersLift" className="h-12 lg:h-14 w-auto" />
             </a>
 
             {/* Desktop Nav — centered */}
@@ -100,88 +91,43 @@ const Header = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
+                  className={`${navLink} px-4 py-2.5 rounded-lg text-base font-medium
                              transition-all duration-200 relative group`}
                 >
                   {item.name}
                   <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
                                    bg-primary-500 rounded-full transition-all duration-300
-                                   group-hover:w-4" />
+                                   group-hover:w-5" />
                 </a>
               ))}
 
-              {/* Demo dropdown */}
-              {/* <div
-                className="relative"
-                onMouseEnter={() => setDemoOpen(true)}
-                onMouseLeave={() => setDemoOpen(false)}
-              >
-                <a
-                  href="/demo"
-                  className={`flex items-center gap-1 ${navLink} px-4 py-2 rounded-lg
-                             text-sm font-medium transition-all duration-200`}
-                >
-                  Demo
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${demoOpen ? 'rotate-180' : ''}`}
-                  />
-                </a>
-
-                <AnimatePresence>
-                  {demoOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56"
-                    >
-                      <div className="glass rounded-xl border border-primary-200/70 dark:border-white/10
-                                      shadow-xl shadow-primary-900/10 dark:shadow-black/40 p-2">
-                        {demoItems.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                                       dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                                       text-sm font-medium py-2 px-3 rounded-lg transition-all duration-200"
-                          >
-                            {item.name}
-                          </a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div> */}
-
               <a
                 href="/#faq"
-                className={`${navLink} px-4 py-2 rounded-lg text-sm font-medium
+                className={`${navLink} px-4 py-2.5 rounded-lg text-base font-medium
                            transition-all duration-200 relative group`}
               >
                 FAQ
                 <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
                                  bg-primary-500 rounded-full transition-all duration-300
-                                 group-hover:w-4" />
+                                 group-hover:w-5" />
               </a>
             </nav>
 
             {/* CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              {themeToggleVisible && themeToggle}
+              {themeToggle}
               <a
                 href="/#contact"
-                className="btn-primary text-sm py-2 px-5"
+                className="btn-primary text-base py-2.5 px-6"
               >
-                <Zap className="w-4 h-4 mr-1.5" />
+                <Zap className="w-[18px] h-[18px] mr-2" />
                 Get Started
               </a>
             </div>
 
             {/* Mobile burger */}
             <div className="lg:hidden flex items-center gap-2">
-              {themeToggleVisible && themeToggle}
+              {themeToggle}
               <motion.button
                 onClick={() => setIsOpen(!isOpen)}
                 whileTap={pressTap}
@@ -192,7 +138,7 @@ const Header = () => {
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={isOpen}
               >
-                {isOpen ? <X size={22} /> : <Menu size={22} />}
+                {isOpen ? <X size={26} /> : <Menu size={26} />}
               </motion.button>
             </div>
           </div>
@@ -217,7 +163,7 @@ const Header = () => {
                     onClick={() => setIsOpen(false)}
                     className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
                                dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                               font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                               text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
                   >
                     {item.name}
                   </a>
@@ -230,11 +176,11 @@ const Header = () => {
                   className="focus-ring w-full flex items-center justify-between text-neutral-700
                              hover:text-primary-700 hover:bg-primary-50 dark:text-slate-300
                              dark:hover:text-white dark:hover:bg-white/5
-                             font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                             text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
                 >
                   Demo
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${mobileDemoOpen ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-200 ${mobileDemoOpen ? 'rotate-180' : ''}`}
                   />
                 </button>
                 <AnimatePresence>
@@ -253,7 +199,7 @@ const Header = () => {
                           onClick={() => setIsOpen(false)}
                           className="block text-neutral-600 hover:text-primary-700 hover:bg-primary-50
                                      dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5
-                                     text-sm font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
+                                     text-base font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
                         >
                           {item.name}
                         </a>
@@ -267,14 +213,14 @@ const Header = () => {
                   onClick={() => setIsOpen(false)}
                   className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
                              dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                             font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                             text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
                 >
                   FAQ
                 </a>
 
                 <div className="pt-4">
-                  <a href="/#contact" className="btn-primary w-full justify-center text-sm">
-                    <Zap className="w-4 h-4 mr-1.5" />
+                  <a href="/#contact" className="btn-primary w-full justify-center text-base py-3.5">
+                    <Zap className="w-[18px] h-[18px] mr-2" />
                     Get Started
                   </a>
                 </div>

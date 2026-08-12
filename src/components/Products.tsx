@@ -115,7 +115,7 @@ const Products = () => (
   <MotionConfig reducedMotion="user">
     <section
       id="products"
-      className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-black relative overflow-hidden scroll-mt-24"
+      className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-black relative overflow-hidden scroll-mt-28"
     >
       {/* Background orbs */}
       <div className="absolute top-0 left-1/3 w-96 h-96 bg-primary-300/25 dark:bg-primary-600/10

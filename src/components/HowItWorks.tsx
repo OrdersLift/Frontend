@@ -47,7 +47,7 @@ const HowItWorks = () => (
   <MotionConfig reducedMotion="user">
     <section
       id="how-it-works"
-      className="py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden scroll-mt-24"
+      className="py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden scroll-mt-28"
     >
       <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 

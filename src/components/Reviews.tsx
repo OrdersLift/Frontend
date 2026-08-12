@@ -96,7 +96,7 @@ function MarqueeRow({
 const Reviews = () => {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="reviews" className="scroll-mt-24 relative py-16 sm:py-20 lg:py-24 bg-white dark:bg-black overflow-hidden">
+      <section id="reviews" className="scroll-mt-28 relative py-16 sm:py-20 lg:py-24 bg-white dark:bg-black overflow-hidden">
         <div className="absolute top-0 left-0 w-64 h-64 bg-primary-300/25 dark:bg-primary-600/10
                         rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-accent-300/25 dark:bg-glow-600/10

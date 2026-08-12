@@ -67,7 +67,7 @@ const plans = [
 const Pricing = () => {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="pricing" className="scroll-mt-24 py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden">
+      <section id="pricing" className="scroll-mt-28 py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px]
                         bg-primary-300/30 dark:bg-primary-600/10 rounded-full blur-3xl pointer-events-none" />
 

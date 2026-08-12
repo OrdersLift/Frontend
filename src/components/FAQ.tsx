@@ -49,7 +49,7 @@ const FAQ = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section id="faq" className="scroll-mt-24 py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden">
+      <section id="faq" className="scroll-mt-28 py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

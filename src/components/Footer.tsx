@@ -18,14 +18,6 @@ const Footer = () => {
       { name: 'Online Ordering',      href: '/#features' },
       { name: 'AI Menu Chatbot',      href: '/#features' },
     ],
-    // Points at the "Who We Serve" section, currently commented out on the homepage.
-    // industries: [
-    //   { name: 'Restaurants',   href: '/#industries' },
-    //   { name: 'Cafés',         href: '/#industries' },
-    //   { name: 'Takeaways',     href: '/#industries' },
-    //   { name: 'Bars & Pubs',   href: '/#industries' },
-    //   { name: 'Food Trucks',   href: '/#industries' },
-    // ],
     company: [
       { name: 'How It Works',  href: '/#how-it-works' },
       { name: 'Pricing',       href: '/#pricing' },
@@ -84,18 +76,6 @@ const Footer = () => {
                     ))}
                   </ul>
                 </div>
-
-                {/* We Serve — hidden while the "Who We Serve" section is commented out */}
-                {/* <div>
-                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">We Serve</h4>
-                  <ul className="space-y-2.5">
-                    {links.industries.map((l) => (
-                      <li key={l.name}>
-                        <a href={l.href} className={linkClass}>{l.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
 
                 {/* Company */}
                 <div>

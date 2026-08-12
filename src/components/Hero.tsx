@@ -51,7 +51,7 @@ const Hero = () => {
       <section
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden
-                   bg-white dark:bg-black scroll-mt-24"
+                   bg-white dark:bg-black scroll-mt-28"
       >
         {/* Grid background */}
         <div className="absolute inset-0 grid-bg opacity-60" />
