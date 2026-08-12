@@ -113,7 +113,12 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Must stay in step with `fontFamily` in tailwind.config.mjs: anything
+         named there and not requested here silently renders as system-ui. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@300..700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({

@@ -73,11 +73,13 @@ export default {
       },
 
       fontFamily: {
-        // Archivo carries a width axis — `font-display` is set narrow and
-        // heavy in global.css, which is how restaurant signage and menu
-        // boards are actually lettered.
-        display: ['Archivo', 'system-ui', 'sans-serif'],
-        sans:    ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        // Fraunces: a warm optical-size serif. Hospitality reads premium in a
+        // serif, and it keeps the page away from the geometric-sans look every
+        // other agency site has. Every family here is actually loaded in
+        // Layout.astro — the previous list named three fonts that weren't,
+        // so every heading silently rendered in system-ui.
+        display: ['Fraunces', 'Georgia', 'serif'],
+        sans:    ['Inter', 'system-ui', 'sans-serif'],
         // Mono is for data — ratings, counts, deltas, section markers.
         // These are numbers off a dashboard, so they get typed like it.
         mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
