@@ -29,7 +29,26 @@ const Stars = ({ size = 'h-3.5 w-3.5' }: { size?: string }) => (
 
 const Hero = () => (
   <MotionConfig reducedMotion="user">
-    <section id="home" className="relative bg-paper scroll-mt-28">
+    <section id="home" className="relative isolate overflow-hidden bg-paper scroll-mt-28">
+      {/* Background banner: a dark, pre-blurred restaurant interior, already
+          composed with an empty left third for the copy. Decorative, so it's a
+          background layer rather than an <img>, and aria-hidden.
+          Dark mode shows it at full strength. Light mode drops it to a faint
+          texture — a near-black photograph behind dark text would be unreadable
+          however the scrim is tuned. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div
+          className="absolute inset-0 bg-cover bg-right opacity-[0.12] dark:opacity-100"
+          style={{ backgroundImage: 'url(/images/hero-bg.webp)' }}
+        />
+        {/* Left stop stays solid: that is what holds the headline at full
+            contrast. Right stop is nearly clear so the bulbs read behind the
+            stat cards. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-paper via-paper/80 to-paper/5" />
+        {/* Settle the band into the section below it. */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-paper" />
+      </div>
+
       <div
         className="mx-auto max-w-7xl px-5 sm:px-8 pt-28 pb-16 lg:pt-32 lg:pb-24
                    lg:min-h-[88vh] flex items-center"
