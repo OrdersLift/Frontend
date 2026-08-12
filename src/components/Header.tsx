@@ -118,14 +118,23 @@ const Header = () => {
               aria-label={brand.name}
               className="focus-ring -mx-1 shrink-0 rounded-md px-1 py-1 leading-none"
             >
-              <span className="block font-display text-[19px] font-bold leading-none tracking-tight text-ink">
-                Orders<span className="text-primary-500">Lift</span>
-              </span>
-              {/* 9px/0.16em keeps the two-line lockup inside the bar's height
-                  instead of pushing it to the full 73px it was using. */}
-              <span className="mt-[3px] block text-[9px] uppercase leading-none tracking-[0.16em] text-muted">
-                {brand.tagline}
-              </span>
+              {/* Two colourways of the same mark: the brand red is only 2.3:1
+                  on charcoal, so dark mode gets it tinted to the accent. Both
+                  carry empty alt — the link's aria-label names the brand once. */}
+              <img
+                src="/logo-h.png"
+                alt=""
+                width={491}
+                height={120}
+                className="block h-9 w-auto dark:hidden"
+              />
+              <img
+                src="/logo-h-dark.png"
+                alt=""
+                width={491}
+                height={120}
+                className="hidden h-9 w-auto dark:block"
+              />
             </a>
 
             {/* Desktop nav — Services sits after the first item */}
