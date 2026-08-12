@@ -35,8 +35,12 @@ const Hero = () => (
       </div>
 
       <div
-        className="mx-auto max-w-7xl px-5 sm:px-8 pt-28 pb-16 lg:pt-32 lg:pb-24
-                   lg:min-h-[88vh] flex items-center"
+        /* No min-height: at 88vh the band was 792px for 453px of content, and
+           `items-center` split the surplus into 186px of dead space above and
+           154px below. The band is now just padding plus content, so the top
+           gap is only the clearance the fixed header needs. */
+        className="mx-auto max-w-7xl px-5 sm:px-8 pt-24 pb-10 lg:pt-28 lg:pb-14
+                   flex items-center"
       >
         <div className="grid w-full gap-12 lg:grid-cols-[46%_1fr] lg:gap-10 lg:items-center">
           {/* ── Left: copy. Above the fold, so initial/animate — never

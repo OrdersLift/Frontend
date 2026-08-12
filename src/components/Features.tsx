@@ -17,8 +17,7 @@ const Features = () => (
           viewport={viewportOnce}
           className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-ink text-center tracking-tight"
         >
-          {services.heading} <span className="text-primary-500">{services.headingAccent}</span>{' '}
-          {services.headingRest}
+          {services.heading} <span className="text-primary-500">{services.headingAccent}</span>
         </motion.h2>
 
         <motion.div

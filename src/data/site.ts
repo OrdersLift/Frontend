@@ -67,8 +67,7 @@ export const trustedBy = {
 /** `icon` is a lucide-react export name. */
 export const services = {
   heading: 'Everything You Need to',
-  headingAccent: 'Grow',
-  headingRest: 'Your Restaurant',
+  headingAccent: 'Grow Your Restaurant',
   items: [
     {
       icon: 'Megaphone',
