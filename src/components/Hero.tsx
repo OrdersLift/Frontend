@@ -45,11 +45,18 @@ const Hero = () => (
           <motion.div variants={staggerContainer(0.08, 0.05)} initial="hidden" animate="show">
             <motion.h1
               variants={fadeUp}
-              className="font-display font-bold text-4xl sm:text-5xl lg:text-[3.5rem]
+              /* Sized so the accent line sets on ONE line once the grid splits.
+                 Measured in Fraunces 700 at -0.025em: the line needs 415px at
+                 2.3rem and 521px at 2.9rem, against a column of 442px at lg and
+                 559px at xl. It drops at lg because the column narrows to 46%
+                 there — below lg the copy has the full width and can be bigger. */
+              className="font-display font-bold text-4xl sm:text-5xl lg:text-[2.3rem] xl:text-[2.9rem]
                          leading-[1.08] tracking-tight"
             >
               <span className="block text-ink">{hero.headline}</span>
-              <span className="block text-primary-500">{hero.headlineAccent}</span>
+              <span className="block text-primary-500 lg:whitespace-nowrap">
+                {hero.headlineAccent}
+              </span>
             </motion.h1>
 
             <motion.p variants={fadeUp} className="mt-6 max-w-md text-base lg:text-lg text-body">
