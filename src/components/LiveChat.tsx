@@ -6,7 +6,7 @@
 // them off, so "come back later" means "same browser".
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
-import { Headphones, X, Send, Plus, ChevronLeft } from 'lucide-react';
+import { Headphones, X, Send, Plus, ChevronLeft, Trash2 } from 'lucide-react';
 import { panel, pressHover, pressTap } from '../lib/motion';
 
 const API = import.meta.env.PUBLIC_CHAT_API as string | undefined;
@@ -207,6 +207,23 @@ export default function LiveChat() {
     }
   };
 
+  // Removing a chat drops it here and from the database. The Slack thread stays
+  // — that is the team's record, not the visitor's to erase.
+  const remove = async (c: Chat) => {
+    if (!confirm(`Delete "${c.title}"? This can't be undone.`)) return;
+    const rest = persist(chats.filter((x) => x.id !== c.id));
+    setMsgs(({ [c.id]: _gone, ...keep }) => keep);
+    if (activeId === c.id) setActiveId(null);
+    if (rest.length === 0) setComposing(true);
+    try {
+      await fetch(`${API}/api/chat/conversations/${c.id}`, { method: 'DELETE' });
+    } catch {
+      // Already removed locally, which is what the visitor asked for. The row
+      // is gone for good either way, so a failed call only leaves server rows.
+      console.warn('chat deleted locally but the server call failed');
+    }
+  };
+
   if (!API) return null; // not configured — better no widget than a broken one
 
   const totalUnread = chats.reduce((n, c) => n + c.unread, 0);
@@ -291,22 +308,34 @@ export default function LiveChat() {
             {view === 'list' && (
               <div className="flex-1 overflow-y-auto p-2">
                 {chats.map((c) => (
-                  <button
+                  // Row is a div, not a button: the delete control cannot nest
+                  // inside the control that opens the chat.
+                  <div
                     key={c.id}
-                    onClick={() => setActiveId(c.id)}
-                    className="focus-ring w-full text-left px-3 py-3 rounded-xl flex items-center gap-3
-                               hover:bg-neutral-100 dark:hover:bg-white/[0.05] transition"
+                    className="group flex items-center gap-1 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/[0.05] transition"
                   >
-                    <span className="min-w-0 flex-1">
+                    <button
+                      onClick={() => setActiveId(c.id)}
+                      className="focus-ring min-w-0 flex-1 text-left px-3 py-3 rounded-xl"
+                    >
                       <span className="block text-sm text-neutral-900 dark:text-slate-100 truncate">{c.title}</span>
                       <span className="block text-[11px] text-neutral-500 dark:text-slate-400">{when(c.at)}</span>
-                    </span>
+                    </button>
                     {c.unread > 0 && (
                       <span className="grid place-items-center min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-semibold">
                         {c.unread}
                       </span>
                     )}
-                  </button>
+                    <button
+                      onClick={() => remove(c)}
+                      className="focus-ring grid place-items-center w-8 h-8 mr-1 rounded-lg shrink-0
+                                 text-neutral-400 hover:text-red-500 hover:bg-red-500/10
+                                 focus:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition"
+                      aria-label={`Delete chat: ${c.title}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
