@@ -1,139 +1,79 @@
 import { motion, MotionConfig } from 'framer-motion';
-import { ArrowUp, Zap } from 'lucide-react';
-import { fadeUp, staggerContainer, pressHover, pressTap, viewportEager } from '../lib/motion';
+import { brand, footer } from '../data/site';
+import { fadeUp, viewportOnce } from '../lib/motion';
 
-const Footer = () => {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+/* Widened once here so `.map`/`.find` see one array type instead of a union
+   of three literal-typed tuples. */
+type Column = { title: string; links: readonly { label: string; href: string }[] };
+const columns: readonly Column[] = footer.columns;
+const legal = columns.find((c) => c.title === 'Legal');
 
-  /* ≥36px tall below sm so a thumb can hit a link without hitting its neighbour */
-  const linkClass = `inline-flex items-center min-h-[36px] sm:min-h-0
-                     text-neutral-600 hover:text-primary-700 dark:text-slate-500
-                     dark:hover:text-white text-sm transition-colors duration-200`;
+const linkClass = 'focus-ring rounded-sm text-sm text-body transition-colors hover:text-ink';
 
-  const links = {
-    services: [
-      { name: 'Restaurant Website',   href: '/#products' },
-      { name: 'Table Booking System', href: '/#products' },
-      { name: 'QR Digital Menu',      href: '/#products' },
-      { name: 'Online Ordering',      href: '/#features' },
-      { name: 'AI Menu Chatbot',      href: '/#features' },
-    ],
-    company: [
-      { name: 'How It Works',  href: '/#how-it-works' },
-      { name: 'Pricing',       href: '/#pricing' },
-      { name: 'Reviews',       href: '/#reviews' },
-      { name: 'FAQ',           href: '/#faq' },
-      { name: 'Contact Us',    href: '/#contact' },
-    ],
-    legal: [
-      { name: 'Privacy Policy',   href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy',    href: '/cookies' },
-    ],
-  };
-
-  return (
-    <MotionConfig reducedMotion="user">
-      <footer className="bg-cream-200 dark:bg-black hairline-t text-neutral-900 dark:text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Two cards, not five loose columns.
-              `viewportEager` is mandatory: the footer is normally reached by a
-              scroll-to-bottom, where `amount: 0.2` on a tall block may never fire. */}
-          <motion.div
-            variants={staggerContainer(0.08)}
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportEager}
-            className="py-14 lg:py-16 grid grid-cols-1 lg:grid-cols-5 gap-6"
-          >
-            {/* Brand */}
-            <motion.div variants={fadeUp} className="surface-card lg:col-span-2 p-6 lg:p-8">
-              <a href="/" className="flex items-center gap-3 mb-5">
-                <img src="/logo.png" alt="OrdersLift" className="h-10 w-auto" />
-                <span className="text-xl font-display font-bold gradient-text">OrdersLift</span>
+/* The footer closes the page — one reveal, no stagger, nothing to look at
+   twice. `.section-band` already paints its own hairline top and bottom. */
+const Footer = () => (
+  <MotionConfig reducedMotion="user">
+    <footer className="section-band">
+      <div className="mx-auto max-w-7xl px-5 pb-8 pt-16 sm:px-8 lg:pt-20">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={viewportOnce}>
+          {/* Brand column is double-width, so lg reads as 4 columns, not 5 */}
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+            <div className="sm:col-span-2">
+              <a
+                href="/"
+                aria-label={brand.name}
+                className="focus-ring -mx-1 inline-block rounded-md px-1 py-1 leading-none"
+              >
+                <span className="block font-display text-xl font-bold tracking-tight text-ink">
+                  Orders<span className="text-primary-500">Lift</span>
+                </span>
+                <span className="mt-1 block text-[10px] uppercase tracking-[0.18em] text-muted">
+                  {brand.tagline}
+                </span>
               </a>
-              <p className="text-neutral-600 dark:text-slate-500 text-sm leading-relaxed max-w-xs">
-                Websites, table bookings and QR menus for restaurants — built, hosted and maintained
-                for 2 years free. One partner, every kind of kitchen.
-              </p>
-              <div className="surface-inset mt-6 px-4 py-3 flex items-center gap-2">
-                <span className="w-2 h-2 bg-primary-500 dark:bg-glow-400 rounded-full animate-pulse flex-shrink-0" />
-                <span className="text-xs text-neutral-600 dark:text-slate-500">Actively onboarding new restaurants</span>
+              <p className="mt-4 max-w-xs text-sm text-body">{footer.blurb}</p>
+            </div>
+
+            {columns.map((col) => (
+              <div key={col.title}>
+                <h2 className="mb-4 text-xs uppercase tracking-[0.16em] text-muted">{col.title}</h2>
+                <ul className="space-y-2.5">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <a href={l.href} className={linkClass}>
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </motion.div>
-
-            {/* Links */}
-            <motion.div variants={fadeUp} className="surface-card lg:col-span-3 p-6 lg:p-8">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
-                {/* Services */}
-                <div>
-                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Services</h4>
-                  <ul className="space-y-2.5">
-                    {links.services.map((l) => (
-                      <li key={l.name}>
-                        <a href={l.href} className={linkClass}>{l.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Company */}
-                <div>
-                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Company</h4>
-                  <ul className="space-y-2.5">
-                    {links.company.map((l) => (
-                      <li key={l.name}>
-                        <a href={l.href} className={linkClass}>{l.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Legal */}
-                <div>
-                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Legal</h4>
-                  <ul className="space-y-2.5">
-                    {links.legal.map((l) => (
-                      <li key={l.name}>
-                        <a href={l.href} className={linkClass}>{l.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* CTA sits under the columns so it reads as the card's action, not a fourth list */}
-              <div className="hairline-t mt-8 pt-6">
-                <a href="/#contact" className="btn-primary text-sm py-2.5 px-5">
-                  <Zap className="w-4 h-4 mr-1.5" />
-                  Get Started
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Bottom bar */}
-          <div className="hairline-t py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-neutral-500 dark:text-slate-600 text-xs">
-              © {new Date().getFullYear()} OrdersLift. All rights reserved.
-            </p>
-            <motion.button
-              onClick={scrollToTop}
-              whileHover={pressHover}
-              whileTap={pressTap}
-              aria-label="Back to top"
-              className="focus-ring w-11 h-11 sm:w-9 sm:h-9 bg-white border border-primary-200 text-neutral-700
-                         hover:bg-primary-600 hover:text-white hover:border-primary-600
-                         dark:bg-white/[0.08] dark:border-transparent dark:text-white dark:hover:bg-primary-600
-                         rounded-lg flex items-center justify-center transition-all duration-200"
-            >
-              <ArrowUp className="w-4 h-4" />
-            </motion.button>
+            ))}
           </div>
-        </div>
-      </footer>
-    </MotionConfig>
-  );
-};
+
+          <div className="mt-14 flex flex-col items-center gap-4 border-t border-rule pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
+            <p className="text-xs text-muted">
+              © {new Date().getFullYear()} {brand.name}. All rights reserved.
+            </p>
+            {legal && (
+              <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+                {legal.links.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="focus-ring rounded-sm text-xs text-muted transition-colors hover:text-ink"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </footer>
+  </MotionConfig>
+);
 
 export default Footer;

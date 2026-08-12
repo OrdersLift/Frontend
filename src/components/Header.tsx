@@ -1,31 +1,71 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
-import { Menu, X, Zap, ChevronDown, Sun, Moon } from 'lucide-react';
-import { collapse, duration, pressTap, tr } from '../lib/motion';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
+import { brand, cta, nav, servicesMenu } from '../data/site';
+import { collapse, duration, panel, pressTap, tr } from '../lib/motion';
 
-const demoItems = [
-  { name: 'Restaurants', href: '/demo/restaurants' },
-];
+/* The only string here that isn't in site.ts: `servicesMenu` ships the items
+   but no label for the group that opens them. */
+const SERVICES = 'Services';
 
-const navLink =
-  'text-neutral-600 hover:text-primary-700 hover:bg-primary-50 ' +
-  'dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5';
+const link = 'focus-ring relative rounded-md px-3 py-2 text-sm transition-colors';
+const idle = 'text-body hover:text-ink';
+const rowLink =
+  'focus-ring block rounded-lg px-3 py-3 text-base transition-colors hover:bg-ink/5';
+
+/* 2px bar sitting directly under the label of the current page. */
+const Bar = () => (
+  <span className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-primary-500" />
+);
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [svcOpen, setSvcOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  /* Empty until hydration so the server markup marks nothing active. */
+  const [here, setHere] = useState('');
+
+  const svcWrap = useRef<HTMLDivElement>(null);
+  const svcBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const read = () => setHere(window.location.pathname + window.location.hash);
+    read();
+    window.addEventListener('hashchange', read);
+    return () => window.removeEventListener('hashchange', read);
   }, []);
 
   useEffect(() => {
     setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
   }, []);
+
+  /* Escape + outside click, for whichever surface is open. */
+  useEffect(() => {
+    if (!svcOpen && !menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (svcOpen) svcBtn.current?.focus();
+      setSvcOpen(false);
+      setMenuOpen(false);
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (svcOpen && !svcWrap.current?.contains(e.target as Node)) setSvcOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [svcOpen, menuOpen]);
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
@@ -35,13 +75,9 @@ const Header = () => {
     setTheme(next);
   };
 
-  const navItems = [
-    { name: 'Home',       href: '/#home' },
-    // { name: 'Who We Serve', href: '/#industries' },
-    { name: 'Services',   href: '/#products' },
-    { name: 'Features',   href: '/#features' },
-    { name: 'Pricing',    href: '/#pricing' },
-  ];
+  const isActive = (href: string) => (href.startsWith('#') ? here.endsWith(href) : here === href);
+  const svcActive = servicesMenu.some((s) => isActive(s.href));
+  const closeAll = () => { setMenuOpen(false); setSvcOpen(false); };
 
   // 44px touch target below lg, back to the compact chip once there is a cursor.
   // The icon swap is CSS, not state: `theme` is only known after hydration, so
@@ -52,176 +88,199 @@ const Header = () => {
       whileTap={pressTap}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="focus-ring grid place-items-center w-11 h-11 lg:w-10 lg:h-10 rounded-lg
-                 border border-primary-500/30
-                 text-primary-600 hover:bg-primary-50 hover:border-primary-500/60
-                 dark:border-white/15 dark:text-accent-300 dark:hover:bg-white/5
-                 transition-all duration-200"
+      className="focus-ring grid h-11 w-11 shrink-0 place-items-center rounded-lg border
+                 border-rule text-primary-500 transition-colors
+                 hover:border-primary-500/60 hover:bg-ink/5 lg:h-10 lg:w-10"
     >
-      <Sun className="w-5 h-5 hidden dark:block" />
-      <Moon className="w-5 h-5 block dark:hidden" />
+      <Sun className="hidden h-5 w-5 dark:block" />
+      <Moon className="block h-5 w-5 dark:hidden" />
     </motion.button>
   );
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* Height stays fixed at h-20 / lg:h-24 — a shrinking header is layout
-          shift, and every section's scroll-mt-28 assumes a constant offset.
-          Change one and you must change the other, or anchors land under it. */}
       <motion.header
         initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={tr(duration.base)}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'glass elev-2 hairline-b'
-            : 'bg-transparent'
+        /* Border is always there, transparent at rest, so gaining the rule on
+           scroll never shifts the 1px of layout underneath it. */
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+          scrolled || menuOpen ? 'border-rule bg-paper/[0.92]' : 'border-transparent bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 lg:h-24">
-            {/* Logo */}
-            <a href="/" className="flex items-center gap-3 flex-shrink-0">
-              <img src="/logo.png" alt="OrdersLift" className="h-12 lg:h-14 w-auto" />
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="relative flex h-16 items-center justify-between gap-4 lg:h-[72px]">
+            {/* Wordmark */}
+            <a
+              href="/"
+              aria-label={brand.name}
+              className="focus-ring -mx-1 shrink-0 rounded-md px-1 py-1 leading-none"
+            >
+              <span className="block font-display text-xl font-bold tracking-tight text-ink">
+                Orders<span className="text-primary-500">Lift</span>
+              </span>
+              <span className="mt-1 block text-[10px] uppercase tracking-[0.18em] text-muted">
+                {brand.tagline}
+              </span>
             </a>
 
-            {/* Desktop Nav — centered */}
-            <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={`${navLink} px-4 py-2.5 rounded-lg text-base font-medium
-                             transition-all duration-200 relative group`}
-                >
-                  {item.name}
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                                   bg-primary-500 rounded-full transition-all duration-300
-                                   group-hover:w-5" />
-                </a>
-              ))}
+            {/* Desktop nav — Services sits after the first item */}
+            <nav
+              aria-label="Main"
+              className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex"
+            >
+              {nav.map((item, i) => (
+                <Fragment key={item.label}>
+                  <a
+                    href={item.href}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                    className={`${link} ${isActive(item.href) ? 'text-primary-500' : idle}`}
+                  >
+                    {item.label}
+                    {isActive(item.href) && <Bar />}
+                  </a>
 
-              <a
-                href="/#faq"
-                className={`${navLink} px-4 py-2.5 rounded-lg text-base font-medium
-                           transition-all duration-200 relative group`}
-              >
-                FAQ
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5
-                                 bg-primary-500 rounded-full transition-all duration-300
-                                 group-hover:w-5" />
-              </a>
+                  {i === 0 && (
+                    <div
+                      ref={svcWrap}
+                      className="relative"
+                      /* Pointer-type guard: on a touch screen mouseenter fires
+                         with the tap, which would open then immediately close. */
+                      onPointerEnter={(e) => e.pointerType === 'mouse' && setSvcOpen(true)}
+                      onPointerLeave={(e) => e.pointerType === 'mouse' && setSvcOpen(false)}
+                      onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget as Node)) setSvcOpen(false);
+                      }}
+                    >
+                      <button
+                        ref={svcBtn}
+                        type="button"
+                        onClick={() => setSvcOpen((v) => !v)}
+                        aria-haspopup="true"
+                        aria-expanded={svcOpen}
+                        aria-controls="services-menu"
+                        className={`${link} inline-flex items-center gap-1 ${
+                          svcActive || svcOpen ? 'text-primary-500' : idle
+                        }`}
+                      >
+                        {SERVICES}
+                        <ChevronDown
+                          aria-hidden="true"
+                          className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                            svcOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                        {svcActive && <Bar />}
+                      </button>
+
+                      <AnimatePresence>
+                        {svcOpen && (
+                          /* pt-2 is inside the positioned box on purpose: the
+                             gap stays hoverable, so the pointer can travel from
+                             the trigger to the list without closing it. */
+                          <motion.div
+                            id="services-menu"
+                            variants={panel}
+                            initial="hidden"
+                            animate="show"
+                            exit="hidden"
+                            className="absolute left-1/2 top-full w-60 -translate-x-1/2 pt-2"
+                          >
+                            <ul className="surface-card elev-2 rounded-xl p-2">
+                              {servicesMenu.map((s) => (
+                                <li key={s.label}>
+                                  <a
+                                    href={s.href}
+                                    onClick={closeAll}
+                                    className="focus-ring block rounded-lg px-3 py-2 text-sm
+                                               text-body transition-colors hover:bg-ink/5 hover:text-ink"
+                                  >
+                                    {s.label}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+                </Fragment>
+              ))}
             </nav>
 
-            {/* CTA */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* Right */}
+            <div className="hidden shrink-0 items-center gap-3 lg:flex">
               {themeToggle}
-              <a
-                href="/#contact"
-                className="btn-primary text-base py-2.5 px-6"
-              >
-                <Zap className="w-[18px] h-[18px] mr-2" />
-                Get Started
+              <a href={cta.primary.href} className="btn-primary focus-ring">
+                {cta.primary.label}
               </a>
             </div>
 
-            {/* Mobile burger */}
-            <div className="lg:hidden flex items-center gap-2">
-              {themeToggle}
-              <motion.button
-                onClick={() => setIsOpen(!isOpen)}
-                whileTap={pressTap}
-                className="focus-ring grid place-items-center rounded-lg
-                           min-w-[44px] min-h-[44px] lg:min-w-0 lg:min-h-0 p-2.5 lg:p-2
-                           text-neutral-700 hover:text-primary-700 dark:text-slate-300
-                           dark:hover:text-white transition-colors"
-                aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={isOpen}
-              >
-                {isOpen ? <X size={26} /> : <Menu size={26} />}
-              </motion.button>
-            </div>
+            <motion.button
+              onClick={() => setMenuOpen((v) => !v)}
+              whileTap={pressTap}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+              className="focus-ring -mr-2 grid h-11 w-11 shrink-0 place-items-center rounded-lg
+                         text-body transition-colors hover:text-ink lg:hidden"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
           </div>
         </div>
 
-        {/* Mobile menu — no child stagger: measuring `height: auto` while the
-            children are still moving makes the panel jitter open. */}
+        {/* Mobile panel */}
         <AnimatePresence>
-          {isOpen && (
+          {menuOpen && (
             <motion.div
+              id="mobile-nav"
               variants={collapse}
               initial="collapsed"
               animate="open"
               exit="collapsed"
-              className="lg:hidden glass hairline-t overflow-hidden"
+              className="overflow-hidden border-t border-rule bg-paper lg:hidden"
             >
-              <div className="px-4 py-6 space-y-1">
-                {navItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                               dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                               text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-
-                {/* Mobile Demo accordion */}
-                <button
-                  onClick={() => setMobileDemoOpen((v) => !v)}
-                  aria-expanded={mobileDemoOpen}
-                  className="focus-ring w-full flex items-center justify-between text-neutral-700
-                             hover:text-primary-700 hover:bg-primary-50 dark:text-slate-300
-                             dark:hover:text-white dark:hover:bg-white/5
-                             text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
-                >
-                  Demo
-                  <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-200 ${mobileDemoOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {mobileDemoOpen && (
-                    <motion.div
-                      variants={collapse}
-                      initial="collapsed"
-                      animate="open"
-                      exit="collapsed"
-                      className="overflow-hidden pl-3"
+              <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto px-5 py-4 sm:px-8">
+                <nav aria-label="Mobile">
+                  {nav.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={closeAll}
+                      aria-current={isActive(item.href) ? 'page' : undefined}
+                      className={`${rowLink} ${isActive(item.href) ? 'text-primary-500' : 'text-body'}`}
                     >
-                      {demoItems.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          onClick={() => setIsOpen(false)}
-                          className="block text-neutral-600 hover:text-primary-700 hover:bg-primary-50
-                                     dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5
-                                     text-base font-medium py-2.5 px-4 rounded-lg transition-all duration-200"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      {item.label}
+                    </a>
+                  ))}
 
-                <a
-                  href="/#faq"
-                  onClick={() => setIsOpen(false)}
-                  className="block text-neutral-700 hover:text-primary-700 hover:bg-primary-50
-                             dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5
-                             text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
-                >
-                  FAQ
-                </a>
+                  <p className="px-3 pb-1 pt-5 text-[10px] uppercase tracking-[0.18em] text-muted">
+                    {SERVICES}
+                  </p>
+                  {servicesMenu.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      onClick={closeAll}
+                      className="focus-ring block rounded-lg px-3 py-2.5 text-sm text-body
+                                 transition-colors hover:bg-ink/5 hover:text-ink"
+                    >
+                      {s.label}
+                    </a>
+                  ))}
+                </nav>
 
-                <div className="pt-4">
-                  <a href="/#contact" className="btn-primary w-full justify-center text-base py-3.5">
-                    <Zap className="w-[18px] h-[18px] mr-2" />
-                    Get Started
+                <div className="mt-5 flex items-center gap-3 border-t border-rule pt-5">
+                  {themeToggle}
+                  <a
+                    href={cta.primary.href}
+                    onClick={closeAll}
+                    className="btn-primary focus-ring flex-1 justify-center"
+                  >
+                    {cta.primary.label}
                   </a>
                 </div>
               </div>

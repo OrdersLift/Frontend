@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
-import { HelpCircle, ChevronDown } from 'lucide-react';
-import {
-  collapse, fadeIn, fadeUp, pressHover, pressTap, staggerContainer, staggerFor, viewportOnce,
-} from '../lib/motion';
+import { ChevronDown } from 'lucide-react';
+import { collapse, fadeUp, staggerContainer, staggerFor, viewportOnce } from '../lib/motion';
 
 const faqs = [
   {
@@ -45,91 +43,61 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  /* One row open at a time; -1 closes all. */
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
     <MotionConfig reducedMotion="user">
-      <section id="faq" className="scroll-mt-28 py-16 sm:py-20 lg:py-24 section-band relative overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
+      <section id="faq" className="scroll-mt-28 section-band py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="text-center mb-16"
+            className="text-center"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass
-                             border border-primary-500/30 text-primary-700 dark:text-primary-300
-                             text-sm font-medium mb-6">
-              <HelpCircle className="w-4 h-4" />
-              FAQ
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-5">
-              Got <span className="gradient-text">Questions?</span>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-ink text-center tracking-tight">
+              Got <span className="text-primary-500">Questions?</span>
             </h2>
-            <p className="text-neutral-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-              Everything you need to know about our platform and process. Can't find your answer?{' '}
-              <a href="/#contact" className="text-primary-600 hover:text-primary-700 dark:text-primary-400
-                                            dark:hover:text-primary-300 underline underline-offset-2">
-                Just ask us.
-              </a>
+            <p className="mt-4 text-body">
+              Everything about the build, the timeline and what is included.
             </p>
           </motion.div>
 
-          {/* Accordion — one panel, hairline-ruled rows */}
           <motion.div
-            variants={fadeUp}
+            variants={staggerContainer(staggerFor(faqs.length))}
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="surface-card overflow-hidden"
+            className="mx-auto mt-12 lg:mt-16 flex max-w-3xl flex-col gap-3"
           >
-            <motion.div
-              variants={staggerContainer(staggerFor(faqs.length))}
-              className="hairline-y"
-            >
-              {faqs.map((faq, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeIn}
-                  className={`relative transition-colors duration-200 ${
-                    openIndex === i ? 'bg-primary-50/70 dark:bg-primary-500/[0.06]' : ''
-                  }`}
-                >
-                  {openIndex === i && (
-                    <span aria-hidden className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary-500 dark:bg-primary-400" />
-                  )}
-
+            {faqs.map((faq, i) => {
+              const isOpen = openIndex === i;
+              return (
+                <motion.div key={faq.q} variants={fadeUp} className="surface-card rounded-xl">
+                  {/* Native <button>: Enter and Space toggle for free. */}
                   <button
+                    type="button"
                     id={`faq-trigger-${i}`}
-                    onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                    aria-expanded={openIndex === i}
+                    onClick={() => setOpenIndex(isOpen ? -1 : i)}
+                    aria-expanded={isOpen}
                     aria-controls={`faq-panel-${i}`}
-                    className="focus-ring w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                    className="focus-ring flex w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left text-sm lg:text-base font-medium text-ink"
                   >
-                    <span className={`font-medium text-sm sm:text-base transition-colors ${
-                      openIndex === i
-                        ? 'text-neutral-900 dark:text-white'
-                        : 'text-neutral-700 dark:text-slate-300'
-                    }`}>
-                      {faq.q}
-                    </span>
+                    {faq.q}
                     <ChevronDown
-                      className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
-                        openIndex === i
-                          ? 'rotate-180 text-primary-600 dark:text-primary-400'
-                          : 'text-neutral-400 dark:text-slate-600'
+                      aria-hidden="true"
+                      className={`h-5 w-5 shrink-0 text-primary-500 transition-transform duration-200 ${
+                        isOpen ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
 
                   {/* Height animates from a real measurement, so a long answer
-                      can no longer be clipped the way `max-h-96` clipped it. */}
+                      can never be clipped the way `max-h-96` clipped it. */}
                   <AnimatePresence initial={false}>
-                    {openIndex === i && (
+                    {isOpen && (
                       <motion.div
                         id={`faq-panel-${i}`}
                         role="region"
@@ -140,32 +108,13 @@ const FAQ = () => {
                         exit="collapsed"
                         className="overflow-hidden"
                       >
-                        <p className="px-6 pb-5 text-neutral-600 dark:text-slate-400 text-sm leading-relaxed">{faq.a}</p>
+                        <p className="px-5 pb-5 text-sm text-body leading-relaxed">{faq.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={viewportOnce}
-            className="text-center mt-14"
-          >
-            <motion.a
-              href="/#contact"
-              whileHover={pressHover}
-              whileTap={pressTap}
-              className="btn-primary focus-ring px-8 py-4"
-            >
-              <HelpCircle className="w-4 h-4 mr-2" />
-              Still Have Questions? Contact Us
-            </motion.a>
+              );
+            })}
           </motion.div>
         </div>
       </section>

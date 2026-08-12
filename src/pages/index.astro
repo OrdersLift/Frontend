@@ -2,30 +2,34 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import Products from '../components/Products';
-import HowItWorks from '../components/HowItWorks';
+import TrustedBy from '../components/TrustedBy';
 import Features from '../components/Features';
+import Results from '../components/Results';
+import HowItWorks from '../components/HowItWorks';
 import Pricing from '../components/Pricing';
 import Reviews from '../components/Reviews';
 import FAQ from '../components/FAQ';
+import CTABanner from '../components/CTABanner';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 ---
 
 <Layout
-  title="OrdersLift - Restaurant Websites, Table Booking & QR Menus"
-  description="OrdersLift builds and rebuilds restaurant websites with a commission-free table booking system, a QR digital menu you can update in seconds, and an AI assistant that answers guests 24/7 — hosted and maintained for 2 years free."
-  keywords="restaurant website design, table booking system for restaurants, QR menu for restaurants, digital menu QR code, restaurant online ordering, commission free restaurant bookings, restaurant website builder, cafe website design, takeaway website, restaurant reservation software"
+  title="OrdersLift - Restaurant Marketing, Analytics & Automation"
+  description="OrdersLift grows restaurants with data-driven marketing, analytics dashboards, menu optimization, inventory insights, reputation management and automation. Book a free strategy call."
+  keywords="restaurant marketing agency, restaurant analytics, menu optimization, restaurant automation, restaurant reputation management, google reviews for restaurants, restaurant growth marketing, restaurant inventory insights"
   canonical="https://orderslift.com/"
 >
   <Header client:load />
   <Hero client:load />
-  <Products client:load />
-  <HowItWorks client:load />
-  <Features client:load />
-  <Pricing client:load />
-  <Reviews client:load />
-  <FAQ client:load />
-  <Contact client:load />
-  <Footer client:load />
+  <TrustedBy client:visible />
+  <Features client:visible />
+  <Results client:visible />
+  <HowItWorks client:visible />
+  <Pricing client:visible />
+  <Reviews client:visible />
+  <FAQ client:visible />
+  <CTABanner client:visible />
+  <Contact client:visible />
+  <Footer client:visible />
 </Layout>

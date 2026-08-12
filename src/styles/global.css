@@ -8,6 +8,17 @@
    Dark  = black surfaces with the same accents.
 =========================== */
 :root {
+  /* Semantic text/surface scale. tailwind.config.mjs exposes these as
+     bg-paper / text-ink / text-body / text-muted / border-rule, which is the
+     vocabulary every section is written against. */
+  --paper:          255 255 255;   /* page background          */
+  --ink:             15  15  17;   /* headings                 */
+  --body:            64  64  70;   /* paragraphs               */
+  --muted:          130 130 138;   /* captions, labels         */
+  --rule:           226 226 230;   /* hairlines                */
+  --gold:           245 158  11;   /* rating stars             */
+  --loss:           220  38  38;   /* the "before" number      */
+
   --surface:        255 255 255;   /* page background          */
   --surface-muted:  255 248 240;   /* alternating section band */
   --glass-bg:       255 255 255;
@@ -54,9 +65,20 @@
 }
 
 .dark {
-  --surface:        0 0 0;
-  --surface-muted:  10 10 10;
-  --glass-bg:       10 10 10;
+  --paper:           12  12  14;
+  --ink:            250 250 252;
+  --body:           176 176 186;
+  --muted:          132 132 144;
+  --rule:            40  40  46;
+  --gold:           251 191  36;
+  --loss:           248 113 113;
+
+  /* Charcoal, not true black. Black flattens a card system — every panel has
+     to earn its edge from a border alone. A few points of lift lets fill
+     lightness carry elevation, which is how the reference reads. */
+  --surface:        12 12 14;
+  --surface-muted:  20 20 23;
+  --glass-bg:       12 12 14;
   --glass-alpha:    0.72;
   --glass-border:   251 146 60;    /* orange-400               */
   --glass-border-a: 0.22;
