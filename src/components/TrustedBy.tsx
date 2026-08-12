@@ -6,13 +6,15 @@ import { fadeUp, staggerContainer, viewportOnce } from '../lib/motion';
    lettered five slightly different ways so the row reads as a collected
    set rather than a list. Monochrome only — no colour, no boxes, and no
    size changes, so the band stays a hairline of texture under the hero.
-   Cycled by index, so the set survives site.ts gaining a sixth name. */
+   Cycled by index, so the set survives site.ts gaining a sixth name.
+   Weights top out at 700: the Fraunces request in Layout.astro covers
+   500..700, so font-extrabold would only be synthesised. */
 const wordmarks = [
-  'font-semibold tracking-tight',
-  'italic font-medium',
-  'font-bold uppercase tracking-[0.1em]',
-  'italic font-semibold tracking-tight',
-  'font-medium tracking-[0.16em]',
+  'font-bold tracking-tight',
+  'italic font-semibold',
+  'font-bold uppercase tracking-[0.08em]',
+  'italic font-bold tracking-tight',
+  'font-semibold tracking-[0.14em]',
 ];
 
 const TrustedBy = () => (
@@ -26,11 +28,11 @@ const TrustedBy = () => (
         initial="hidden"
         whileInView="show"
         viewport={viewportOnce}
-        className="mx-auto max-w-7xl px-5 sm:px-8"
+        className="mx-auto max-w-7xl px-5 sm:px-10"
       >
         <motion.p
           variants={fadeUp}
-          className="text-center text-[11px] uppercase tracking-[0.2em] text-muted"
+          className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-body lg:text-sm"
         >
           {trustedBy.eyebrow}
         </motion.p>
@@ -44,11 +46,11 @@ const TrustedBy = () => (
                  on mobile; auto-width from sm up so the five sit in one line. */
               className="w-[calc(50%-1.25rem)] text-center sm:w-auto"
             >
-              <div className={`font-display text-lg text-ink/70 lg:text-xl ${wordmarks[i % wordmarks.length]}`}>
+              <div className={`font-display text-xl text-ink lg:text-2xl ${wordmarks[i % wordmarks.length]}`}>
                 {logo.name}
               </div>
               {logo.sub && (
-                <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-muted">
+                <div className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-muted lg:text-xs">
                   {logo.sub}
                 </div>
               )}
