@@ -21,8 +21,11 @@ const ad = (n: number) => ({
 });
 
 export const media = {
-  /** Hero visual: a live ad creative, shown as the thing we actually ship. */
-  hero: ad(5),
+  /** Hero visual: transparent cutout of a dish with the dashboard cards
+      composited in. The card figures are baked into the pixels, so this is
+      shown from `lg` up only — below that the hero renders the same numbers as
+      real elements, which stay legible and readable by assistive tech. */
+  hero: { src: `${dir}/hero-stats.webp`, width: 1100, height: 889 },
 
   /** Before/after proof. One file per card — each already shows both states. */
   results: [

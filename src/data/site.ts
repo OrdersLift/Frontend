@@ -41,7 +41,9 @@ export const hero = {
   headlineAccent: 'We Grow Your Business.',
   sub: 'Marketing, Analytics, and Automation solutions designed to get you more orders, more customers, and more profit.',
   proof: 'Trusted by Restaurant Owners Across USA',
-  imageAlt: 'A live Meta ad creative we run for a restaurant client',
+  // Carries the figures, because they are pixels in the artwork rather than text.
+  imageAlt:
+    'A restaurant dashboard over a plated dish: total orders 3,287 up 32.6%, revenue $28,540 up 28.4%, new customers 1,642 up 41.2% versus last month',
   /** Cards that float over the hero photograph. `delta` is rendered green. */
   stats: [
     { label: 'Total Orders', value: '3,287', delta: '32.6%', note: 'vs last month' },

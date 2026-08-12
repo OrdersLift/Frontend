@@ -4,21 +4,6 @@ import { cta, hero } from '../data/site';
 import { media } from '../data/media';
 import { duration, fadeUp, staggerContainer, tr } from '../lib/motion';
 
-/* Where each stat card sits around the ad creative — index-matched to
-   `hero.stats`. Only applied from `lg` up; below that the cards are a plain
-   2-column grid under the image, so nothing overlaps or overflows.
-   The creative is portrait and capped at 340px inside a much wider column,
-   so each card lives in the gutter beside it and only clips the frame's
-   edge — the ad's own copy and food photography stay readable.
-   Negative offsets stay under the container's own `sm:px-8`, so a card
-   hanging off the edge can never push the page sideways. */
-const cardAt = [
-  'lg:absolute lg:top-4 lg:left-0',
-  'lg:absolute lg:top-16 lg:-right-2',
-  'lg:absolute lg:bottom-16 lg:left-0',
-  'lg:absolute lg:bottom-2 lg:-right-2',
-];
-
 const Stars = ({ size = 'h-3.5 w-3.5' }: { size?: string }) => (
   <span className="flex items-center gap-0.5" aria-hidden="true">
     {[0, 1, 2, 3, 4].map((i) => (
@@ -93,17 +78,14 @@ const Hero = () => (
 
           {/* ── Right: the live ad creative + floating dashboard cards ── */}
           <div className="relative">
-            {/* Portrait artwork on a white background, so the frame is white in
-                BOTH themes and the image is never inverted, tinted or
-                filtered. Capped well under the column width so it doesn't
-                tower over the copy; the column keeps its full width for the
-                floating cards. */}
+            {/* Transparent cutout, so no frame — it sits straight on the
+                background banner. lg and up only: its card figures are baked
+                into the artwork and would render around 7px on a phone. */}
             <motion.div
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={tr(duration.slower, 0.12)}
-              className="relative mx-auto w-full max-w-[300px] lg:max-w-[340px]
-                         rounded-2xl bg-white ring-1 ring-inset ring-rule"
+              className="hidden lg:block relative mx-auto w-full max-w-[560px]"
             >
               <img
                 src={media.hero.src}
@@ -112,37 +94,24 @@ const Hero = () => (
                 height={media.hero.height}
                 loading="eager"
                 fetchPriority="high"
-                className="block h-auto w-full rounded-2xl"
+                className="block h-auto w-full"
               />
-
-              {/* Says plainly that this is an ad we ship, not decoration.
-                  Hangs below the frame rather than over it: the artwork is
-                  white in both themes, and `.surface-card` is only legible on
-                  the page background. */}
-              <span
-                className="surface-card !rounded-full absolute -bottom-3 left-1/2
-                           -translate-x-1/2 translate-y-full whitespace-nowrap px-3 py-1
-                           text-[10px] uppercase tracking-wider text-muted"
-              >
-                Live ad creative
-              </span>
             </motion.div>
 
-            {/* Orchestrator only. At lg it becomes a transparent overlay on the
-                column and each card takes its own absolute offset; below lg it
-                is a normal 2-col grid, so the cards never cover the image. */}
+            {/* Below lg only — the cutout above carries these same figures as
+                pixels, so showing both would print every number twice. This is
+                the legible, selectable, screen-reader-visible version. */}
             <motion.div
               variants={staggerContainer(0.1, 0.45)}
               initial="hidden"
               animate="show"
-              className="mt-12 grid grid-cols-2 gap-3 lg:mt-0 lg:block lg:absolute lg:inset-0
-                         lg:pointer-events-none"
+              className="grid grid-cols-2 gap-3 lg:hidden"
             >
-              {hero.stats.map((stat, i) => (
+              {hero.stats.map((stat) => (
                 <motion.div
                   key={stat.label}
                   variants={fadeUp}
-                  className={`surface-card backdrop-blur-sm !rounded-xl px-4 py-3 min-w-[150px] ${cardAt[i]}`}
+                  className="surface-card backdrop-blur-sm !rounded-xl px-4 py-3"
                 >
                   <p className="text-[11px] text-muted">{stat.label}</p>
                   <p className="font-mono font-bold text-xl text-ink">{stat.value}</p>
