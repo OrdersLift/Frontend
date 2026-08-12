@@ -70,14 +70,10 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
         }
         let saved = null;
         try { saved = localStorage.getItem('theme'); } catch {}
-        // Dark is the brand's own look, so it is the default. A visitor who
-        // picks light still gets it, and so does anyone whose OS asks for it.
-        const theme =
-          saved === 'dark' || saved === 'light'
-            ? saved
-            : window.matchMedia('(prefers-color-scheme: light)').matches
-              ? 'light'
-              : 'dark';
+        // Dark is the brand's look, not a preference, so it is what everyone
+        // gets until they pick otherwise with the toggle. Deferring to the OS
+        // would serve a white site to most visitors.
+        const theme = saved === 'light' ? 'light' : 'dark';
         root.classList.toggle('dark', theme === 'dark');
         root.dataset.theme = theme;
       })();

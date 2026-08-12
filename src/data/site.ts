@@ -41,7 +41,7 @@ export const hero = {
   headlineAccent: 'We Grow Your Business.',
   sub: 'Marketing, Analytics, and Automation solutions designed to get you more orders, more customers, and more profit.',
   proof: 'Trusted by Restaurant Owners Across USA',
-  imageAlt: 'Restaurant team plating dishes during a dinner service',
+  imageAlt: 'A live Meta ad creative we run for a restaurant client',
   /** Cards that float over the hero photograph. `delta` is rendered green. */
   stats: [
     { label: 'Total Orders', value: '3,287', delta: '32.6%', note: 'vs last month' },
@@ -101,42 +101,54 @@ export const services = {
   ],
 } as const;
 
+// Each item pairs with media.results[i] — a single graphic that already shows
+// the before and after states, so the card frames one image, not two.
 export const results = {
   heading: 'Real Results.',
   headingAccent: 'Real Growth.',
+  sub: 'Four Google Business Profiles, before and after we worked on them.',
   items: [
     {
-      title: 'Google Reviews',
-      kind: 'rating' as const,
-      before: { rating: 3.8, note: '24 reviews' },
-      after: { rating: 4.6, note: '156 reviews' },
-      gain: '+132 Reviews',
-      why: 'Higher rating, more trust',
-    },
-    // `slot` keys into media.results — without it the images were matched on
-    // the title string, so renaming a card silently broke its screenshots.
-    {
-      title: 'Google Business Profile',
-      kind: 'image' as const,
-      slot: 'googleProfile' as const,
-      gain: '+213% Views',
-      why: 'More visibility, more customers',
+      title: 'The Grill Spot',
+      gain: '2.7 → 4.6 stars',
+      why: 'Low visibility and thin reviews turned into a profile people trust',
+      alt: 'The Grill Spot Google Business Profile before and after: rating rises from 2.7 to 4.6 with far more reviews and photos',
     },
     {
-      title: 'Social Media',
-      kind: 'image' as const,
-      slot: 'social' as const,
-      gain: '+178% Engagement',
-      why: 'Stronger brand, more reach',
+      title: 'Bella Napoli → Coastal Kitchen',
+      gain: '+213% profile views',
+      why: 'Complete listing, real photos, questions answered',
+      alt: 'Restaurant Google Business Profile before and after: sparse listing replaced with full hours, photos and recent reviews',
     },
     {
-      title: 'Website',
-      kind: 'image' as const,
-      slot: 'website' as const,
-      gain: 'Modern, fast & optimized',
-      why: 'More leads, more orders',
+      title: 'Spice Court → Bistro House',
+      gain: '4.7 from 245 reviews',
+      why: 'Steady review flow instead of a stale page',
+      alt: 'Google Business Profile before and after showing a rise to 4.7 stars across 245 reviews',
+    },
+    {
+      title: 'The Urban Plate',
+      gain: '2.8 → 4.7 stars',
+      why: 'Stronger profile, more reviews, more customers',
+      alt: 'The Urban Plate Google Business Profile before and after: rating rises from 2.8 to 4.7 with 227 reviews',
     },
   ],
+} as const;
+
+export const work = {
+  heading: 'The Work We',
+  headingAccent: 'Actually Ship',
+  sub: 'Live campaigns running for real restaurants — not mockups.',
+  ads: { title: 'Meta ads', note: '12 creatives currently in market' },
+  email: {
+    title: 'Email & SMS',
+    note: 'Campaigns that bring guests back',
+    alts: [
+      'Branded post-visit feedback email as a guest sees it in Gmail',
+      'Grid of restaurant email templates for offers, feedback and reopenings',
+      'Grid of review-request and loyalty email campaigns for restaurants',
+    ],
+  },
 } as const;
 
 export const howItWorks = {
