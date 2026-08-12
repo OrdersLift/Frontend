@@ -8,7 +8,10 @@ const icons = { Megaphone, BarChart3, ClipboardList, Package, Star, Bot };
 
 const Features = () => (
   <MotionConfig reducedMotion="user">
-    <section id="services" className="scroll-mt-28 bg-paper py-20 lg:py-28">
+    {/* Asymmetric on purpose: the trusted-by band directly above already ends
+        in its own padding, so a full py-28 here read as a gap twice the size
+        of every other section break. Bottom padding stays at the standard. */}
+    <section id="services" className="scroll-mt-28 bg-paper pt-10 pb-20 lg:pt-12 lg:pb-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.h2
           variants={fadeUp}
