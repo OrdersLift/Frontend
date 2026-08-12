@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
-import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { brand, cta, nav, servicesMenu } from '../data/site';
 import { collapse, duration, panel, pressTap, tr } from '../lib/motion';
 
@@ -23,7 +23,6 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [svcOpen, setSvcOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   /* Empty until hydration so the server markup marks nothing active. */
   const [here, setHere] = useState('');
 
@@ -42,10 +41,6 @@ const Header = () => {
     read();
     window.addEventListener('hashchange', read);
     return () => window.removeEventListener('hashchange', read);
-  }, []);
-
-  useEffect(() => {
-    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
   }, []);
 
   /* Escape + outside click, for whichever surface is open. */
@@ -68,35 +63,9 @@ const Header = () => {
     };
   }, [svcOpen, menuOpen]);
 
-  const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.toggle('dark', next === 'dark');
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
-    setTheme(next);
-  };
-
   const isActive = (href: string) => (href.startsWith('#') ? here.endsWith(href) : here === href);
   const svcActive = servicesMenu.some((s) => isActive(s.href));
   const closeAll = () => { setMenuOpen(false); setSvcOpen(false); };
-
-  // 44px touch target below lg, back to the compact chip once there is a cursor.
-  // The icon swap is CSS, not state: `theme` is only known after hydration, so
-  // rendering it from state flashed a Moon at dark-mode users on every load.
-  const themeToggle = (
-    <motion.button
-      onClick={toggleTheme}
-      whileTap={pressTap}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="focus-ring grid h-11 w-11 shrink-0 place-items-center rounded-lg border
-                 border-rule text-primary-500 transition-colors
-                 hover:border-primary-500/60 hover:bg-ink/5 lg:h-[38px] lg:w-[38px]"
-    >
-      <Sun className="hidden h-5 w-5 dark:block lg:h-[18px] lg:w-[18px]" />
-      <Moon className="block h-5 w-5 dark:hidden lg:h-[18px] lg:w-[18px]" />
-    </motion.button>
-  );
 
   return (
     <MotionConfig reducedMotion="user">
@@ -118,22 +87,14 @@ const Header = () => {
               aria-label={brand.name}
               className="focus-ring -mx-1 shrink-0 rounded-md px-1 py-1 leading-none"
             >
-              {/* Two colourways of the same mark: the brand red is only 2.3:1
-                  on charcoal, so dark mode gets it tinted to the accent. Both
-                  carry empty alt — the link's aria-label names the brand once. */}
-              <img
-                src="/logo-h.png"
-                alt=""
-                width={491}
-                height={120}
-                className="block h-9 w-auto dark:hidden"
-              />
+              {/* Accent-tinted mark: the brand red is only 2.3:1 on charcoal.
+                  Empty alt — the link's aria-label names the brand once. */}
               <img
                 src="/logo-h-dark.png"
                 alt=""
                 width={491}
                 height={120}
-                className="hidden h-9 w-auto dark:block"
+                className="block h-9 w-auto"
               />
             </a>
 
@@ -224,7 +185,6 @@ const Header = () => {
 
             {/* Right */}
             <div className="hidden shrink-0 items-center gap-3 lg:flex">
-              {themeToggle}
               <a href={cta.primary.href} className="btn-primary btn-sm focus-ring">
                 {cta.primary.label}
               </a>
@@ -286,7 +246,6 @@ const Header = () => {
                 </nav>
 
                 <div className="mt-5 flex items-center gap-3 border-t border-rule pt-5">
-                  {themeToggle}
                   <a
                     href={cta.primary.href}
                     onClick={closeAll}

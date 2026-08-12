@@ -25,10 +25,8 @@ const Footer = () => (
                 aria-label={brand.name}
                 className="focus-ring -mx-1 inline-block rounded-md px-1 py-1 leading-none"
               >
-                {/* Same two colourways as the header — a text wordmark here
-                    beside an image mark up there would read as two brands. */}
-                <img src="/logo-h.png" alt="" width={491} height={120} className="block h-10 w-auto dark:hidden" />
-                <img src="/logo-h-dark.png" alt="" width={491} height={120} className="hidden h-10 w-auto dark:block" />
+                {/* Same mark as the header. */}
+                <img src="/logo-h-dark.png" alt="" width={491} height={120} className="block h-10 w-auto" />
                 <span className="mt-3 block text-[10px] uppercase tracking-[0.18em] text-muted">
                   {brand.tagline}
                 </span>

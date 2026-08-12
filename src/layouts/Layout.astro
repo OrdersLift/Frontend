@@ -41,7 +41,14 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!-- Dark is the only theme. `demoBrandPath` is known during render, so the
+     class is set here rather than by a script — no flash, no client JS. Demo
+     sites under /demo/* keep their own light brand palettes. -->
+<html
+  lang="en"
+  class={`scroll-smooth ${demoBrandPath ? '' : 'dark'}`}
+  data-theme={demoBrandPath ? 'light' : 'dark'}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -58,27 +65,6 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
     <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
 
-    <!-- Applies the saved / system colour scheme before first paint so the
-         page never flashes the wrong theme. -->
-    <script is:inline define:vars={{ demoBrandPath }}>
-      (() => {
-        const root = document.documentElement;
-        if (demoBrandPath) {
-          root.classList.remove('dark');
-          root.dataset.theme = 'light';
-          return;
-        }
-        let saved = null;
-        try { saved = localStorage.getItem('theme'); } catch {}
-        // Dark is the brand's look, not a preference, so it is what everyone
-        // gets until they pick otherwise with the toggle. Deferring to the OS
-        // would serve a white site to most visitors.
-        const theme = saved === 'light' ? 'light' : 'dark';
-        root.classList.toggle('dark', theme === 'dark');
-        root.dataset.theme = theme;
-      })();
-    </script>
-    
     <!-- Language and Region -->
     <meta name="language" content="English" />
     <meta name="geo.region" content="Worldwide" />
