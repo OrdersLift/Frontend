@@ -31,6 +31,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 // The OrdersLift assistant appears on marketing pages only — demo pages under
 // /demo/* render their own brand-specific chat widgets.
 import AIChat from '../components/AIChat';
+import LiveChat from '../components/LiveChat';
 const showAssistant = !Astro.url.pathname.startsWith('/demo');
 
 // Individual demo sites carry their own fixed brand palettes, so the
@@ -223,6 +224,7 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
   <body class="font-sans antialiased bg-white text-neutral-900 dark:bg-black dark:text-slate-100 transition-colors duration-300">
     <slot />
     {showAssistant && <AIChat client:load />}
+    {showAssistant && <LiveChat client:load />}
   </body>
   
   <!-- Global Styles -->

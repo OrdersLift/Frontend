@@ -25,6 +25,13 @@ export default function AIChat() {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msgs, open, typing]);
 
+  // Only one floating panel at a time — <LiveChat/> shares this event.
+  useEffect(() => {
+    const close = (e: Event) => { if ((e as CustomEvent).detail !== 'ai') setOpen(false); };
+    window.addEventListener('ol:panel-open', close);
+    return () => window.removeEventListener('ol:panel-open', close);
+  }, []);
+
   const send = async (text: string) => {
     const t = text.trim();
     if (!t || typing) return;
@@ -46,7 +53,10 @@ export default function AIChat() {
         transition={{ delay: 0.8, type: 'spring' }}
         whileHover={pressHover}
         whileTap={pressTap}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          if (!open) window.dispatchEvent(new CustomEvent('ol:panel-open', { detail: 'ai' }));
+          setOpen((o) => !o);
+        }}
         className="focus-ring fixed bottom-5 right-5 z-50 grid place-items-center w-14 h-14 rounded-full
                    bg-gradient-to-br from-primary-600 to-glow-500 text-white shadow-xl shadow-primary-600/40
                    hover:brightness-110"
