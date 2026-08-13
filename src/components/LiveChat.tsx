@@ -71,6 +71,7 @@ export default function LiveChat() {
   const [input, setInput] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [confirmId, setConfirmId] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const lastAt = useRef(0);
@@ -209,8 +210,12 @@ export default function LiveChat() {
 
   // Removing a chat drops it here and from the database. The Slack thread stays
   // — that is the team's record, not the visitor's to erase.
+  //
+  // Confirmation is a second click on the row, NOT window.confirm. A browser
+  // that suppresses dialogs (Chrome offers exactly that after a few) makes
+  // confirm() return false, and delete then failed silently with no clue why.
   const remove = async (c: Chat) => {
-    if (!confirm(`Delete "${c.title}"? This can't be undone.`)) return;
+    setConfirmId(null);
     const rest = persist(chats.filter((x) => x.id !== c.id));
     setMsgs(({ [c.id]: _gone, ...keep }) => keep);
     if (activeId === c.id) setActiveId(null);
@@ -307,36 +312,62 @@ export default function LiveChat() {
 
             {view === 'list' && (
               <div className="flex-1 overflow-y-auto p-2">
-                {chats.map((c) => (
+                {chats.map((c) =>
                   // Row is a div, not a button: the delete control cannot nest
                   // inside the control that opens the chat.
-                  <div
-                    key={c.id}
-                    className="group flex items-center gap-1 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/[0.05] transition"
-                  >
-                    <button
-                      onClick={() => setActiveId(c.id)}
-                      className="focus-ring min-w-0 flex-1 text-left px-3 py-3 rounded-xl"
+                  confirmId === c.id ? (
+                    <div
+                      key={c.id}
+                      className="flex items-center gap-2 rounded-xl bg-red-500/10 px-3 py-2.5"
                     >
-                      <span className="block text-sm text-neutral-900 dark:text-slate-100 truncate">{c.title}</span>
-                      <span className="block text-[11px] text-neutral-500 dark:text-slate-400">{when(c.at)}</span>
-                    </button>
-                    {c.unread > 0 && (
-                      <span className="grid place-items-center min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-semibold">
-                        {c.unread}
+                      <span className="min-w-0 flex-1 truncate text-[13px] text-neutral-800 dark:text-slate-200">
+                        Delete this chat?
                       </span>
-                    )}
-                    <button
-                      onClick={() => remove(c)}
-                      className="focus-ring grid place-items-center w-8 h-8 mr-1 rounded-lg shrink-0
-                                 text-neutral-400 hover:text-red-500 hover:bg-red-500/10
-                                 focus:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition"
-                      aria-label={`Delete chat: ${c.title}`}
+                      <button
+                        onClick={() => remove(c)}
+                        className="focus-ring rounded-lg bg-red-500 px-2.5 py-1 text-[12px] font-semibold text-white"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={() => setConfirmId(null)}
+                        className="focus-ring rounded-lg px-2.5 py-1 text-[12px] text-neutral-500 hover:text-neutral-800 dark:text-slate-400 dark:hover:text-slate-200"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      key={c.id}
+                      className="flex items-center gap-1 rounded-xl transition hover:bg-neutral-100 dark:hover:bg-white/[0.05]"
                     >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        onClick={() => setActiveId(c.id)}
+                        className="focus-ring min-w-0 flex-1 rounded-xl px-3 py-3 text-left"
+                      >
+                        <span className="block truncate text-sm text-neutral-900 dark:text-slate-100">{c.title}</span>
+                        <span className="block text-[11px] text-neutral-500 dark:text-slate-400">{when(c.at)}</span>
+                      </button>
+                      {c.unread > 0 && (
+                        <span className="grid min-w-[20px] h-5 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-semibold text-white">
+                          {c.unread}
+                        </span>
+                      )}
+                      {/* Always visible. It used to be opacity-0 until the row
+                          was hovered, which hid it completely on touch and made
+                          it undiscoverable with a mouse. */}
+                      <button
+                        onClick={() => setConfirmId(c.id)}
+                        className="focus-ring mr-1 grid h-8 w-8 shrink-0 place-items-center rounded-lg
+                                   text-neutral-400 transition hover:bg-red-500/10 hover:text-red-500
+                                   dark:text-slate-500 dark:hover:text-red-400"
+                        aria-label={`Delete chat: ${c.title}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ),
+                )}
               </div>
             )}
 
