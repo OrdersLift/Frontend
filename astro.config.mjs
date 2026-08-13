@@ -11,6 +11,6 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   integrations: [react(), tailwind()],
   adapter: netlify(),
-  site: 'https://orderslift.com',
+  site: 'https://orderslift.co.in',
   base: '/',
 });

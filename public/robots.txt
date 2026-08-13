@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://orderslift.com/sitemap.xml
+Sitemap: https://orderslift.co.in/sitemap.xml
 
 Disallow: /api/
 Disallow: /_astro/
