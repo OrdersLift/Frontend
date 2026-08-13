@@ -15,6 +15,7 @@ export const brand = {
 // sections existed with no way to reach them from the nav.
 export const nav = [
   { label: 'Home', href: '/' },
+  { label: 'Services', href: '#services' },
   { label: 'Results', href: '#results' },
   { label: 'Work', href: '#work' },
   { label: 'How It Works', href: '#how-it-works' },

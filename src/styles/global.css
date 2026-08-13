@@ -231,7 +231,7 @@ html { scroll-behavior: smooth; }
    `class="btn-primary btn-sm"`. Declared after the button classes so it wins
    without !important. */
 .btn-sm {
-  @apply py-2.5 px-5 text-sm rounded-lg;
+  @apply py-2.5 px-5 text-[15px] rounded-lg;
 }
 
 .btn-outline {

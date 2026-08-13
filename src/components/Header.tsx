@@ -1,15 +1,11 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
-import { brand, cta, nav, servicesMenu } from '../data/site';
-import { collapse, duration, panel, pressTap, tr } from '../lib/motion';
+import { Menu, X } from 'lucide-react';
+import { brand, cta, nav } from '../data/site';
+import { collapse, duration, pressTap, tr } from '../lib/motion';
 
-/* The only string here that isn't in site.ts: `servicesMenu` ships the items
-   but no label for the group that opens them. */
-const SERVICES = 'Services';
-
-// 15px/500 holds its own beside the CTA; 14px/400 read as fine print next to it.
-const link = 'focus-ring relative rounded-md px-3 py-2 text-[15px] font-medium transition-colors';
+// Services is a plain nav entry now, so every desktop link shares this.
+const link = 'focus-ring relative rounded-md px-3 py-2 text-base font-semibold transition-colors';
 const idle = 'text-body hover:text-ink';
 const rowLink =
   'focus-ring block rounded-lg px-3 py-3 text-base transition-colors hover:bg-ink/5';
@@ -22,13 +18,10 @@ const Bar = () => (
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [svcOpen, setSvcOpen] = useState(false);
   /* Both empty until hydration so the server markup marks nothing active. */
   const [path, setPath] = useState('');
   const [activeHash, setActiveHash] = useState('');
 
-  const svcWrap = useRef<HTMLDivElement>(null);
-  const svcBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -48,7 +41,7 @@ const Header = () => {
   useEffect(() => {
     if (path !== '/') return;
     const ids = [...new Set(
-      [...nav, ...servicesMenu]
+      nav
         .map((i) => i.href)
         .filter((h) => h.startsWith('#'))
         .map((h) => h.slice(1)),
@@ -93,32 +86,22 @@ const Header = () => {
     };
   }, [path]);
 
-  /* Escape + outside click, for whichever surface is open. */
+  /* Escape closes the mobile panel. The outside-click handler went with the
+     dropdown — the panel is full width, so there is no "outside" to click. */
   useEffect(() => {
-    if (!svcOpen && !menuOpen) return;
+    if (!menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      if (svcOpen) svcBtn.current?.focus();
-      setSvcOpen(false);
-      setMenuOpen(false);
-    };
-    const onPointer = (e: PointerEvent) => {
-      if (svcOpen && !svcWrap.current?.contains(e.target as Node)) setSvcOpen(false);
+      if (e.key === 'Escape') setMenuOpen(false);
     };
     document.addEventListener('keydown', onKey);
-    document.addEventListener('pointerdown', onPointer);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('pointerdown', onPointer);
-    };
-  }, [svcOpen, menuOpen]);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   /* Hash links track the scroll position; "/" is only current at the very top,
      before any section has claimed the reading line. */
   const isActive = (href: string) =>
     href.startsWith('#') ? path === '/' && activeHash === href : path === href && !activeHash;
-  const svcActive = servicesMenu.some((s) => isActive(s.href));
-  const closeAll = () => { setMenuOpen(false); setSvcOpen(false); };
+  const closeAll = () => setMenuOpen(false);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -152,87 +135,23 @@ const Header = () => {
             </a>
 
             {/* Desktop nav — Services sits after the first item */}
+            {/* Centred by flex, not by `absolute left-1/2`. Absolute centring
+                caps the width at half the container, and seven 16px items no
+                longer fit in that — "How It Works" broke onto two lines. */}
             <nav
               aria-label="Main"
-              className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex"
+              className="hidden flex-1 items-center justify-center gap-0.5 whitespace-nowrap lg:flex"
             >
-              {nav.map((item, i) => (
-                <Fragment key={item.label}>
-                  <a
-                    href={item.href}
-                    aria-current={isActive(item.href) ? 'page' : undefined}
-                    className={`${link} ${isActive(item.href) ? 'text-primary-500' : idle}`}
-                  >
-                    {item.label}
-                    {isActive(item.href) && <Bar />}
-                  </a>
-
-                  {i === 0 && (
-                    <div
-                      ref={svcWrap}
-                      className="relative"
-                      /* Pointer-type guard: on a touch screen mouseenter fires
-                         with the tap, which would open then immediately close. */
-                      onPointerEnter={(e) => e.pointerType === 'mouse' && setSvcOpen(true)}
-                      onPointerLeave={(e) => e.pointerType === 'mouse' && setSvcOpen(false)}
-                      onBlur={(e) => {
-                        if (!e.currentTarget.contains(e.relatedTarget as Node)) setSvcOpen(false);
-                      }}
-                    >
-                      <button
-                        ref={svcBtn}
-                        type="button"
-                        onClick={() => setSvcOpen((v) => !v)}
-                        aria-haspopup="true"
-                        aria-expanded={svcOpen}
-                        aria-controls="services-menu"
-                        className={`${link} inline-flex items-center gap-1 ${
-                          svcActive || svcOpen ? 'text-primary-500' : idle
-                        }`}
-                      >
-                        {SERVICES}
-                        <ChevronDown
-                          aria-hidden="true"
-                          className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                            svcOpen ? 'rotate-180' : ''
-                          }`}
-                        />
-                        {svcActive && <Bar />}
-                      </button>
-
-                      <AnimatePresence>
-                        {svcOpen && (
-                          /* pt-2 is inside the positioned box on purpose: the
-                             gap stays hoverable, so the pointer can travel from
-                             the trigger to the list without closing it. */
-                          <motion.div
-                            id="services-menu"
-                            variants={panel}
-                            initial="hidden"
-                            animate="show"
-                            exit="hidden"
-                            className="absolute left-1/2 top-full w-60 -translate-x-1/2 pt-2"
-                          >
-                            <ul className="surface-card elev-2 rounded-xl p-2">
-                              {servicesMenu.map((s) => (
-                                <li key={s.label}>
-                                  <a
-                                    href={s.href}
-                                    onClick={closeAll}
-                                    className="focus-ring block rounded-lg px-3 py-2 text-sm
-                                               text-body transition-colors hover:bg-ink/5 hover:text-ink"
-                                  >
-                                    {s.label}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  )}
-                </Fragment>
+              {nav.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  className={`${link} ${isActive(item.href) ? 'text-primary-500' : idle}`}
+                >
+                  {item.label}
+                  {isActive(item.href) && <Bar />}
+                </a>
               ))}
             </nav>
 
@@ -282,20 +201,6 @@ const Header = () => {
                     </a>
                   ))}
 
-                  <p className="px-3 pb-1 pt-5 text-[10px] uppercase tracking-[0.18em] text-muted">
-                    {SERVICES}
-                  </p>
-                  {servicesMenu.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      onClick={closeAll}
-                      className="focus-ring block rounded-lg px-3 py-2.5 text-sm text-body
-                                 transition-colors hover:bg-ink/5 hover:text-ink"
-                    >
-                      {s.label}
-                    </a>
-                  ))}
                 </nav>
 
                 <div className="mt-5 flex items-center gap-3 border-t border-rule pt-5">
