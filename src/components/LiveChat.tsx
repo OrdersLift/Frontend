@@ -42,10 +42,16 @@ const readJSON = <T,>(key: string, fallback: T): T => {
 
 function loadChats(): Chat[] {
   const chats = readJSON<Chat[]>(CHATS_KEY, []);
-  // Adopt the single chat written by the previous version of this widget.
+  // One-time adoption of the single chat the previous widget stored. The key is
+  // cleared as soon as it is read: leaving it made this run on EVERY load, so
+  // deleting that chat and refreshing resurrected it as "Earlier chat" forever.
   const legacy = localStorage.getItem(LEGACY_KEY);
-  if (legacy && !chats.some((c) => c.id === legacy)) {
-    chats.push({ id: legacy, title: 'Earlier chat', at: 0, unread: 0 });
+  if (legacy) {
+    localStorage.removeItem(LEGACY_KEY);
+    if (!chats.some((c) => c.id === legacy)) {
+      chats.push({ id: legacy, title: 'Earlier chat', at: Date.now(), unread: 0 });
+      localStorage.setItem(CHATS_KEY, JSON.stringify(chats));
+    }
   }
   return chats.sort((a, b) => b.at - a.at);
 }
@@ -279,9 +285,9 @@ export default function LiveChat() {
                        elev-3 flex flex-col"
             style={{ height: 'min(70vh, 540px)' }}
           >
-            <div className="flex items-center gap-3 px-4 py-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900">
+            <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-600 to-glow-500 text-white">
               {view === 'list' ? (
-                <span className="grid place-items-center w-9 h-9 rounded-full bg-white/20 dark:bg-neutral-900/10 flex-shrink-0">
+                <span className="grid place-items-center w-9 h-9 rounded-full bg-white/20 flex-shrink-0">
                   <Headphones className="w-5 h-5" />
                 </span>
               ) : (
@@ -339,14 +345,15 @@ export default function LiveChat() {
                   ) : (
                     <div
                       key={c.id}
-                      className="flex items-center gap-1 rounded-xl transition hover:bg-neutral-100 dark:hover:bg-white/[0.05]"
+                      className="mb-2 flex items-center gap-1 rounded-xl border border-primary-500/40
+                                 bg-primary-500/[0.18] transition hover:border-primary-500/60 hover:bg-primary-500/25"
                     >
                       <button
                         onClick={() => setActiveId(c.id)}
                         className="focus-ring min-w-0 flex-1 rounded-xl px-3 py-3 text-left"
                       >
-                        <span className="block truncate text-sm text-neutral-900 dark:text-slate-100">{c.title}</span>
-                        <span className="block text-[11px] text-neutral-500 dark:text-slate-400">{when(c.at)}</span>
+                        <span className="block truncate text-sm font-medium text-neutral-900 dark:text-slate-100">{c.title}</span>
+                        <span className="block text-[11px] text-neutral-600 dark:text-slate-400">{when(c.at)}</span>
                       </button>
                       {c.unread > 0 && (
                         <span className="grid min-w-[20px] h-5 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-semibold text-white">
@@ -391,7 +398,7 @@ export default function LiveChat() {
                   type="submit"
                   disabled={sending || !input.trim()}
                   className="focus-ring w-full rounded-full py-2.5 text-sm font-semibold
-                             bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 disabled:opacity-50"
+                             bg-gradient-to-r from-primary-600 to-glow-500 text-white disabled:opacity-50"
                 >
                   {sending ? 'Sending…' : 'Start chat'}
                 </button>
@@ -412,8 +419,8 @@ export default function LiveChat() {
                       <div
                         className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
                           m.role === 'visitor'
-                            ? 'bg-neutral-900 text-white rounded-br-sm dark:bg-white dark:text-neutral-900'
-                            : 'bg-neutral-100 text-neutral-800 border border-neutral-200 rounded-bl-sm dark:bg-white/[0.05] dark:text-slate-200 dark:border-white/[0.08]'
+                            ? 'bg-primary-600 text-white rounded-br-sm'
+                            : 'bg-cream-100 text-neutral-800 border border-primary-200 rounded-bl-sm dark:bg-white/[0.06] dark:text-slate-200 dark:border-white/[0.10]'
                         }`}
                       >
                         {m.role === 'agent' && m.author && (
@@ -445,7 +452,7 @@ export default function LiveChat() {
                     type="submit"
                     disabled={sending}
                     className="focus-ring grid place-items-center w-9 h-9 rounded-full shrink-0 disabled:opacity-50
-                               bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
+                               bg-gradient-to-r from-primary-600 to-glow-500 text-white"
                     aria-label="Send"
                   >
                     <Send className="w-4 h-4" />
