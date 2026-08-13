@@ -7,8 +7,27 @@
 export const brand = {
   name: 'OrdersLift',
   tagline: 'Elevate Every Order',
-  email: 'hello@orderslift.com',
-  phone: '+1 (555) 123-4567',
+  // Real, reachable details. The redesign briefly replaced these with the
+  // hello@ / +1-555 placeholders that were only ever in the page schema.
+  email: 'restaurantorderlift@gmail.com',
+  emailNote: 'Reply within 24 hours',
+  phone: '(+91) 63939 74340',
+  phoneNote: 'Available 24/7',
+} as const;
+
+export const contactAside = {
+  availability: {
+    title: 'Availability',
+    rows: [
+      { label: 'Support', value: '24/7 online', highlight: true },
+      { label: 'Discovery calls', value: 'Mon – Sat' },
+      { label: 'Time zones', value: 'Worldwide' },
+    ],
+  },
+  discovery: {
+    title: 'Free discovery call',
+    body: "Every project starts with a free 30-minute call. No commitment. We'll map out exactly what you need and give you a clear plan.",
+  },
 } as const;
 
 // "About Us" is gone with the page. "Results" and "Work" take its place — both

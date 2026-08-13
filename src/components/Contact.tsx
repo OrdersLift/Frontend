@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, MotionConfig } from 'framer-motion';
-import { AlertCircle, CheckCircle2, Mail, Phone, Send } from 'lucide-react';
-import { brand } from '../data/site';
+import { AlertCircle, CheckCircle2, Clock, Mail, Phone, Send } from 'lucide-react';
+import { brand, contactAside } from '../data/site';
 import { fadeUp, pressHover, pressTap, staggerContainer, viewportOnce } from '../lib/motion';
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgvlkaar';
@@ -13,8 +13,14 @@ const venueTypes = [
 ];
 
 const details = [
-  { icon: Mail,  label: 'Email', value: brand.email, href: `mailto:${brand.email}` },
-  { icon: Phone, label: 'Phone', value: brand.phone, href: `tel:${brand.phone.replace(/[^+\d]/g, '')}` },
+  { icon: Mail, label: 'Email', value: brand.email, note: brand.emailNote, href: `mailto:${brand.email}` },
+  {
+    icon: Phone,
+    label: 'Phone',
+    value: brand.phone,
+    note: brand.phoneNote,
+    href: `tel:${brand.phone.replace(/[^+\d]/g, '')}`,
+  },
 ];
 
 /* `.surface-inset` owns fill, border and radius (--radius-inset = rounded-xl);
@@ -177,32 +183,57 @@ const Contact = () => {
               )}
             </motion.div>
 
+            {/* Three stacked panels rather than one. A single short card had to
+                stretch to the form's height and left ~340px of empty fill. */}
             <motion.div
-              variants={staggerContainer()}
+              variants={staggerContainer(0.08)}
               initial="hidden"
               whileInView="show"
               viewport={viewportOnce}
-              className="surface-card rounded-2xl p-6 lg:p-7 flex flex-col gap-5"
+              className="flex flex-col gap-5"
             >
-              {details.map((d) => (
-                <motion.a
-                  key={d.label}
-                  href={d.href}
-                  variants={fadeUp}
-                  className="focus-ring flex items-start gap-4 rounded-lg"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-500/10"
-                  >
-                    <d.icon className="h-5 w-5 text-primary-500" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-xs text-muted">{d.label}</span>
-                    <span className="block text-sm text-ink break-words">{d.value}</span>
-                  </span>
-                </motion.a>
-              ))}
+              <motion.div variants={fadeUp} className="surface-card rounded-2xl p-6 lg:p-7">
+                <h3 className="font-display text-base font-semibold text-ink">Contact information</h3>
+                <div className="mt-5 flex flex-col gap-5">
+                  {details.map((d) => (
+                    <a key={d.label} href={d.href} className="focus-ring flex items-start gap-4 rounded-lg">
+                      <span
+                        aria-hidden="true"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-500/10"
+                      >
+                        <d.icon className="h-5 w-5 text-primary-500" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-xs text-muted">{d.label}</span>
+                        <span className="block break-words text-sm font-medium text-ink">{d.value}</span>
+                        <span className="mt-0.5 block text-xs text-muted">{d.note}</span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="surface-card rounded-2xl p-6 lg:p-7">
+                <h3 className="flex items-center gap-2.5 font-display text-base font-semibold text-ink">
+                  <Clock aria-hidden="true" className="h-4 w-4 text-primary-500" />
+                  {contactAside.availability.title}
+                </h3>
+                <dl className="mt-4 flex flex-col gap-2.5 text-sm">
+                  {contactAside.availability.rows.map((r) => (
+                    <div key={r.label} className="flex items-baseline justify-between gap-3">
+                      <dt className="text-body">{r.label}</dt>
+                      <dd className={r.highlight ? 'font-medium text-primary-500' : 'text-ink'}>{r.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="surface-card rounded-2xl p-6 lg:p-7">
+                <h3 className="font-display text-base font-semibold text-ink">
+                  {contactAside.discovery.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-body">{contactAside.discovery.body}</p>
+              </motion.div>
             </motion.div>
           </div>
         </div>
