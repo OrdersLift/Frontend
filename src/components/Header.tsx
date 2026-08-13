@@ -23,8 +23,9 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [svcOpen, setSvcOpen] = useState(false);
-  /* Empty until hydration so the server markup marks nothing active. */
-  const [here, setHere] = useState('');
+  /* Both empty until hydration so the server markup marks nothing active. */
+  const [path, setPath] = useState('');
+  const [activeHash, setActiveHash] = useState('');
 
   const svcWrap = useRef<HTMLDivElement>(null);
   const svcBtn = useRef<HTMLButtonElement>(null);
@@ -36,12 +37,61 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => setPath(window.location.pathname), []);
+
+  /* Scroll spy. The old version read location.hash and only listened for
+     hashchange, so the highlight sat wherever you last clicked and never moved
+     while scrolling — the hash doesn't change on scroll.
+     A section is "current" when it crosses a reading line just below the fixed
+     header; the last match wins, so overlapping sections resolve to the lower
+     one. rAF-throttled, and passive so it can't block scrolling. */
   useEffect(() => {
-    const read = () => setHere(window.location.pathname + window.location.hash);
-    read();
-    window.addEventListener('hashchange', read);
-    return () => window.removeEventListener('hashchange', read);
-  }, []);
+    if (path !== '/') return;
+    const ids = [...new Set(
+      [...nav, ...servicesMenu]
+        .map((i) => i.href)
+        .filter((h) => h.startsWith('#'))
+        .map((h) => h.slice(1)),
+    )];
+
+    let frame = 0;
+    const spy = () => {
+      frame = 0;
+      const line = 96; // clears the 68px bar with a little air
+      let current = '';
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const { top, bottom } = el.getBoundingClientRect();
+        if (top <= line && bottom > line) current = `#${id}`;
+      }
+      // The last section can be too short to reach the line, so the bottom of
+      // the page claims it outright. "Last" means furthest down the document,
+      // not last in `ids` — the Services entries sort to the end of that array
+      // while their section sits near the top of the page.
+      const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atEnd) {
+        let lowest = '';
+        let lowestTop = -1;
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (el && el.offsetTop > lowestTop) { lowestTop = el.offsetTop; lowest = id; }
+        }
+        if (lowest) current = `#${lowest}`;
+      }
+      setActiveHash(current);
+    };
+
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(spy); };
+    spy();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [path]);
 
   /* Escape + outside click, for whichever surface is open. */
   useEffect(() => {
@@ -63,7 +113,10 @@ const Header = () => {
     };
   }, [svcOpen, menuOpen]);
 
-  const isActive = (href: string) => (href.startsWith('#') ? here.endsWith(href) : here === href);
+  /* Hash links track the scroll position; "/" is only current at the very top,
+     before any section has claimed the reading line. */
+  const isActive = (href: string) =>
+    href.startsWith('#') ? path === '/' && activeHash === href : path === href && !activeHash;
   const svcActive = servicesMenu.some((s) => isActive(s.href));
   const closeAll = () => { setMenuOpen(false); setSvcOpen(false); };
 

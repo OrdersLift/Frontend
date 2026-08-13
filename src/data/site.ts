@@ -11,11 +11,14 @@ export const brand = {
   phone: '+1 (555) 123-4567',
 } as const;
 
+// "About Us" is gone with the page. "Results" and "Work" take its place — both
+// sections existed with no way to reach them from the nav.
 export const nav = [
   { label: 'Home', href: '/' },
+  { label: 'Results', href: '#results' },
+  { label: 'Work', href: '#work' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Pricing', href: '#pricing' },
-  { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '#contact' },
 ] as const;
 
@@ -176,7 +179,8 @@ export const footer = {
     {
       title: 'Company',
       links: [
-        { label: 'About Us', href: '/about' },
+        { label: 'Results', href: '#results' },
+        { label: 'Our Work', href: '#work' },
         { label: 'How It Works', href: '#how-it-works' },
         { label: 'Pricing', href: '#pricing' },
         { label: 'Contact', href: '#contact' },
