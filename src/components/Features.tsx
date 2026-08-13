@@ -11,7 +11,7 @@ const Features = () => (
     {/* Asymmetric on purpose: the trusted-by band directly above already ends
         in its own padding, so a full py-28 here read as a gap twice the size
         of every other section break. Bottom padding stays at the standard. */}
-    <section id="services" className="scroll-mt-28 bg-paper pt-10 pb-20 lg:pt-12 lg:pb-28">
+    <section id="services" className="scroll-mt-28 bg-paper pt-10 pb-12 lg:pt-12 lg:pb-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.h2
           variants={fadeUp}

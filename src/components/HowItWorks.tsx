@@ -15,7 +15,7 @@ const badgeRing = 'ring-4 ring-[color:rgb(var(--focus-offset))]';
 
 const HowItWorks = () => (
   <MotionConfig reducedMotion="user">
-    <section id="how-it-works" className="scroll-mt-28 bg-paper py-20 lg:py-28">
+    <section id="how-it-works" className="scroll-mt-28 section-band py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.h2
           variants={fadeUp}

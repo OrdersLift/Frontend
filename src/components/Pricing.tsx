@@ -73,7 +73,7 @@ const cardClass = (highlight: boolean) =>
 
 const Pricing = () => (
   <MotionConfig reducedMotion="user">
-    <section id="pricing" className="scroll-mt-28 section-band py-20 lg:py-28">
+    <section id="pricing" className="scroll-mt-28 bg-paper py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           variants={fadeUp}

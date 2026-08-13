@@ -72,7 +72,7 @@ const Contact = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section id="contact" className="scroll-mt-28 bg-paper py-20 lg:py-28">
+      <section id="contact" className="scroll-mt-28 bg-paper py-14 lg:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <motion.div
             variants={fadeUp}

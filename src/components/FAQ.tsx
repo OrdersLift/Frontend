@@ -48,7 +48,7 @@ const FAQ = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <section id="faq" className="scroll-mt-28 section-band py-20 lg:py-28">
+      <section id="faq" className="scroll-mt-28 bg-paper py-14 lg:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <motion.div
             variants={fadeUp}
@@ -70,7 +70,10 @@ const FAQ = () => {
             initial="hidden"
             whileInView="show"
             viewport={viewportOnce}
-            className="mx-auto mt-12 lg:mt-16 flex max-w-3xl flex-col gap-3"
+            /* 5xl, not 3xl: at 768px the rows sat visibly narrower than every
+               other section and read as a different page. Not the full 7xl —
+               a single line of answer text that wide is hard to track. */
+            className="mx-auto mt-10 lg:mt-12 flex max-w-5xl flex-col gap-3"
           >
             {faqs.map((faq, i) => {
               const isOpen = openIndex === i;

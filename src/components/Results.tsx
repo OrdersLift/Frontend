@@ -10,7 +10,7 @@ import { fadeUp, staggerContainer, viewportOnce } from '../lib/motion';
 
 const Results = () => (
   <MotionConfig reducedMotion="user">
-    <section id="results" aria-labelledby="results-heading" className="section-band py-20 lg:py-28">
+    <section id="results" aria-labelledby="results-heading" className="section-band pt-12 pb-12 lg:pt-14 lg:pb-16">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           variants={fadeUp}

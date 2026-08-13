@@ -48,7 +48,7 @@ function AdsMarquee() {
 const Work = () => {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="work" className="scroll-mt-28 bg-paper py-20 lg:py-28">
+      <section id="work" className="scroll-mt-28 bg-paper pt-10 pb-14 lg:pt-12 lg:pb-20">
         <motion.div
           variants={fadeUp}
           initial="hidden"

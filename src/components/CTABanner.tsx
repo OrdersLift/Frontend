@@ -5,7 +5,7 @@ import { fadeUp, pressHover, pressTap, viewportOnce } from '../lib/motion';
 
 const CTABanner = () => (
   <MotionConfig reducedMotion="user">
-    <section id="contact-cta" className="py-20 scroll-mt-28 lg:py-28">
+    <section id="contact-cta" className="section-band scroll-mt-28 py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* .surface-card already sets radius (--radius-card = 1rem = rounded-2xl)
             and owns background/border/shadow — padding and layout are ours. */}
