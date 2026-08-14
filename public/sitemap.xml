@@ -19,6 +19,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://orderslift.co.in/demo/burger-blaze/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://orderslift.co.in/demo/prime-table/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://orderslift.co.in/demo/restaurants/menu</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>

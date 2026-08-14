@@ -4,12 +4,14 @@ import Header from '../../components/Header';
 
 const demos = [
   { slug: 'restaurants', brand: 'Saffron & Ember', tagline: 'Indo-Mediterranean wood-fire dining', emoji: '🔥', industry: 'Restaurant', accent: 'from-primary-400/25 to-primary-600/20', ring: 'hover:border-glow-500/60' },
+  { slug: 'burger-blaze', brand: 'Burger Blaze', tagline: 'Quick-service burgers — build-your-own, AI combos and live order tracking', emoji: '🍔', industry: 'Quick Service', accent: 'from-accent-400/25 to-primary-500/20', ring: 'hover:border-accent-500/60' },
+  { slug: 'prime-table', brand: 'Prime Table', tagline: 'Modern steakhouse — live reservations, digital menu and private events', emoji: '🥩', industry: 'Fine Dining', accent: 'from-glow-500/25 to-neutral-700/20', ring: 'hover:border-glow-400/60' },
 ];
 ---
 
 <Layout
   title="Live Demos — See What OrdersLift Builds"
-  description="Explore a live, interactive demo of the restaurant website OrdersLift builds — a full multi-page site with online ordering, table reservations, a QR menu and a built-in AI chat widget."
+  description="Explore three live, interactive demos of the restaurant websites OrdersLift builds — fine dining, quick service and steakhouse, each with online ordering, table reservations, a QR menu and a built-in AI chat widget."
   canonical="https://orderslift.co.in/demo/"
 >
   <Header client:load />
@@ -30,9 +32,9 @@ const demos = [
           <span class="gradient-text">For Restaurants</span>
         </h1>
         <p class="text-lg text-neutral-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-          A complete, multi-page restaurant website with its own brand, online ordering, table
+          Three complete restaurant websites, each with its own brand, online ordering, table
           reservations and a built-in AI chat widget — exactly the kind of site we build for you.
-          Click through and try it live.
+          Click through and try them live.
         </p>
       </div>
 

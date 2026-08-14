@@ -42,6 +42,28 @@ export const nav = [
   { label: 'Contact', href: '#contact' },
 ] as const;
 
+/** The Demos dropdown in the header — one entry per live demo brand under /demo. */
+export const demosMenu = [
+  {
+    label: 'Saffron & Ember',
+    kind: 'Fine dining · Indo-Mediterranean',
+    emoji: '🔥',
+    href: '/demo/restaurants/',
+  },
+  {
+    label: 'Burger Blaze',
+    kind: 'Quick service · Burgers & shakes',
+    emoji: '🍔',
+    href: '/demo/burger-blaze/',
+  },
+  {
+    label: 'Prime Table',
+    kind: 'Steakhouse · Reservations-led',
+    emoji: '🥩',
+    href: '/demo/prime-table/',
+  },
+] as const;
+
 /** The Services dropdown in the header — mirrors the six service cards. */
 export const servicesMenu = [
   { label: 'Marketing', href: '#services' },

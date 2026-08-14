@@ -1,0 +1,77 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PrimeTable from '../../../components/demos/prime-table/PrimeTable';
+---
+
+<Layout
+  title="Prime Table — Modern American Steakhouse"
+  description="Prime Table — a live OrdersLift demo for fine dining. Live reservations, a digital menu, private events, online ordering and an AI dining assistant."
+  canonical="https://orderslift.co.in/demo/prime-table/"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <PrimeTable client:load />
+</Layout>
+
+<style is:global>
+  /* Scoped to `.ptb-root` so the brand typefaces never leak onto the marketing site. */
+  .ptb-root,
+  .ptb-root input,
+  .ptb-root textarea,
+  .ptb-root select,
+  .ptb-root button {
+    font-family: 'Manrope', sans-serif;
+  }
+  .ptb-display,
+  .ptb-root h1,
+  .ptb-root h2,
+  .ptb-root h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .ptb-mono {
+    font-family: 'Space Mono', monospace;
+  }
+
+  .ptb-glass {
+    background: rgba(23, 22, 26, 0.55);
+    border: 1px solid rgba(201, 162, 75, 0.22);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Range input can't be styled with utilities — the thumb needs vendor pseudos. */
+  .ptb-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: rgba(201, 162, 75, 0.22);
+    border-radius: 2px;
+    outline: none;
+  }
+  .ptb-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e8cd8a;
+    border: 2px solid #0b0b0d;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.2);
+  }
+  .ptb-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e8cd8a;
+    border: 2px solid #0b0b0d;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.2);
+  }
+</style>

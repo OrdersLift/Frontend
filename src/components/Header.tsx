@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { brand, cta, nav } from '../data/site';
-import { collapse, duration, pressTap, tr } from '../lib/motion';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import { brand, cta, demosMenu, nav } from '../data/site';
+import { collapse, duration, panel, pressTap, tr } from '../lib/motion';
 
 // Services is a plain nav entry now, so every desktop link shares this.
 const link = 'focus-ring relative rounded-md px-3 py-2 text-base font-semibold transition-colors';
@@ -18,6 +18,8 @@ const Bar = () => (
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [demosOpen, setDemosOpen] = useState(false);
+  const demosRef = useRef<HTMLDivElement>(null);
   /* Both empty until hydration so the server markup marks nothing active. */
   const [path, setPath] = useState('');
   const [activeHash, setActiveHash] = useState('');
@@ -86,22 +88,39 @@ const Header = () => {
     };
   }, [path]);
 
-  /* Escape closes the mobile panel. The outside-click handler went with the
-     dropdown — the panel is full width, so there is no "outside" to click. */
+  /* Escape closes the mobile panel and the Demos dropdown. */
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen && !demosOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMenuOpen(false);
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        setDemosOpen(false);
+      }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [menuOpen]);
+  }, [menuOpen, demosOpen]);
+
+  /* The Demos dropdown is narrow, so unlike the full-width mobile panel it does
+     have an "outside" to click. */
+  useEffect(() => {
+    if (!demosOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (!demosRef.current?.contains(e.target as Node)) setDemosOpen(false);
+    };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [demosOpen]);
 
   /* Hash links track the scroll position; "/" is only current at the very top,
      before any section has claimed the reading line. */
   const isActive = (href: string) =>
     href.startsWith('#') ? path === '/' && activeHash === href : path === href && !activeHash;
-  const closeAll = () => setMenuOpen(false);
+  const closeAll = () => {
+    setMenuOpen(false);
+    setDemosOpen(false);
+  };
+  const onDemo = path.startsWith('/demo');
 
   return (
     <MotionConfig reducedMotion="user">
@@ -153,6 +172,59 @@ const Header = () => {
                   {isActive(item.href) && <Bar />}
                 </a>
               ))}
+
+              {/* Demos dropdown — the one nav entry that leads off the marketing
+                  site, so it gets a panel rather than a bare link. */}
+              <div ref={demosRef} className="relative">
+                <button
+                  onClick={() => setDemosOpen((v) => !v)}
+                  aria-expanded={demosOpen}
+                  aria-haspopup="true"
+                  className={`${link} inline-flex items-center gap-1 ${onDemo ? 'text-primary-500' : idle}`}
+                >
+                  Demos
+                  <motion.span animate={{ rotate: demosOpen ? 180 : 0 }} transition={tr(duration.fast)}>
+                    <ChevronDown size={16} />
+                  </motion.span>
+                  {onDemo && <Bar />}
+                </button>
+
+                <AnimatePresence>
+                  {demosOpen && (
+                    <motion.div
+                      variants={panel}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                      className="absolute left-1/2 top-full z-50 mt-2 w-[300px] -translate-x-1/2 overflow-hidden
+                                 rounded-xl border border-rule bg-paper p-1.5 shadow-2xl shadow-black/40"
+                    >
+                      {demosMenu.map((d) => (
+                        <a
+                          key={d.href}
+                          href={d.href}
+                          onClick={closeAll}
+                          className="focus-ring flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-ink/5"
+                        >
+                          <span className="text-xl leading-none">{d.emoji}</span>
+                          <span>
+                            <span className="block text-sm font-semibold text-ink">{d.label}</span>
+                            <span className="block text-xs text-muted">{d.kind}</span>
+                          </span>
+                        </a>
+                      ))}
+                      <a
+                        href="/demo/"
+                        onClick={closeAll}
+                        className="focus-ring mt-1 block border-t border-rule px-3 py-2.5 text-sm
+                                   font-semibold text-primary-500 transition-colors hover:bg-ink/5"
+                      >
+                        See all demos →
+                      </a>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </nav>
 
             {/* Right */}
@@ -201,6 +273,25 @@ const Header = () => {
                     </a>
                   ))}
 
+                  {/* No dropdown on mobile — the panel already scrolls, so the
+                      demos just list inline under a heading. */}
+                  <p className="mt-3 px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted">
+                    Demos
+                  </p>
+                  {demosMenu.map((d) => (
+                    <a
+                      key={d.href}
+                      href={d.href}
+                      onClick={closeAll}
+                      className={`${rowLink} flex items-center gap-3 text-body`}
+                    >
+                      <span className="text-lg leading-none">{d.emoji}</span>
+                      {d.label}
+                    </a>
+                  ))}
+                  <a href="/demo/" onClick={closeAll} className={`${rowLink} text-primary-500`}>
+                    See all demos →
+                  </a>
                 </nav>
 
                 <div className="mt-5 flex items-center gap-3 border-t border-rule pt-5">

@@ -1,0 +1,42 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import BurgerBlaze from '../../../components/demos/burger-blaze/BurgerBlaze';
+---
+
+<Layout
+  title="Burger Blaze — Fast. Fresh. Fire."
+  description="Burger Blaze — a live OrdersLift demo for quick-service restaurants. Build-your-own burger, AI combo picks, order tracking, locations and a built-in chat assistant."
+  canonical="https://orderslift.co.in/demo/burger-blaze/"
+>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@700&display=swap"
+    rel="stylesheet"
+  />
+
+  <BurgerBlaze client:load />
+</Layout>
+
+<style is:global>
+  /* Scoped to `.bb` so the brand typefaces never leak onto the marketing site. */
+  .bb,
+  .bb input,
+  .bb textarea,
+  .bb button {
+    font-family: 'Poppins', sans-serif;
+  }
+  .bb-display {
+    font-family: 'Lilita One', cursive;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+  }
+  .bb-mono {
+    font-family: 'Space Mono', monospace;
+  }
+  .bb h1,
+  .bb h2 {
+    font-family: 'Lilita One', cursive;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+  }
+</style>
