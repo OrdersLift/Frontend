@@ -1,6 +1,9 @@
-import { useState } from 'react';
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
-import { Menu, X, Send } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { AnimatePresence, MotionConfig, motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { Menu, X, Send, ShoppingBag } from 'lucide-react';
+import { useScrollSpy } from '../useScrollSpy';
+
+const IMG = '/images/demos/burger-blaze';
 
 /* Burger Blaze — QSR demo brand.
    Neo-brutalist: 3px black rules, hard offset shadows, no soft blur anywhere.
@@ -33,31 +36,33 @@ const TOPPINGS = ['cheese', 'bacon', 'lettuce', 'tomato'] as const;
 
 const MENU_TABS = ['Burgers', 'Chicken', 'Sides', 'Shakes', 'Salads'] as const;
 
-const MENU: Record<string, { name: string; desc: string; price: string; kcal: string; emoji: string }[]> = {
+type Dish = { name: string; desc: string; price: string; kcal: string; emoji: string; img: string };
+
+const MENU: Record<string, Dish[]> = {
   Burgers: [
-    { name: 'Blaze Classic', desc: 'Beef patty, cheddar, lettuce, blaze sauce.', price: '$6.49', kcal: '540 kcal', emoji: '🍔' },
-    { name: 'Double Smokehouse', desc: 'Double patty, smoked bacon, BBQ, onion crisps.', price: '$8.99', kcal: '820 kcal', emoji: '🍔' },
-    { name: 'Veggie Ember Stack', desc: 'Plant patty, avocado, roasted pepper, herb aioli.', price: '$6.99', kcal: '480 kcal', emoji: '🥬' },
+    { name: 'Blaze Classic', desc: 'Beef patty, cheddar, lettuce, blaze sauce.', price: '$6.49', kcal: '540 kcal', emoji: '🍔', img: 'blaze-classic' },
+    { name: 'Double Smokehouse', desc: 'Double patty, smoked bacon, BBQ, onion crisps.', price: '$8.99', kcal: '820 kcal', emoji: '🍔', img: 'double-smokehouse' },
+    { name: 'Veggie Ember Stack', desc: 'Plant patty, avocado, roasted pepper, herb aioli.', price: '$6.99', kcal: '480 kcal', emoji: '🥬', img: 'veggie-ember' },
   ],
   Chicken: [
-    { name: 'Spicy Blaze Chicken', desc: 'Crispy chicken, jalapeño, pepper-jack, chipotle mayo.', price: '$7.29', kcal: '610 kcal', emoji: '🌶️' },
-    { name: 'Grilled Herb Chicken', desc: 'Flame-grilled breast, garlic aioli, rocket.', price: '$6.89', kcal: '430 kcal', emoji: '🍗' },
-    { name: 'Blaze Nuggets ×8', desc: 'Buttermilk-brined, honey-mustard dip.', price: '$4.99', kcal: '390 kcal', emoji: '🍗' },
+    { name: 'Spicy Blaze Chicken', desc: 'Crispy chicken, jalapeño, pepper-jack, chipotle mayo.', price: '$7.29', kcal: '610 kcal', emoji: '🌶️', img: 'spicy-chicken' },
+    { name: 'Grilled Herb Chicken', desc: 'Flame-grilled breast, garlic aioli, rocket.', price: '$6.89', kcal: '430 kcal', emoji: '🍗', img: 'grilled-chicken' },
+    { name: 'Blaze Nuggets ×8', desc: 'Buttermilk-brined, honey-mustard dip.', price: '$4.99', kcal: '390 kcal', emoji: '🍗', img: 'nuggets' },
   ],
   Sides: [
-    { name: 'Loaded Blaze Fries', desc: 'Cheese sauce, bacon bits, scallion, chipotle drizzle.', price: '$4.49', kcal: '460 kcal', emoji: '🍟' },
-    { name: 'Onion Rings', desc: 'Beer-battered, smoked paprika salt.', price: '$3.79', kcal: '340 kcal', emoji: '🧅' },
-    { name: 'Mac & Cheese Bites', desc: 'Four-cheese, crisp crumb, ranch dip.', price: '$4.29', kcal: '410 kcal', emoji: '🧀' },
+    { name: 'Loaded Blaze Fries', desc: 'Cheese sauce, bacon bits, scallion, chipotle drizzle.', price: '$4.49', kcal: '460 kcal', emoji: '🍟', img: 'loaded-fries' },
+    { name: 'Onion Rings', desc: 'Beer-battered, smoked paprika salt.', price: '$3.79', kcal: '340 kcal', emoji: '🧅', img: 'onion-rings' },
+    { name: 'Mac & Cheese Bites', desc: 'Four-cheese, crisp crumb, ranch dip.', price: '$4.29', kcal: '410 kcal', emoji: '🧀', img: 'mac-bites' },
   ],
   Shakes: [
-    { name: 'Salted Caramel Shake', desc: 'Hand-spun, whipped cream, caramel drizzle.', price: '$5.29', kcal: '590 kcal', emoji: '🥤' },
-    { name: 'Double Chocolate Shake', desc: 'Cocoa, fudge ripple, chocolate shavings.', price: '$5.29', kcal: '620 kcal', emoji: '🍫' },
-    { name: 'Strawberry Blaze', desc: 'Real fruit, vanilla soft-serve.', price: '$4.99', kcal: '510 kcal', emoji: '🍓' },
+    { name: 'Salted Caramel Shake', desc: 'Hand-spun, whipped cream, caramel drizzle.', price: '$5.29', kcal: '590 kcal', emoji: '🥤', img: 'caramel-shake' },
+    { name: 'Double Chocolate Shake', desc: 'Cocoa, fudge ripple, chocolate shavings.', price: '$5.29', kcal: '620 kcal', emoji: '🍫', img: 'chocolate-shake' },
+    { name: 'Strawberry Blaze', desc: 'Real fruit, vanilla soft-serve.', price: '$4.99', kcal: '510 kcal', emoji: '🍓', img: 'strawberry-shake' },
   ],
   Salads: [
-    { name: 'Ember Chicken Salad', desc: 'Grilled chicken, avocado, lime dressing.', price: '$7.49', kcal: '380 kcal', emoji: '🥗' },
-    { name: 'Garden Crunch', desc: 'Leaves, cucumber, seeds, herb vinaigrette.', price: '$5.99', kcal: '220 kcal', emoji: '🥗' },
-    { name: 'Smoky Corn Bowl', desc: 'Charred corn, black bean, chipotle yoghurt.', price: '$6.29', kcal: '340 kcal', emoji: '🌽' },
+    { name: 'Ember Chicken Salad', desc: 'Grilled chicken, avocado, lime dressing.', price: '$7.49', kcal: '380 kcal', emoji: '🥗', img: 'chicken-salad' },
+    { name: 'Garden Crunch', desc: 'Leaves, cucumber, seeds, herb vinaigrette.', price: '$5.99', kcal: '220 kcal', emoji: '🥗', img: 'garden-crunch' },
+    { name: 'Smoky Corn Bowl', desc: 'Charred corn, black bean, chipotle yoghurt.', price: '$6.29', kcal: '340 kcal', emoji: '🌽', img: 'corn-bowl' },
   ],
 };
 
@@ -165,6 +170,28 @@ export default function BurgerBlaze() {
   ]);
   const [draft, setDraft] = useState('');
 
+  /* Nav highlight follows the scroll position, not the last thing you clicked. */
+  const active = useScrollSpy(NAV.map(([, href]) => href.slice(1)), 100);
+
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, restDelta: 0.001 });
+  /* Hero photo drifts at ~1/5 scroll speed. The img is over-tall by 8rem so the
+     drift never exposes an edge. */
+  const heroShift = useTransform(scrollY, [0, 900], [0, 110]);
+
+  /* Cart is demo-only: it counts taps so the "+" buttons actually answer. */
+  const [cart, setCart] = useState(0);
+  const [toast, setToast] = useState('');
+  const toastTimer = useRef<number | undefined>(undefined);
+  const addToCart = (name: string) => {
+    setCart((c) => c + 1);
+    setToast(name);
+    window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(''), 2200);
+  };
+
+  const [typing, setTyping] = useState(false);
+
   const kcal = LAYERS.reduce((t, l) => t + (l.fixed || on[l.id] ? l.cal : 0), 0);
 
   const send = (e: React.FormEvent) => {
@@ -173,10 +200,11 @@ export default function BurgerBlaze() {
     if (!text) return;
     setDraft('');
     setMsgs((m) => [...m, { from: 'user', text }]);
-    setTimeout(
-      () => setMsgs((m) => [...m, { from: 'bot', text: CANNED[Math.floor(Math.random() * CANNED.length)] }]),
-      600,
-    );
+    setTyping(true);
+    setTimeout(() => {
+      setTyping(false);
+      setMsgs((m) => [...m, { from: 'bot', text: CANNED[Math.floor(Math.random() * CANNED.length)] }]);
+    }, 900);
   };
 
   return (
@@ -199,15 +227,51 @@ export default function BurgerBlaze() {
             </a>
 
             <nav aria-label="Primary" className="hidden gap-6 text-sm font-semibold xl:flex">
-              {NAV.map(([label, href]) => (
-                <a key={href} href={href} className="group relative py-1.5">
-                  {label}
-                  <span className="absolute inset-x-0 bottom-0 h-[3px] w-0 bg-[#FFC72C] transition-[width] duration-300 group-hover:w-full" />
-                </a>
-              ))}
+              {NAV.map(([label, href]) => {
+                const current = active === href.slice(1);
+                return (
+                  <a
+                    key={href}
+                    href={href}
+                    aria-current={current ? 'true' : undefined}
+                    className={`group relative py-1.5 transition-colors ${current ? 'text-[#E8412C]' : ''}`}
+                  >
+                    {label}
+                    {/* The current section's bar is a shared layout element, so
+                        it slides between links instead of blinking on and off. */}
+                    {current && (
+                      <motion.span
+                        layoutId="bb-navbar"
+                        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                        className="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-[#E8412C]"
+                      />
+                    )}
+                    {!current && (
+                      <span className="absolute inset-x-0 bottom-0 h-[3px] w-0 bg-[#FFC72C] transition-[width] duration-300 group-hover:w-full" />
+                    )}
+                  </a>
+                );
+              })}
             </nav>
 
             <div className="flex items-center gap-3">
+              <AnimatePresence>
+                {cart > 0 && (
+                  <motion.a
+                    href="#order"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    aria-label={`${cart} item${cart === 1 ? '' : 's'} in your order`}
+                    className="inline-flex items-center gap-1.5 rounded-full border-[3px] border-[#1A1A1A] bg-white px-3 py-1.5 text-[13px] font-bold"
+                  >
+                    <ShoppingBag size={15} />
+                    <motion.span key={cart} initial={{ y: -8, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                      {cart}
+                    </motion.span>
+                  </motion.a>
+                )}
+              </AnimatePresence>
               <Btn href="#order" variant="yellow" className="hidden sm:inline-block">
                 Order Now
               </Btn>
@@ -237,7 +301,10 @@ export default function BurgerBlaze() {
                       key={href}
                       href={href}
                       onClick={() => setNavOpen(false)}
-                      className="block rounded-lg px-3 py-2.5 font-semibold hover:bg-[#FFC72C]/40"
+                      aria-current={active === href.slice(1) ? 'true' : undefined}
+                      className={`block rounded-lg px-3 py-2.5 font-semibold hover:bg-[#FFC72C]/40 ${
+                        active === href.slice(1) ? 'bg-[#FFC72C]/40 text-[#E8412C]' : ''
+                      }`}
                     >
                       {label}
                     </a>
@@ -246,18 +313,47 @@ export default function BurgerBlaze() {
               </motion.nav>
             )}
           </AnimatePresence>
+
+          {/* Reading progress — a quiet cue for a page this long. */}
+          <motion.div
+            style={{ scaleX: progress }}
+            className="h-[3px] origin-left bg-[#E8412C]"
+            aria-hidden
+          />
         </motion.header>
 
         <main id="main">
           {/* ── HERO ──────────────────────────────────────────── */}
           <section
-            className="flex min-h-screen items-center pt-[130px] pb-20"
+            className="relative flex min-h-screen items-center overflow-hidden pt-[130px] pb-20"
             style={{
               background:
                 'radial-gradient(circle at 15% 20%, rgba(255,199,44,0.35), transparent 45%), radial-gradient(circle at 85% 75%, rgba(232,65,44,0.25), transparent 50%), #FFF8EC',
             }}
           >
-            <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
+            {/* Photo sits behind everything and is masked back to cream on the
+                left, so the headline never competes with it for contrast. */}
+            <motion.img
+              src={`${IMG}/hero.webp`}
+              alt=""
+              width={1800}
+              height={1200}
+              fetchPriority="high"
+              style={{ y: heroShift }}
+              className="pointer-events-none absolute inset-x-0 -top-16 h-[calc(100%+8rem)] w-full object-cover object-[58%_45%]"
+            />
+            {/* Solid cream under the headline, thinning out to the right so the
+                photo actually reads instead of being washed to nothing. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(100deg, #FFF8EC 0%, #FFF8EC 34%, rgba(255,248,236,0.88) 50%, rgba(255,248,236,0.58) 72%, rgba(255,248,236,0.44) 100%)',
+              }}
+            />
+
+            <div className="relative z-10 mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
               <motion.div variants={stagger(0.1)} initial="hidden" animate="show">
                 <motion.div variants={rise}>
                   <Eyebrow>Flame-Grilled Since 2016</Eyebrow>
@@ -398,12 +494,21 @@ export default function BurgerBlaze() {
                       key={item.name}
                       variants={rise}
                       whileHover={{ y: -6 }}
-                      className="overflow-hidden rounded-2xl border-[3px] border-[#1A1A1A] bg-white shadow-[5px_5px_0_#1A1A1A]"
+                      className="group overflow-hidden rounded-2xl border-[3px] border-[#1A1A1A] bg-white shadow-[5px_5px_0_#1A1A1A]"
                     >
-                      <div className="grid h-[140px] place-items-center bg-gradient-to-br from-[#FFD873] to-[#F2A900] text-[52px]">
-                        <motion.span whileHover={{ scale: 1.12, rotate: -6 }} className="inline-block">
+                      <div className="relative h-[170px] overflow-hidden border-b-[3px] border-[#1A1A1A] bg-[#F2A900]">
+                        <img
+                          src={`${IMG}/menu/${item.img}.webp`}
+                          alt={item.name}
+                          width={800}
+                          height={520}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <span className="absolute left-3 top-3 grid h-9 w-9 place-items-center rounded-full border-2 border-[#1A1A1A] bg-[#FFC72C] text-lg">
                           {item.emoji}
-                        </motion.span>
+                        </span>
                       </div>
                       <div className="px-5 py-[18px]">
                         <h3 className="mb-1.5 text-base font-bold">{item.name}</h3>
@@ -414,9 +519,10 @@ export default function BurgerBlaze() {
                             {item.kcal}
                           </span>
                           <motion.button
+                            onClick={() => addToCart(item.name)}
                             whileHover={{ scale: 1.12 }}
                             whileTap={{ scale: 0.9 }}
-                            aria-label={`Add ${item.name}`}
+                            aria-label={`Add ${item.name} to order`}
                             className="grid h-[34px] w-[34px] place-items-center rounded-full bg-[#E8412C] text-lg font-bold text-white"
                           >
                             +
@@ -441,8 +547,17 @@ export default function BurgerBlaze() {
           </section>
 
           {/* ── COMBOS ────────────────────────────────────────── */}
-          <section id="combos" className="scroll-mt-20 bg-white py-24">
-            <div className="mx-auto max-w-[1180px] px-6">
+          <section id="combos" className="relative scroll-mt-20 overflow-hidden bg-white py-24">
+            <img
+              src={`${IMG}/band-combos.webp`}
+              alt=""
+              width={1800}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.13]"
+            />
+            <div className="relative z-10 mx-auto max-w-[1180px] px-6">
               <Reveal className="mb-12 max-w-[640px]">
                 <Eyebrow>Combo Deals</Eyebrow>
                 <h2 className="bb-display text-[clamp(30px,4.4vw,50px)]">Made for your cravings, by AI.</h2>
@@ -557,8 +672,21 @@ export default function BurgerBlaze() {
           </section>
 
           {/* ── LOCATIONS ─────────────────────────────────────── */}
-          <section id="locations" className="scroll-mt-20 bg-[#1A1A1A] py-24 text-white">
-            <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 px-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <section id="locations" className="relative scroll-mt-20 overflow-hidden bg-[#1A1A1A] py-24 text-white">
+            <img
+              src={`${IMG}/band-locations.webp`}
+              alt=""
+              width={1800}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1A1A1A] via-[#1A1A1A]/85 to-[#1A1A1A]/40"
+            />
+            <div className="relative z-10 mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 px-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal>
                 <Eyebrow className="text-[#FFC72C]">Locations</Eyebrow>
                 <h2 className="bb-display text-[clamp(30px,4.4vw,50px)]">Find your nearest Blaze.</h2>
@@ -791,6 +919,24 @@ export default function BurgerBlaze() {
           </div>
         </footer>
 
+        {/* Added-to-order confirmation. Bottom-left so it never sits under the
+            FAB stack on a phone. */}
+        <AnimatePresence>
+          {toast && (
+            <motion.div
+              role="status"
+              initial={{ opacity: 0, y: 16, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.96 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed bottom-6 left-6 z-[200] max-w-[calc(100vw-6.5rem)] rounded-full border-[3px] border-[#1A1A1A]
+                         bg-[#FFC72C] px-5 py-3 text-[13px] font-bold shadow-[5px_5px_0_#1A1A1A]"
+            >
+              Added to your order — {toast}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* ── FLOATING WIDGETS ────────────────────────────────── */}
         <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end gap-3.5">
           <motion.button
@@ -857,6 +1003,24 @@ export default function BurgerBlaze() {
                     {m.text}
                   </motion.div>
                 ))}
+                {typing && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    aria-live="polite"
+                    aria-label="Blaze AI is typing"
+                    className="flex w-fit gap-1 self-start rounded-[14px] rounded-bl-[2px] border-2 border-[#1A1A1A] bg-[#FFF8EC] px-3 py-3"
+                  >
+                    {[0, 1, 2].map((i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.12 }}
+                        className="block h-1.5 w-1.5 rounded-full bg-[#1A1A1A]"
+                      />
+                    ))}
+                  </motion.div>
+                )}
               </div>
               <form onSubmit={send} className="flex border-t-[3px] border-[#1A1A1A]">
                 <input

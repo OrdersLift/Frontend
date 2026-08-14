@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Menu, X, Send } from 'lucide-react';
+import { useScrollSpy } from '../useScrollSpy';
+
+const IMG = '/images/demos/prime-table';
 
 /* Prime Table — high-end steakhouse demo brand.
    Onyx + gold, hairline rules, glass panels. Everything is slower and quieter
@@ -113,13 +116,13 @@ const SERVICES = [
 ];
 
 const GALLERY = [
-  { span: 'row-span-2', emoji: '🥩' },
-  { span: '', emoji: '🔥' },
-  { span: 'col-span-2', emoji: '🍷' },
-  { span: '', emoji: '🕯️' },
-  { span: '', emoji: '🦞' },
-  { span: 'row-span-2', emoji: '🧑‍🍳' },
-  { span: 'col-span-2', emoji: '🍽️' },
+  { span: 'row-span-2', img: '1', alt: 'A plated course under low light' },
+  { span: '', img: '2', alt: 'Wine glasses set out by the window' },
+  { span: 'col-span-2', img: '3', alt: 'The main dining room, wood and warm light' },
+  { span: '', img: '4', alt: 'A tomahawk steak, rested and garnished' },
+  { span: '', img: '5', alt: 'Sauce finished over the plate at the pass' },
+  { span: 'row-span-2', img: '6', alt: 'A chef working the line' },
+  { span: 'col-span-2', img: '7', alt: 'Steak over live hardwood' },
 ];
 
 const REVIEWS = [
@@ -207,6 +210,17 @@ export default function PrimeTable() {
   ]);
   const [draft, setDraft] = useState('');
 
+  /* Nav highlight follows the scroll position, not the last thing you clicked. */
+  const active = useScrollSpy(NAV.map(([, href]) => href.slice(1)), 100);
+
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, restDelta: 0.001 });
+  /* Hero photo drifts at ~1/8 scroll speed; the img is over-tall so no edge shows. */
+  const heroShift = useTransform(scrollY, [0, 900], [0, 110]);
+
+  const [booked, setBooked] = useState(false);
+  const [typing, setTyping] = useState(false);
+
   const level = DONENESS.find((l) => doneness <= l.max) ?? DONENESS[DONENESS.length - 1];
 
   const send = (e: React.FormEvent) => {
@@ -215,7 +229,11 @@ export default function PrimeTable() {
     if (!text) return;
     setDraft('');
     setMsgs((m) => [...m, { from: 'user', text }]);
-    setTimeout(() => setMsgs((m) => [...m, { from: 'bot', text: CANNED[Math.floor(Math.random() * CANNED.length)] }]), 600);
+    setTyping(true);
+    setTimeout(() => {
+      setTyping(false);
+      setMsgs((m) => [...m, { from: 'bot', text: CANNED[Math.floor(Math.random() * CANNED.length)] }]);
+    }, 900);
   };
 
   return (
@@ -238,12 +256,32 @@ export default function PrimeTable() {
             </a>
 
             <nav aria-label="Primary" className="hidden gap-8 text-[13px] tracking-[0.04em] xl:flex">
-              {NAV.map(([label, href]) => (
-                <a key={href} href={href} className="group relative py-1 text-[#c9c4b8] transition-colors hover:text-[#f5f1e8]">
-                  {label}
-                  <span className="absolute inset-x-0 bottom-0 h-px w-0 bg-[#c9a24b] transition-[width] duration-300 group-hover:w-full" />
-                </a>
-              ))}
+              {NAV.map(([label, href]) => {
+                const current = active === href.slice(1);
+                return (
+                  <a
+                    key={href}
+                    href={href}
+                    aria-current={current ? 'true' : undefined}
+                    className={`group relative py-1 transition-colors ${
+                      current ? 'text-[#e8cd8a]' : 'text-[#c9c4b8] hover:text-[#f5f1e8]'
+                    }`}
+                  >
+                    {label}
+                    {/* Shared layout element, so the rule slides between links
+                        rather than blinking on and off as sections change. */}
+                    {current ? (
+                      <motion.span
+                        layoutId="ptb-navbar"
+                        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                        className="absolute inset-x-0 -bottom-0.5 h-px bg-[#c9a24b]"
+                      />
+                    ) : (
+                      <span className="absolute inset-x-0 bottom-0 h-px w-0 bg-[#c9a24b] transition-[width] duration-300 group-hover:w-full" />
+                    )}
+                  </a>
+                );
+              })}
             </nav>
 
             <div className="flex items-center gap-3.5">
@@ -286,7 +324,10 @@ export default function PrimeTable() {
                       key={href}
                       href={href}
                       onClick={() => setNavOpen(false)}
-                      className="block rounded px-3 py-2.5 text-sm text-[#c9c4b8] hover:bg-[#c9a24b]/10 hover:text-[#f5f1e8]"
+                      aria-current={active === href.slice(1) ? 'true' : undefined}
+                      className={`block rounded px-3 py-2.5 text-sm hover:bg-[#c9a24b]/10 hover:text-[#f5f1e8] ${
+                        active === href.slice(1) ? 'bg-[#c9a24b]/10 text-[#e8cd8a]' : 'text-[#c9c4b8]'
+                      }`}
                     >
                       {label}
                     </a>
@@ -295,18 +336,45 @@ export default function PrimeTable() {
               </motion.nav>
             )}
           </AnimatePresence>
+
+          {/* Reading progress — a quiet cue for a page this long. */}
+          <motion.div style={{ scaleX: progress }} className="h-px origin-left bg-[#c9a24b]" aria-hidden />
         </motion.header>
 
         <main id="main">
           {/* ── HERO ──────────────────────────────────────────── */}
           <section
-            className="flex min-h-screen items-center px-6 pb-24 pt-[130px]"
+            className="relative flex min-h-screen items-center overflow-hidden px-6 pb-24 pt-[130px]"
             style={{
               background:
                 'radial-gradient(ellipse at 20% 20%, rgba(201,162,75,0.10), transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(201,162,75,0.06), transparent 55%), #0b0b0d',
             }}
           >
-            <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* A dark brand can carry a full-bleed photo; it only needs a
+                vignette heavy enough to hold the type at AA. */}
+            <motion.img
+              src={`${IMG}/hero.webp`}
+              alt=""
+              width={1800}
+              height={1200}
+              fetchPriority="high"
+              style={{ y: heroShift }}
+              className="pointer-events-none absolute inset-x-0 -top-16 h-[calc(100%+8rem)] w-full object-cover"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(95deg, rgba(11,11,13,0.96) 0%, rgba(11,11,13,0.9) 45%, rgba(11,11,13,0.62) 72%, rgba(11,11,13,0.45) 100%)',
+              }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#17161a] to-transparent"
+            />
+
+            <div className="relative z-10 mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
               <motion.div variants={stagger(0.11)} initial="hidden" animate="show">
                 <motion.div variants={rise}>
                   <Eyebrow>Modern American Steakhouse · Est. 2014</Eyebrow>
@@ -385,18 +453,21 @@ export default function PrimeTable() {
           <section id="about" className="scroll-mt-20 bg-[#17161a] px-6 py-28">
             <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-16 lg:grid-cols-[0.9fr_1.1fr]">
               <Reveal>
-                <motion.div
-                  whileHover={{ scale: 1.015 }}
-                  transition={{ duration: 0.5 }}
-                  className="relative grid aspect-[4/5] place-items-center overflow-hidden rounded-md border border-[#c9a24b]/[0.22] bg-gradient-to-br from-[#26221c] to-[#0b0b0d] text-[90px]"
-                >
-                  <motion.span animate={reduced ? {} : { scale: [1, 1.06, 1] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
-                    🔥
-                  </motion.span>
-                  <span className="ptb-mono absolute bottom-5 left-5 text-[11px] tracking-[0.1em] text-[#e8cd8a] opacity-70">
+                <div className="group relative aspect-[4/5] overflow-hidden rounded-md border border-[#c9a24b]/[0.22]">
+                  <img
+                    src={`${IMG}/about.webp`}
+                    alt="A table set for dinner, plates and wine under candlelight"
+                    width={900}
+                    height={1125}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+                  />
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#0b0b0d] via-transparent to-transparent" />
+                  <span className="ptb-mono absolute bottom-5 left-5 text-[11px] tracking-[0.1em] text-[#e8cd8a]">
                     PRIME TABLE · EST. 2014
                   </span>
-                </motion.div>
+                </div>
               </Reveal>
 
               <Reveal delay={0.1}>
@@ -496,8 +567,18 @@ export default function PrimeTable() {
           </section>
 
           {/* ── RESERVATIONS ──────────────────────────────────── */}
-          <section id="reservations" className="scroll-mt-20 bg-[#17161a] px-6 py-28">
-            <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-14 lg:grid-cols-2">
+          <section id="reservations" className="relative scroll-mt-20 overflow-hidden bg-[#17161a] px-6 py-28">
+            <img
+              src={`${IMG}/band-room.webp`}
+              alt=""
+              width={1800}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
+            />
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#17161a]/75" />
+            <div className="relative z-10 mx-auto grid max-w-[1180px] grid-cols-1 gap-14 lg:grid-cols-2">
               <Reveal>
                 <Eyebrow>Reservations</Eyebrow>
                 <h2 className="ptb-display text-[clamp(30px,4vw,46px)] font-medium italic">Book your table.</h2>
@@ -559,9 +640,33 @@ export default function PrimeTable() {
                     ))}
                   </div>
 
-                  <Btn solid className="mt-7 w-full text-center">
-                    Confirm Reservation — {slot}
-                  </Btn>
+                  <AnimatePresence mode="wait">
+                    {booked ? (
+                      <motion.p
+                        key="done"
+                        role="status"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="mt-7 rounded border border-[#c9a24b] bg-[#c9a24b]/10 px-5 py-4 text-sm text-[#e8cd8a]"
+                      >
+                        Table held for {slot} — we've sent a confirmation to your phone. See you then.
+                      </motion.p>
+                    ) : (
+                      <motion.button
+                        key="book"
+                        type="submit"
+                        onClick={() => setBooked(true)}
+                        whileHover={{ y: -2 }}
+                        whileTap={{ y: 0, scale: 0.99 }}
+                        exit={{ opacity: 0 }}
+                        className="ptb-mono mt-7 w-full rounded-sm border border-[#c9a24b] bg-[#c9a24b] px-[22px] py-3 text-[11px]
+                                   uppercase tracking-[0.14em] text-[#0b0b0d] transition-colors hover:bg-[#e8cd8a]"
+                      >
+                        Confirm Reservation — {slot}
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
                 </form>
               </Reveal>
 
@@ -664,16 +769,25 @@ export default function PrimeTable() {
                 viewport={viewport}
                 className="grid auto-rows-[140px] grid-cols-2 gap-2 md:grid-cols-4"
               >
-                {GALLERY.map((g, i) => (
-                  <motion.div
-                    key={i}
+                {GALLERY.map((g) => (
+                  <motion.figure
+                    key={g.img}
                     variants={rise}
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.35 }}
-                    className={`grid place-items-center overflow-hidden rounded border border-[#c9a24b]/[0.22] bg-gradient-to-br from-[#26221c] to-[#0b0b0d] text-4xl opacity-80 ${g.span}`}
+                    className={`group relative overflow-hidden rounded border border-[#c9a24b]/[0.22] bg-[#17161a] ${g.span}`}
                   >
-                    {g.emoji}
-                  </motion.div>
+                    <img
+                      src={`${IMG}/gallery/${g.img}.webp`}
+                      alt={g.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover brightness-[0.82] transition-[filter,transform] duration-500 group-hover:scale-[1.06] group-hover:brightness-100"
+                    />
+                    <figcaption className="ptb-mono pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-[#0b0b0d] to-transparent px-3 pb-2.5 pt-8 text-[10px] tracking-[0.06em] text-[#e8cd8a] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      {g.alt}
+                    </figcaption>
+                  </motion.figure>
                 ))}
               </motion.div>
             </div>
@@ -866,6 +980,24 @@ export default function PrimeTable() {
                     {m.text}
                   </motion.div>
                 ))}
+                {typing && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    aria-live="polite"
+                    aria-label="Ember is typing"
+                    className="flex w-fit gap-1 self-start rounded-[10px] rounded-bl-[2px] border border-[#c9a24b]/[0.22] bg-[#c9a24b]/[0.12] px-3 py-3"
+                  >
+                    {[0, 1, 2].map((i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.12 }}
+                        className="block h-1.5 w-1.5 rounded-full bg-[#e8cd8a]"
+                      />
+                    ))}
+                  </motion.div>
+                )}
               </div>
               <form onSubmit={send} className="flex border-t border-[#c9a24b]/[0.22]">
                 <input
