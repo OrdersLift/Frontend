@@ -209,6 +209,9 @@ const demoBrandPath = /^\/demo\/.+/.test(Astro.url.pathname);
       "serviceType": "Restaurant Website, Booking & QR Menu Services",
       "openingHours": "Mo-Su 00:00-23:59"
     })} />
+
+    <!-- Demo brand sites load their own typefaces here. -->
+    <slot name="head" />
   </head>
   <body class="font-sans antialiased bg-paper text-body transition-colors duration-300">
     <slot />
