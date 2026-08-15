@@ -88,33 +88,6 @@ const SLOTS = [
   { t: '9:00p', full: true },
 ];
 
-const SERVICES = [
-  {
-    num: '01 — ONLINE ORDERING',
-    id: 'ordering',
-    title: 'Pickup & Delivery',
-    body: 'Order the full menu for pickup or delivery, pay securely, and track your order from the kitchen to your door.',
-    cta: 'Start an Order',
-    track: true,
-  },
-  {
-    num: '02 — CATERING',
-    id: 'catering',
-    title: 'Private Catering',
-    body: 'Full-service steakhouse catering for offices, weddings, and milestone gatherings, from 20 to 400 guests.',
-    cta: 'Request a Quote',
-    track: false,
-  },
-  {
-    num: '03 — PRIVATE EVENTS',
-    id: 'events',
-    title: 'Events & Buyouts',
-    body: "Book our private dining room or a full restaurant buyout, with a dedicated chef's tasting menu.",
-    cta: 'Plan an Event',
-    track: false,
-  },
-];
-
 const GALLERY = [
   { span: 'row-span-2', img: '1', alt: 'A plated course under low light' },
   { span: '', img: '2', alt: 'Wine glasses set out by the window' },
@@ -695,64 +668,123 @@ export default function PrimeTable() {
             </div>
           </section>
 
-          {/* ── ORDER / CATERING / EVENTS ─────────────────────── */}
-          <section id="order" className="scroll-mt-20 px-6 py-28">
+          {/* ── ORDER ─────────────────────────────────────────── */}
+          {/* Ordering, catering and events are three separate sections in the
+              order the nav lists them. They used to be three columns of one
+              grid, which meant Catering and Events shared a scroll position:
+              both nav links landed in the same place and the highlight jumped
+              back and forth inside Order. */}
+          <section id="order" className="scroll-mt-20 px-6 pb-16 pt-28">
             <div className="mx-auto max-w-[1180px]">
               <Reveal className="mx-auto mb-14 max-w-[640px] text-center">
                 <Eyebrow>Beyond the Table</Eyebrow>
                 <h2 className="ptb-display text-[clamp(30px,4vw,46px)] font-medium italic">Order, cater, celebrate.</h2>
               </Reveal>
 
-              <motion.div variants={stagger(0.1)} initial="hidden" whileInView="show" viewport={viewport} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                {SERVICES.map((s) => (
-                  <motion.div
-                    key={s.num}
-                    id={s.id === 'ordering' ? undefined : s.id}
-                    variants={rise}
-                    whileHover={{ y: -6, borderColor: GOLD }}
-                    className="ptb-glass scroll-mt-24 rounded-md px-7 py-9"
-                  >
-                    <span className="ptb-mono mb-4 block text-xs tracking-[0.1em] text-[#c9a24b]">{s.num}</span>
-                    <h3 className="ptb-display mb-3 text-[22px]">{s.title}</h3>
-                    <p className="mb-5 text-sm leading-[1.7] text-[#c9c4b8]">{s.body}</p>
-                    {s.track && (
-                      <>
-                        <div className="mt-3.5 h-[3px] overflow-hidden rounded bg-white/[0.08]">
-                          <motion.i
-                            initial={{ width: 0 }}
-                            whileInView={{ width: '62%' }}
-                            viewport={viewport}
-                            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-                            className="block h-full bg-gradient-to-r from-[#c9a24b] to-[#e8cd8a]"
-                          />
-                        </div>
-                        <div className="ptb-mono mt-2 flex justify-between text-[10px] text-[#c9c4b8]">
-                          <span>Placed</span>
-                          <span>Fired</span>
-                          <span>Plated</span>
-                          <span>On the way</span>
-                        </div>
-                      </>
-                    )}
-                    <Btn href={s.track ? '#' : '#contact'} className="mt-5">
-                      {s.cta}
-                    </Btn>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              <Reveal className="mt-7">
-                <div className="ptb-glass flex flex-wrap items-center justify-between gap-4 rounded-md px-7 py-6">
-                  <div>
-                    <Eyebrow className="mb-1.5">Loyalty &amp; Rewards</Eyebrow>
-                    <h3 className="ptb-display text-lg">
-                      Earn a $25 reward for every $250 spent — plus a birthday tomahawk on the house.
-                    </h3>
+              <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+                <Reveal>
+                  <span className="ptb-mono mb-4 block text-xs tracking-[0.1em] text-[#c9a24b]">01 — ONLINE ORDERING</span>
+                  <h3 className="ptb-display mb-3 text-[28px]">Pickup &amp; Delivery</h3>
+                  <p className="mb-6 max-w-[440px] text-sm leading-[1.7] text-[#c9c4b8]">
+                    Order the full menu for pickup or delivery, pay securely, and track your order from the kitchen to
+                    your door.
+                  </p>
+                  <Btn>Start an Order</Btn>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <div className="ptb-glass rounded-md px-7 py-8">
+                    <span className="ptb-mono mb-4 block text-xs tracking-[0.1em] text-[#e8cd8a]">
+                      ORDER #PT-2214 · ON THE WAY
+                    </span>
+                    <div className="h-[3px] overflow-hidden rounded bg-white/[0.08]">
+                      <motion.i
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '62%' }}
+                        viewport={viewport}
+                        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                        className="block h-full bg-gradient-to-r from-[#c9a24b] to-[#e8cd8a]"
+                      />
+                    </div>
+                    <div className="ptb-mono mt-2 flex justify-between text-[10px] text-[#c9c4b8]">
+                      <span>Placed</span>
+                      <span>Fired</span>
+                      <span>Plated</span>
+                      <span>On the way</span>
+                    </div>
                   </div>
-                  <Btn solid>Join Prime Rewards</Btn>
+                </Reveal>
+              </div>
+            </div>
+          </section>
+
+          {/* ── CATERING ──────────────────────────────────────── */}
+          <section id="catering" className="scroll-mt-20 px-6 py-16">
+            <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2">
+              <Reveal className="lg:order-1">
+                <div className="group overflow-hidden rounded-md border border-[#c9a24b]/[0.22]">
+                  <img
+                    src={`${IMG}/catering.webp`}
+                    alt="Platters laid out for a catered service"
+                    width={1200}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[4/3] w-full object-cover brightness-[0.85] transition-[filter,transform] duration-700 group-hover:scale-[1.03] group-hover:brightness-100"
+                  />
+                </div>
+              </Reveal>
+              <Reveal delay={0.1} className="lg:order-2">
+                <span className="ptb-mono mb-4 block text-xs tracking-[0.1em] text-[#c9a24b]">02 — CATERING</span>
+                <h3 className="ptb-display mb-3 text-[28px]">Private Catering</h3>
+                <p className="mb-6 max-w-[440px] text-sm leading-[1.7] text-[#c9c4b8]">
+                  Full-service steakhouse catering for offices, weddings, and milestone gatherings, from 20 to 400
+                  guests.
+                </p>
+                <Btn href="#contact">Request a Quote</Btn>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* ── EVENTS ────────────────────────────────────────── */}
+          <section id="events" className="scroll-mt-20 px-6 py-16">
+            <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2">
+              <Reveal>
+                <span className="ptb-mono mb-4 block text-xs tracking-[0.1em] text-[#c9a24b]">03 — PRIVATE EVENTS</span>
+                <h3 className="ptb-display mb-3 text-[28px]">Events &amp; Buyouts</h3>
+                <p className="mb-6 max-w-[440px] text-sm leading-[1.7] text-[#c9c4b8]">
+                  Book our private dining room or a full restaurant buyout, with a dedicated chef's tasting menu.
+                </p>
+                <Btn href="#contact">Plan an Event</Btn>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <div className="group overflow-hidden rounded-md border border-[#c9a24b]/[0.22]">
+                  <img
+                    src={`${IMG}/events.webp`}
+                    alt="The private dining room, laid for an evening service"
+                    width={1200}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[4/3] w-full object-cover brightness-[0.85] transition-[filter,transform] duration-700 group-hover:scale-[1.03] group-hover:brightness-100"
+                  />
                 </div>
               </Reveal>
             </div>
+          </section>
+
+          {/* Loyalty closes the "beyond the table" run before the gallery. */}
+          <section className="px-6 pb-28 pt-16">
+            <Reveal className="mx-auto max-w-[1180px]">
+              <div className="ptb-glass flex flex-wrap items-center justify-between gap-4 rounded-md px-7 py-6">
+                <div>
+                  <Eyebrow className="mb-1.5">Loyalty &amp; Rewards</Eyebrow>
+                  <h3 className="ptb-display text-lg">
+                    Earn a $25 reward for every $250 spent — plus a birthday tomahawk on the house.
+                  </h3>
+                </div>
+                <Btn solid>Join Prime Rewards</Btn>
+              </div>
+            </Reveal>
           </section>
 
           {/* ── GALLERY ───────────────────────────────────────── */}

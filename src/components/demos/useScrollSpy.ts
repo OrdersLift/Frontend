@@ -23,12 +23,21 @@ export function useScrollSpy(ids: readonly string[], offset = 96): string {
     let frame = 0;
     const spy = () => {
       frame = 0;
+
+      /* Among every section crossing the line, the one furthest down the
+         document wins. Taking the last match in `ids` order instead would tie
+         the highlight to nav order, so a nav that lists sections out of page
+         order — or lists two side-by-side blocks — would jump backwards. */
       let current = '';
+      let currentTop = -1;
       for (const id of list) {
         const el = document.getElementById(id);
         if (!el) continue;
         const { top, bottom } = el.getBoundingClientRect();
-        if (top <= offset && bottom > offset) current = id;
+        if (top <= offset && bottom > offset && el.offsetTop > currentTop) {
+          currentTop = el.offsetTop;
+          current = id;
+        }
       }
 
       /* The last section can be shorter than the gap between the reading line
